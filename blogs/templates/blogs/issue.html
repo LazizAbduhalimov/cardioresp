@@ -1,0 +1,107 @@
+{% load static i18n%}
+<!DOCTYPE html>
+<html lang="ru-RU" xml:lang="ru-RU">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>{{ object.title }}</title>
+
+    <link rel="stylesheet" href="/static/css/css_1.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/css.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/font-awesome.css" type="text/css"/>
+</head>
+<body class="pkp_page_issue pkp_op_view has_site_logo" dir="ltr">
+<div class="pkp_structure_page">
+    {% include "blocks/header.html" %}
+
+    <div class="pkp_structure_content has_sidebar">
+        <div id="pkp_content_main" class="pkp_structure_main" role="main">
+            <div class="page page_issue">
+                <img style="width: 150px; float: right ; padding-left: 0px" src="{{ object.qr.url }}" alt="qr-код">
+                <h1>{{ object.title }}</h1>
+
+                <div class="obj_issue_toc">
+                    <div class="heading">
+                        <div class="pub_id doi">
+
+                            <span class="type"> DOI: </span>
+                            <span class="id">
+                                <a href="{{ object.doi }}"> {{ object.doi }} </a>
+                            </span>
+
+                        </div>
+
+                        <div class="published">
+
+                            <span class="label"> {% trans "Опубликован" %}: </span>
+                            <span class="value"> {{ volume.published_date }} </span>
+
+                        </div>
+                        {% if volume.file %}
+                            <div>
+                            <a class="obj_galley_link pdf" href="{% url "pdf-view-volume" volume.slug %}"> {% trans "Скачать" %} PDF </a>
+                        </div>
+                        {% endif %}
+
+
+                    </div>
+
+                    <div class="sections">
+                    {% for section in article_section %}
+                        <div class="section">
+
+                            <ul class="cmp_article_list articles">
+
+                                <h2>{{ section.title }}</h2>
+                                {% for article in articles %}
+                                    {% if article.chapter == section %}
+                                        <li>
+                                        <div class="obj_article_summary">
+                                            <div class="title">
+                                                <a href="{{ article.get_absolute_url }}"> {{ article.title }} </a>
+                                            </div>
+                                            <hr>
+
+                                            <div class="meta">
+                                                <div class="authors">
+
+                                                    {% for author in article.authors.all %}
+                                                        {% if author == article.authors.last %}
+                                                            {{ author }}
+                                                            {% else %}
+                                                            {{ author }},
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+
+                                            <ul class="galleys_links">
+                                                <li>
+                                                    <a class="obj_galley_link pdf" href="{% url "pdf-view" article.slug %}"> {% trans "Скачать" %} PDF </a>
+                                                </li>
+                                            </ul>
+
+                                        </div>
+                                    </li>
+                                    {% endif %}
+
+                                {% endfor %}
+                            </ul>
+
+                        </div>
+                    {% endfor %}
+                    </div>
+                    <!-- .sections -->
+                </div>
+            </div>
+        </div>
+        {% include "blocks/left_sidebar.html" %}
+    </div>
+    <!-- pkp_structure_content -->
+    {% include "blocks/footer.html" %}
+</div>
+<!-- pkp_structure_page -->
+
+{% include "blocks/js.html" %}
+</body>
+</html>

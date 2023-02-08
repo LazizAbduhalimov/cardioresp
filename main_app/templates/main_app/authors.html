@@ -1,0 +1,14 @@
+{% extends "main_app/base.html" %}
+{% load i18n %}
+{% block title %}
+    {% trans "Авторы" %}
+{% endblock %}
+{% block content %}
+    {% include "blocks/poster.html" %}
+    <div style="padding-left: 20px">
+        {% for i in authors_list %}
+            <a href="{{ i.get_absolute_url }}"><p>{{ i.name }}</p></a>
+        {% endfor %}
+        {% include "blocks/pagination.html" %}
+    </div>
+{% endblock %}

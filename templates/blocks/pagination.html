@@ -1,0 +1,26 @@
+<div  class="cmp_pagination">
+    {% if page_obj.has_other_pages %}
+        {% if page_obj.number|add:-2 > 1 %}
+            <a href="?q&page=1" class="btn btn-link-w"><span>1</span></a>
+            {% if page_obj.number|add:-3 > 1 %}
+                <span>...</span>&nbsp;
+            {% endif %}
+
+        {% endif %}
+
+        {% for i in page_obj.paginator.page_range %}
+            {% if page_obj.number == i %}
+                <a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: #e86a1e"><span>{{ i }}</span></a>&nbsp;
+            {% elif i >= page_obj.number|add:-2 and i <= page_obj.number|add:2 %}
+                <a href="?q&page={{ i }}" class="btn btn-link-w"><span>{{ i }}</span></a>&nbsp;
+            {% endif %}
+        {% endfor %}
+        {% if page_obj.number|add:2 < page_obj.paginator.num_pages %}
+            {% if page_obj.number|add:3 < page_obj.paginator.num_pages %}
+                <span>...</span>&nbsp;
+            {% endif %}
+            <a href="?q&page={{ page_obj.paginator.num_pages }}"
+               class="btn btn-link-w"><span>{{ page_obj.paginator.num_pages }}</span></a>&nbsp;
+        {% endif %}
+    {% endif %}
+</div>

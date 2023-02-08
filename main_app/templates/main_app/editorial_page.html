@@ -1,0 +1,30 @@
+{% extends "main_app/base.html" %}
+{% load i18n %}
+{% block title %}
+    {% trans "Редакция" %}
+{% endblock %}
+
+{% block content %}
+    <div class="homepage_image">
+        <img src="/static/images/poster.jpg" alt/>
+    </div>
+    <ul style="list-style-type: none">
+        {% for post in posts %}
+
+            <p><span
+                    style="font-family:Times New Roman,Times,serif; font-size:20px; background-color:white; color:#333333"><strong>{{ post.title }}</strong></span>
+            </p>
+            <li style="margin-left: 20px; margin-top: 0">
+                {% for member in members %}
+                    {% if member.post.title == post.title %}
+                        <p>
+                            <a href="{{ member.get_absolute_url }}"><em>{{ member.full_name }}</em></a>,
+                            {{ member.location }}
+                        </p>
+                    {% endif %}
+
+                {% endfor %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,6 @@
+{% extends 'main_app/base.html' %}
+{% block title %}{{ object.title }}{% endblock %}
+{% block content %}
+    {% include "blocks/poster.html" %}
+    {{ object.content|safe }}
+{% endblock %}

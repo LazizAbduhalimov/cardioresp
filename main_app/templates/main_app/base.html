@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+{% load i18n static %}
+<html lang="ru-RU" xml:lang="ru-RU">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="google-site-verification" content="w8xbc_-Wpfon-XI6jWkxdUfhjOJdRUTv_HK_-qzG1PE"/>
+    <meta name="google-site-verification" content="LzA9iYax7uWMVRr_rD85OIe4DwopeFP3thazHEYd828"/>
+    <meta name="yandex-verification" content="8ee8ba49fcf874a9"/>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    {% include "blocks/links.html" %}
+</head>
+<body class="pkp_page_index pkp_op_index has_site_logo" dir="ltr">
+
+<div class="pkp_structure_page">
+    {% include "blocks/header.html" %}
+    <!-- .pkp_structure_head -->
+
+    <div class="pkp_structure_content has_sidebar">
+        <div id="pkp_content_main" class="pkp_structure_main" role="main">
+            <div class="page_index_journal">
+                {% block content %}{% endblock %}
+            </div>
+            <!-- .page -->
+
+        </div>
+        {% include "blocks/left_sidebar.html" %}
+    </div>
+    <!-- pkp_structure_content -->
+    {% include "blocks/footer.html" %}
+    <!-- pkp_structure_footer_wrapper -->
+</div>
+<!-- pkp_structure_page -->
+{% include "blocks/js.html" %}
+</body>
+</html>

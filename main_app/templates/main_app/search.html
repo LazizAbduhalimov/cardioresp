@@ -1,0 +1,167 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="ru-RU" xml:lang="ru-RU">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>UJCR | {% trans "Поиск" %}</title>
+
+    <meta name="generator" content="Open Journal Systems 3.1.2.4"/>
+    <link rel="stylesheet" href="/static/css/css_1.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/css.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/font-awesome.css" type="text/css"/>
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Poppins:300,400,500,600,700|PT+Serif:400,400i&display=swap"
+          rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/select-boxes.css" type="text/css"/>
+</head>
+<body class="pkp_page_search pkp_op_search has_site_logo" dir="ltr">
+<div class="pkp_structure_page">
+    {% include "blocks/header.html" %}
+    <!-- .pkp_structure_head -->
+
+    <div class="pkp_structure_content has_sidebar">
+        <div id="pkp_content_main" class="pkp_structure_main" role="main">
+            <div class="page page_search">
+
+                <h1>{% trans "Найти" %}</h1>
+                {% csrf_token %}
+                <form method="get" action="{% url "search" %}">
+
+                    <div class="search_input">
+                        <label class="pkp_screen_reader" for="query">{% trans "Поиск статей" %} </label>
+
+                        <input type="text" id="query" name="q" value="{{ q }}" class="query"/>
+                    </div>
+
+                    <div class="bottommargin-sm">
+                        <h2>Поиск по тегам</h2>
+                        <select name="tag" class="select-1 form-control" multiple="multiple" style="width:100%;">
+                            <optgroup>
+                                {% for tag in tags %}
+                                    <option value="{{ tag.id }}">{{ tag }} ({{ tag.related_articles_number }})</option>
+                                {% endfor %}
+                            </optgroup>
+                        </select>
+
+                    </div>
+
+
+                    <div class="submit">
+                        <button class="submit" type="submit">{% trans "Найти" %}</button>
+                    </div>
+                </form>
+                <form action="#" method="post" class="mb-0">
+
+
+                </form>
+                <div class="search_results">
+                    {% if q or filter_tags %}
+                        {% if page_obj %}
+                            {% for obj in page_obj %}
+                                <div class="obj_article_summary">
+                                    <div class="title">
+                                        <a href="{{ obj.get_absolute_url }}"> {{ obj.title }} </a>
+                                    </div>
+
+                                    <div class="meta">
+                                        <div class="authors">
+                                            {% for author in obj.authors.all %}
+                                                {% if author == obj.authors.last %}
+                                                    {{ author }}
+                                                {% else %}
+                                                    {{ author }},
+                                                {% endif %}
+
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            {% include "blocks/pagination.html" %}
+                        {% else %}
+                            <div class="cmp_notification notice">
+                                {% trans "Ничего не найдено" %}
+                            </div>
+                        {% endif %}
+                        <!--TODO: <div class="cmp_pagination">1 - 12 из 12 результатов</div> -->
+                    {% else %}
+                        <div class="cmp_notification notice">
+                            {% trans "Задана пустая строка" %}
+                        </div>
+                    {% endif %}
+
+
+                </div>
+
+            </div>
+            <!-- .page -->
+        </div>
+        <!-- pkp_structure_main -->
+
+        {% include "blocks/left_sidebar.html" %}
+    </div>
+    <!-- pkp_structure_content -->
+    {% include "blocks/footer.html" %}
+</div>
+<!-- pkp_structure_page -->
+
+{% include "blocks/js.html" %}
+<script src="/static/js/jquery_select_picker.js"></script>
+
+<!-- Select-Boxes Plugin -->
+<script src="/static/js/select-boxes.js"></script>
+
+<!-- Select-Splitter Plugin -->
+<script src="/static/js/selectsplitter.js"></script>
+
+<script>
+    jQuery(document).ready(function ($) {
+
+        // Multiple Select
+        $(".select-1").select2({
+            placeholder: "Select Multiple Values"
+        });
+
+        // Loading array data
+        var data = [{id: 0, text: 'enhancement'}, {id: 1, text: 'bug'}, {id: 2, text: 'duplicate'}, {
+            id: 3,
+            text: 'invalid'
+        }, {id: 4, text: 'wontfix'}];
+        $(".select-data-array").select2({
+            data: data
+        })
+        $(".select-data-array-selected").select2({
+            data: data
+        });
+
+        // Enabled/Disabled
+        $(".select-disabled").select2();
+        $(".select-enable").on("click", function () {
+            $(".select-disabled").prop("disabled", false);
+            $(".select-disabled-multi").prop("disabled", false);
+        });
+        $(".select-disable").on("click", function () {
+            $(".select-disabled").prop("disabled", true);
+            $(".select-disabled-multi").prop("disabled", true);
+        });
+
+        // Without Search
+        $(".select-hide").select2({
+            minimumResultsForSearch: Infinity
+        });
+
+        // select Tags
+        $(".select-tags").select2({
+            tags: true
+        });
+
+        // Select Splitter
+        $('.selectsplitter').selectsplitter();
+
+    });
+</script>
+</body>
+</html>

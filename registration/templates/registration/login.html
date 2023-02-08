@@ -1,0 +1,25 @@
+{% extends "main_app/base.html" %}
+{% load i18n %}
+{% block title %}
+    {% trans "UJCR|Вход" %}
+{% endblock %}
+{% block content %}
+    <div class="page page_login">
+        <h1>Войти в систему</h1>
+
+        <form class="cmp_form cmp_form login" id="login" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="buttons">
+                <button class="submit" type="submit">
+                    Войти в систему
+                </button>
+
+                <a href="{% url 'registration' %}" class="register">
+                    Регистрация
+                </a>
+            </div>
+        </form>
+        <p><a href="{% url "password_reset" %}">{% trans "Забыли пароль?" %}</a></p>
+    </div>
+{% endblock %}

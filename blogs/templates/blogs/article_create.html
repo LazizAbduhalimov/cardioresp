@@ -1,0 +1,16 @@
+{% extends "main_app/base.html" %}
+{% load i18n %}
+{% block title %}
+    {% trans "Создание статьи" %}
+{% endblock %}
+{% block content %}
+    <h1> {% trans "Добавить статью" %} </h1>
+    <div class="form-group">
+        <form action="{% url "article-create" %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p }}
+            <button class="btn btn-dark" type="submit">{% trans "Добавить статью" %}</button>
+        </form>
+    </div>
+{% endblock %}

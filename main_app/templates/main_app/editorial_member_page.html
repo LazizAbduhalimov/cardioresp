@@ -1,0 +1,14 @@
+{% extends "main_app/base.html" %}
+{% block title %}{{ object.full_name }}{% endblock %}
+{% block content %}
+    {% include "blocks/poster.html" %}
+    <div class="additional_content">
+        <strong style="font-size: large">{{ object.full_name }}
+            <img style="display: inline; width: 20px; margin-left: 20px" src="/static/images/email_icon.png"
+                 alt="gmail">
+            <a href="">{{ object.e_mail }}</a></strong>
+    </div>
+    <div>
+        {{ object.about|safe }}
+    </div>
+{% endblock %}
