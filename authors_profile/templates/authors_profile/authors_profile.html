@@ -1,0 +1,11 @@
+{% extends "main_app/base.html" %}
+{% load i18n %}
+{% block title %}{{ object.user.first_name }}| {% trans "Профиль" %}{% endblock %}
+{% block content %}
+    <h1> {{ object.user.first_name }}</h1>
+
+    {% for article in articles %}
+        {{ article.title }}
+    {% endfor %}
+
+{% endblock %}
