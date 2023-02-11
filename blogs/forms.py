@@ -12,7 +12,6 @@ class ArticleCreateForm(TranslationModelForm):
             "annotation",
             "for_quoting",
             "doi",
-            "qr",
             "file",
             "linked_volume",
             "chapter",
@@ -24,9 +23,6 @@ class ArticleCreateForm(TranslationModelForm):
             'title': forms.TextInput(attrs={"class": "form-control", }),
             'for_quoting': forms.Textarea(attrs={"class": "form-control", 'rows': 3}),
             'doi': forms.TextInput(attrs={"class": "form-control", }),
-            'qr': forms.FileInput(attrs={
-                "class": "form-control", "type": "file",
-            }),
             'file': forms.FileInput(attrs={"class": "form-control", }),
             'linked_volume': forms.Select(attrs={"class": "form-control", }),
             'chapter': forms.Select(attrs={"class": "form-control", }),

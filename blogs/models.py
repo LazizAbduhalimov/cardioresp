@@ -1,10 +1,16 @@
-from ckeditor.fields import RichTextField
 from django.db import models
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.utils.timezone import now
 from pytils.templatetags.pytils_translit import slugify
 from django.utils.translation import gettext_lazy as _
+
+import qrcode
+from cardioresp.settings import MEDIA_ROOT
+from io import BytesIO
+from django.core.files import File
+from PIL import Image, ImageDraw
+from ckeditor.fields import RichTextField
 
 
 class State(models.Model):
@@ -58,7 +64,7 @@ class Volume(models.Model):
     doi = models.CharField("DOI ссылка", max_length=255, default="")
     file = models.FileField("Файл (PDF)", upload_to="files/Volume/", blank=True, null=True)
     published_date = models.DateField("Дата публикации", default=now, editable=True)
-    qr = models.ImageField("QR-код", upload_to="images/volumes/QR/")
+    qr = models.ImageField("QR-код", upload_to="images/volumes/QR/", blank=True)
 
     slug = models.SlugField("Slug тома", max_length=200, blank=True, null=True)
     status = models.ForeignKey(State, verbose_name="Статус", on_delete=models.DO_NOTHING)
@@ -70,6 +76,18 @@ class Volume(models.Model):
     def save(self, *args, **kwargs):
         self.status_str = str(self.status)
         self.slug = slugify(self.title)
+
+        # Создание и сохранение qr-code
+        url = MEDIA_ROOT.replace("\\", "/") + "/" + str(self.file)
+        qrcode_image = qrcode.make(url)
+        canvas = Image.new("RGB", (qrcode_image.pixel_size, qrcode_image.pixel_size), "white")
+        draw = ImageDraw.Draw(canvas)
+        canvas.paste(qrcode_image)
+        file_name = f"qrcode-{self.title}.png"
+        buffer = BytesIO()
+        canvas.save(buffer, "PNG")
+        self.qr.save(file_name, File(buffer), save=False)
+        canvas.close()
 
         # При статусе Неактивынй отключаем все связанные Статьи, а иначе включаем их
         if self.status_str == "Неактивный" or self.status_str == "Следующий":
@@ -149,7 +167,6 @@ class Article(models.Model):
     for_quoting = models.TextField(_("Для цитирования"), default="", blank=True, null=True)
 
     doi = models.CharField(_("DOI ссылка"), max_length=255, default="", null=True)
-    qr = models.ImageField(_("QR-код"), upload_to="images/articles/QR/")
     file = models.FileField(_("Файл (PDF)"), upload_to="files/Article/", null=True)
 
     linked_volume = models.ForeignKey(Volume, verbose_name=_("Связанный том"), null=True, on_delete=models.DO_NOTHING)
@@ -182,17 +199,6 @@ class Article(models.Model):
             return 'Text Not Found'
 
     cut_title.short_description = 'Аннотация'
-
-    def admin_image(self):
-
-        if self.qr:
-            return mark_safe(
-                u'<a href="{0}" target="_blank"><img src="{0}" width="100" /></a>'.format(self.qr.url))
-        else:
-            return 'Image Not Found'
-
-    admin_image.short_description = 'QR-код'
-    admin_image.allow_tags = True
 
     def __str__(self):
         return self.title

@@ -75,7 +75,6 @@ class AdminArticle(TabbedTranslationAdmin):
     list_display = [
         "cut_title",
         "doi",
-        "admin_image",
         "published_date",
         "is_active",
         "slug"
