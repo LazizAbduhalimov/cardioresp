@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
 from django.utils.safestring import mark_safe
@@ -161,7 +162,7 @@ class UniqueViewers(models.Model):
 class Article(models.Model):
     position = models.IntegerField(default=0)
 
-    title = models.CharField(_("Заголовок статьи"), max_length=255, default="", unique=True)
+    title = models.CharField(_("Заголовок статьи"), max_length=255, default="")
     slug = models.SlugField(_("Slug статьи"), max_length=200, blank=True)
     annotation = RichTextField(_("Аннотация"), default="")
     for_quoting = models.TextField(_("Для цитирования"), default="", blank=True, null=True)
@@ -184,6 +185,10 @@ class Article(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Article, self).save(*args, **kwargs)
+
+    def clean(self):
+        if self.is_active and self.slug == "":
+            raise ValidationError("Поле slug не может быть пустым при публикации")
 
     def get_absolute_url(self):
         return reverse('article', kwargs={'slug': self.slug})

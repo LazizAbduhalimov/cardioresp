@@ -1,7 +1,6 @@
 from django import forms
 from .models import Article
 from modeltranslation.forms import TranslationModelForm
-from django.utils.translation import gettext_lazy as _
 
 
 class ArticleCreateForm(TranslationModelForm):

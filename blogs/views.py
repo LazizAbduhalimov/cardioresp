@@ -1,6 +1,7 @@
-from django.http import FileResponse, Http404, HttpResponseNotFound
+from django.http import FileResponse, HttpResponseRedirect, Http404
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from main_app.utils import MenuMixin
 from cardioresp.settings import MEDIA_ROOT
@@ -13,7 +14,7 @@ def get_client_ip(request):
     if x_forwarded_for:
         ip = x_forwarded_for.split(',')[0]
     else:
-        ip = request.META.get('HTTP_USER_AGENT') # В REMOTE_ADDR значение айпи пользователя
+        ip = request.META.get('HTTP_USER_AGENT')  # В REMOTE_ADDR значение айпи пользователя
     return ip
 
 
@@ -49,13 +50,31 @@ class ArticleView(MenuMixin, DetailView):
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
 
-class ArticleCreate(MenuMixin, CreateView):
+class ArticleCreate(LoginRequiredMixin, MenuMixin, CreateView):
     form_class = ArticleCreateForm
     template_name = "blogs/article_create.html"
-    success_url = reverse_lazy("home")
+    login_url = reverse_lazy("login")
 
     def get_context_data(self, **kwargs):
         context = super(ArticleCreate, self).get_context_data(**kwargs)
+        context["current_path"] = str(self.request.path)[3:]
+
+        return dict(list(context.items()) + list(self.get_user_context().items()))
+
+    def form_valid(self, form, *args, **kwargs):
+        article = form.save()
+        return HttpResponseRedirect(reverse_lazy("article-update", kwargs={"slug": article.slug}))
+
+
+class ArticleUpdate(LoginRequiredMixin, MenuMixin, UpdateView):
+    model = Article
+    form_class = ArticleCreateForm
+    template_name = "blogs/article_update.html"
+    success_url = reverse_lazy("home")
+    login_url = reverse_lazy("login")
+
+    def get_context_data(self, **kwargs):
+        context = super(ArticleUpdate, self).get_context_data(**kwargs)
         context["current_path"] = str(self.request.path)[3:]
 
         return dict(list(context.items()) + list(self.get_user_context().items()))
@@ -97,7 +116,6 @@ class IssueDetail(MenuMixin, DetailView):
 
         context["article_section"] = ArticleSection.objects.filter(title__in=list(a))
         context["title"] = Volume.objects.get(slug=self.kwargs["slug"])
-
         context["current_path"] = str(self.request.path)[3:]
         return dict(list(context.items()) + list(self.get_user_context().items()))
 

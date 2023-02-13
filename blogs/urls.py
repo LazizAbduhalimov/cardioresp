@@ -10,4 +10,5 @@ urlpatterns = [
     path("pdf/article/<slug:slug>.pdf", PdfView.as_view(), name="pdf-view"),
     path("pdf/volume/<slug:slug>", PdfViewVolume.as_view(), name="pdf-view-volume"),
     path('article/create/', ArticleCreate.as_view(), name="article-create"),
+    path('article/update/<slug:slug>', ArticleUpdate.as_view(), name="article-update"),
 ]
