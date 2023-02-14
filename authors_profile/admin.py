@@ -1,3 +1,11 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import *
+
+
+@admin.register(AuthorsProfile)
+class AdminState(admin.ModelAdmin):
+    list_display = [
+        "user",
+    ]
+    list_per_page = 15

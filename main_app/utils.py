@@ -3,7 +3,9 @@ from main_app.models import *
 
 
 class MenuMixin:
+
     def get_user_context(self, **kwargs):
+        #context[""]
         context = kwargs
         context["links"] = Page.objects.filter(linklocation__title="About us")
         context["menu_links"] = Page.objects.filter(linklocation__title="Menu")

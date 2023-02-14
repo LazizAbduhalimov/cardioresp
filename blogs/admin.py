@@ -12,16 +12,6 @@ class AdminState(admin.ModelAdmin):
     list_per_page = 15
 
 
-@admin.register(Authors)
-class AdminAuthors(TabbedTranslationAdmin):
-    list_display = [
-        "name",
-        "slug",
-    ]
-    readonly_fields = ["slug"]
-    list_per_page = 50
-
-
 @admin.register(Volume)
 class AdminVolume(TabbedTranslationAdmin):
     list_display = [
@@ -32,7 +22,7 @@ class AdminVolume(TabbedTranslationAdmin):
         "get_status_color",
     ]
 
-    readonly_fields = ["status_str", "slug"]
+    readonly_fields = ["slug"]
 
     def get_doi_color(self, object):
         return mark_safe(f"<span style='color: DarkGray;'><italic>{object.doi}</italic></span>")

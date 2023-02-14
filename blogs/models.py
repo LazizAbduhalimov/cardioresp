@@ -7,6 +7,8 @@ from pytils.templatetags.pytils_translit import slugify
 from django.utils.translation import gettext_lazy as _
 
 import qrcode
+
+from authors_profile.models import AuthorsProfile
 from cardioresp.settings import MEDIA_ROOT
 from io import BytesIO
 from django.core.files import File
@@ -37,27 +39,6 @@ class Tags(models.Model):
         verbose_name_plural = "Ключевые слова"
 
         ordering = ["title"]
-
-
-class Authors(models.Model):
-    name = models.CharField("Ф.И.О.", max_length=255, default="")
-    slug = models.SlugField("Slug тома", max_length=200, null=True)
-
-    def get_absolute_url(self):
-        return reverse('author-detail', kwargs={'slug': self.slug})
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super(Authors, self).save(*args, **kwargs)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = "Автора"
-        verbose_name_plural = "Авторы"
-
-        ordering = ["name_ru"]
 
 
 class Volume(models.Model):
@@ -172,7 +153,7 @@ class Article(models.Model):
 
     linked_volume = models.ForeignKey(Volume, verbose_name=_("Связанный том"), null=True, on_delete=models.DO_NOTHING)
     chapter = models.ForeignKey(ArticleSection, verbose_name=_("Раздел"), null=True, on_delete=models.DO_NOTHING)
-    authors = models.ManyToManyField(Authors, verbose_name=_("Связанные Авторы"), related_name='authors', blank=True)
+    authors = models.ManyToManyField(AuthorsProfile, verbose_name=_("Связанные Авторы"), related_name='authors', blank=True)
     authors_text = models.CharField(_("Авторы (Текст)"), max_length=255, default="")
     tags = models.ManyToManyField(Tags, verbose_name=_("Ключевые слова"), related_name='tags')
 

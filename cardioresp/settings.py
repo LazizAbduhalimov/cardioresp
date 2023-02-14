@@ -50,6 +50,7 @@ CUSTOM_APPS = [
     'main_app',
     'blogs',
     'registration',
+    'authors_profile',
 ]
 INSTALLED_APPS += CUSTOM_APPS
 

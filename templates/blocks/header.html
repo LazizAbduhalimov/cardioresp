@@ -69,7 +69,18 @@
                 <nav class="pkp_navigation_user_wrapper" id="navigationUserWrapper" aria-label="Навигация пользователя">
                     <ul id="navigationUser" class="pkp_navigation_user pkp_nav_list">
                         <li class="profile">
-                            <span style="color: white">Имя: <strong>{{ request.user.username }}</strong></span>
+                            {% if is_authorized %}
+                                <span style="color: white">Имя:
+                                    <a href="{{ author_profile.get_absolute_url }}">
+                                        <strong>{{ request.user.username }}</strong>
+                                    </a>
+                                </span>
+                            {% else %}
+                                <span style="color: white">Имя:
+                                    <strong>{{ request.user.username }}</strong>
+                                </span>
+                            {% endif %}
+
                         </li>
                         <li class="profile">
                             <a href="{% url 'exit' %}"> Выйти </a>

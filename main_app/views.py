@@ -1,11 +1,13 @@
 from django.http import HttpResponseRedirect, FileResponse, HttpRequest
 from django.views.generic import ListView, DetailView
-from blogs.models import Volume, Article, Tags, Authors, ArticleSection
+from django.views.decorators.cache import cache_control
+from django.views.decorators.http import require_GET
+
+from blogs.models import Article, Tags, ArticleSection
 from main_app.models import *
 from main_app.utils import MenuMixin
 from django.conf import settings
-from django.views.decorators.cache import cache_control
-from django.views.decorators.http import require_GET
+from authors_profile.models import AuthorsProfile
 
 
 @require_GET
@@ -27,8 +29,12 @@ class SamePages(MenuMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(SamePages, self).get_context_data(**kwargs)
         slug = self.kwargs['slug']
+        try:
+            context["author_profile"] = AuthorsProfile.objects.filter(user=self.request.user).first()
+        except TypeError:
+            context["author_profile"] = None
+        context["is_authorized"] = bool(context["author_profile"])
         context["object"] = Page.objects.get(slug=slug)
-
         context["current_path"] = str(self.request.path)[3:]
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
@@ -114,7 +120,7 @@ class EditorialMemberPage(MenuMixin, DetailView):
 
 
 class AuthorsPage(MenuMixin, ListView):
-    model = Authors
+    model = AuthorsProfile
     template_name = "main_app/authors.html"
     paginate_by = 10
 
@@ -134,7 +140,7 @@ class AuthorsPage(MenuMixin, ListView):
 
 
 class AuthorsDetailPage(MenuMixin, DetailView):
-    model = Authors
+    model = AuthorsProfile
     template_name = "main_app/author's_articles.html"
     slug_field = "slug"
 

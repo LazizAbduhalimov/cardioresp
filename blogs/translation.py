@@ -1,5 +1,5 @@
 from modeltranslation.translator import register, TranslationOptions
-from .models import Volume, Article, Authors, ArticleSection, Tags
+from .models import Volume, Article, ArticleSection, Tags
 
 
 @register(Volume)
@@ -10,11 +10,6 @@ class VolumeTranslationOptions(TranslationOptions):
 @register(Article)
 class ArticleTranslationOptions(TranslationOptions):
     fields = ("title", "annotation", "file", "for_quoting", "authors_text")
-
-
-@register(Authors)
-class AuthorsTranslationOptions(TranslationOptions):
-    fields = ("name",)
 
 
 @register(ArticleSection)
