@@ -1,10 +1,10 @@
 from django.contrib import admin
-
+from modeltranslation.admin import TabbedTranslationAdmin
 from .models import *
 
 
 @admin.register(AuthorsProfile)
-class AdminState(admin.ModelAdmin):
+class AdminState(TabbedTranslationAdmin):
     list_display = [
         "user",
     ]

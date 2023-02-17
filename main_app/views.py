@@ -29,13 +29,7 @@ class SamePages(MenuMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(SamePages, self).get_context_data(**kwargs)
         slug = self.kwargs['slug']
-        try:
-            context["author_profile"] = AuthorsProfile.objects.filter(user=self.request.user).first()
-        except TypeError:
-            context["author_profile"] = None
-        context["is_authorized"] = bool(context["author_profile"])
         context["object"] = Page.objects.get(slug=slug)
-        context["current_path"] = str(self.request.path)[3:]
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
 
@@ -47,7 +41,6 @@ class SubmissionPage(MenuMixin, ListView):
         context = super(SubmissionPage, self).get_context_data(**kwargs)
         context["object"] = self.model.objects.get(slug="submission")
 
-        context["current_path"] = str(self.request.path)[3:]
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
 
@@ -101,7 +94,6 @@ class EditorialPage(MenuMixin, ListView):
         context["posts"] = Post.objects.all()
         context["members"] = EditorialMember.objects.all()
 
-        context["current_path"] = str(self.request.path)[3:]
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
 
@@ -115,7 +107,6 @@ class EditorialMemberPage(MenuMixin, DetailView):
         slug = self.kwargs['slug']
         context["object"] = self.model.objects.get(slug=slug)
 
-        context["current_path"] = str(self.request.path)[3:]
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
 
@@ -123,19 +114,19 @@ class AuthorsPage(MenuMixin, ListView):
     model = AuthorsProfile
     template_name = "main_app/authors.html"
     paginate_by = 10
+    context_object_name = "authors_list"
 
     def get_queryset(self):
         if "/ru/" in self.request.path:
-            queryset = self.model.objects.order_by("name_ru")
+            queryset = self.model.objects.order_by("full_name_ru")
         else:
-            queryset = self.model.objects.order_by("name_en")
-
+            queryset = self.model.objects.order_by("full_name_en")
+        print(queryset)
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super(AuthorsPage, self).get_context_data(**kwargs)
 
-        context["current_path"] = str(self.request.path)[3:]
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
 
@@ -149,7 +140,6 @@ class AuthorsDetailPage(MenuMixin, DetailView):
         slug = self.kwargs['slug']
         context["authors"] = self.model.objects.all()
         context["article_section"] = ArticleSection.objects.all()
-        context["articles"] = Article.objects.filter(authors=self.model.objects.get(slug=slug)).distinct()
+        context["articles"] = Article.objects.filter(authors=self.model.objects.get(slug=slug), is_active=True).distinct()
 
-        context["current_path"] = str(self.request.path)[3:]
         return dict(list(context.items()) + list(self.get_user_context().items()))

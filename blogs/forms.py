@@ -12,9 +12,6 @@ class ArticleCreateForm(TranslationModelForm):
             "for_quoting",
             "doi",
             "file",
-            "linked_volume",
-            "chapter",
-            "authors",
             "authors_text",
             "tags",
         ]

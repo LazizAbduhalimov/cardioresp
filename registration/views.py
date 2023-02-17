@@ -92,7 +92,6 @@ class EmailConfirmation(MenuMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(EmailConfirmation, self).get_context_data(**kwargs)
 
-        context["current_path"] = str(self.request.path)[3:]
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
 
@@ -103,7 +102,6 @@ class SuccessfulRegistration(MenuMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(SuccessfulRegistration, self).get_context_data(**kwargs)
 
-        context["current_path"] = str(self.request.path)[3:]
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
 
@@ -114,7 +112,6 @@ class InvalidLink(MenuMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(InvalidLink, self).get_context_data(**kwargs)
 
-        context["current_path"] = str(self.request.path)[3:]
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
 
@@ -125,7 +122,6 @@ class LoginUser(MenuMixin, LoginView):
     def get_context_data(self, **kwargs):
         context = super(LoginUser, self).get_context_data(**kwargs)
 
-        context["current_path"] = str(self.request.path)[3:]
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
     def get_success_url(self):

@@ -155,8 +155,9 @@ class Article(models.Model):
     chapter = models.ForeignKey(ArticleSection, verbose_name=_("Раздел"), null=True, on_delete=models.DO_NOTHING)
     authors = models.ManyToManyField(AuthorsProfile, verbose_name=_("Связанные Авторы"), related_name='authors', blank=True)
     authors_text = models.CharField(_("Авторы (Текст)"), max_length=255, default="")
-    tags = models.ManyToManyField(Tags, verbose_name=_("Ключевые слова"), related_name='tags')
-
+    tags = models.ManyToManyField(Tags, verbose_name=_("Ключевые слова"), related_name='tags', blank=True)
+    created_date = models.DateTimeField(_("Дата создания"), auto_now_add=True)
+    updated_date = models.DateTimeField(_("Дата последнего изменения"), auto_now=True)
     published_date = models.DateField(_("Дата публикации"), default=now, editable=True)
 
     is_active = models.BooleanField(_("Показывать на сайте"), default=False)

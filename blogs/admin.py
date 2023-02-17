@@ -21,8 +21,8 @@ class AdminVolume(TabbedTranslationAdmin):
         "slug",
         "get_status_color",
     ]
-
-    readonly_fields = ["slug"]
+    readonly_fields = ["status_str", "slug"]
+    exclude = ["qr"]
 
     def get_doi_color(self, object):
         return mark_safe(f"<span style='color: DarkGray;'><italic>{object.doi}</italic></span>")
@@ -73,6 +73,7 @@ class AdminArticle(TabbedTranslationAdmin):
     prepopulated_fields = {"slug": ("title",)}
     exclude = ["viewers"]
     list_editable = ["is_active"]
+    readonly_fields = ["created_date", "updated_date"]
 
     list_filter = ["linked_volume", "chapter"]
     list_per_page = 15

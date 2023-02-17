@@ -4,7 +4,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from main_app.utils import MenuMixin
-from cardioresp.settings import MEDIA_ROOT
+from .utils import ArticleModificationMixin
 from blogs.models import *
 from .forms import ArticleCreateForm
 
@@ -44,29 +44,28 @@ class ArticleView(MenuMixin, DetailView):
         context["object"] = Article.objects.get(slug=slug)
         context["published_date"] = Article.objects.get(slug=slug).published_date.strftime("%Y/%m/%d")
         context["authors"] = Article.objects.get(slug=slug).authors_text.strip().split(",")
-        context["current_path"] = str(self.request.path)[3:]
         context["current_lang"] = str(self.request.path)[:3]
 
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
 
-class ArticleCreate(LoginRequiredMixin, MenuMixin, CreateView):
+class ArticleCreate(LoginRequiredMixin, ArticleModificationMixin, MenuMixin, CreateView):
     form_class = ArticleCreateForm
     template_name = "blogs/article_create.html"
     login_url = reverse_lazy("login")
 
     def get_context_data(self, **kwargs):
         context = super(ArticleCreate, self).get_context_data(**kwargs)
-        context["current_path"] = str(self.request.path)[3:]
-
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
     def form_valid(self, form, *args, **kwargs):
         article = form.save()
+        article.authors.add(AuthorsProfile.objects.get(user=self.request.user))
+        article.save()
         return HttpResponseRedirect(reverse_lazy("article-update", kwargs={"slug": article.slug}))
 
 
-class ArticleUpdate(LoginRequiredMixin, MenuMixin, UpdateView):
+class ArticleUpdate(LoginRequiredMixin, ArticleModificationMixin, MenuMixin, UpdateView):
     model = Article
     form_class = ArticleCreateForm
     template_name = "blogs/article_update.html"
@@ -75,8 +74,6 @@ class ArticleUpdate(LoginRequiredMixin, MenuMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(ArticleUpdate, self).get_context_data(**kwargs)
-        context["current_path"] = str(self.request.path)[3:]
-
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
 
@@ -89,7 +86,6 @@ class ArchiveView(MenuMixin, ListView):
         context = super(ArchiveView, self).get_context_data(**kwargs)
 
         context["current_volume"] = Volume.objects.filter(status_str="Активный")[0]
-        context["current_path"] = str(self.request.path)[3:]
         if "/ru/" in context["current_path"]:
             context["title"] = "Архивы | UJCR"
         else:
@@ -116,7 +112,6 @@ class IssueDetail(MenuMixin, DetailView):
 
         context["article_section"] = ArticleSection.objects.filter(title__in=list(a))
         context["title"] = Volume.objects.get(slug=self.kwargs["slug"])
-        context["current_path"] = str(self.request.path)[3:]
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
 
@@ -135,8 +130,6 @@ class TagCloudPage(MenuMixin, ListView):
             tag.save()
 
         context["tags"] = Tags.objects.order_by("-related_articles_number")
-
-        context["current_path"] = str(self.request.path)[3:]
 
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
