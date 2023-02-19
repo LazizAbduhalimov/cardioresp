@@ -7,9 +7,11 @@
     <meta name="google-site-verification" content="w8xbc_-Wpfon-XI6jWkxdUfhjOJdRUTv_HK_-qzG1PE"/>
     <meta name="google-site-verification" content="LzA9iYax7uWMVRr_rD85OIe4DwopeFP3thazHEYd828"/>
     <meta name="yandex-verification" content="8ee8ba49fcf874a9"/>
+    {% block extra_meta %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     {% include "blocks/links.html" %}
+    {% block extra_css %}{% endblock %}
 </head>
 <body class="pkp_page_index pkp_op_index has_site_logo" dir="ltr">
 

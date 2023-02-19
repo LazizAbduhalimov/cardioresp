@@ -66,13 +66,11 @@ class AdminArticle(TabbedTranslationAdmin):
         "cut_title",
         "doi",
         "published_date",
-        "is_active",
         "slug"
     ]
     filter_horizontal = ["authors", ]
     prepopulated_fields = {"slug": ("title",)}
     exclude = ["viewers"]
-    list_editable = ["is_active"]
     readonly_fields = ["created_date", "updated_date"]
 
     list_filter = ["linked_volume", "chapter"]

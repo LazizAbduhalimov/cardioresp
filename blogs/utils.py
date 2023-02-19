@@ -6,7 +6,8 @@ class ArticleModificationMixin:
 
     def dispatch(self, request, *args, **kwargs):
         try:
-            AuthorsProfile.objects.get(user=request.user)
+            author = AuthorsProfile.objects.get(user=request.user)
+            article = Article.objects.get(slug=kwargs["slug"], authors=author)
         except:
             raise Http404()
         return super().dispatch(request, *args, **kwargs)

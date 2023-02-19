@@ -1,12 +1,8 @@
-from django.http import FileResponse, HttpResponseRedirect, Http404
-from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import FileResponse, Http404
+from django.views.generic import ListView, DetailView
 
 from main_app.utils import MenuMixin
-from .utils import ArticleModificationMixin
 from blogs.models import *
-from .forms import ArticleCreateForm
 
 
 def get_client_ip(request):
@@ -26,7 +22,7 @@ class ArticleView(MenuMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(ArticleView, self).get_context_data(**kwargs)
         slug = self.kwargs['slug']
-        if not self.model.objects.get(slug=slug).is_active:
+        if self.model.objects.get(slug=slug).is_draft:
             raise Http404()
 
         ip = get_client_ip(self.request)
@@ -49,34 +45,6 @@ class ArticleView(MenuMixin, DetailView):
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
 
-class ArticleCreate(LoginRequiredMixin, ArticleModificationMixin, MenuMixin, CreateView):
-    form_class = ArticleCreateForm
-    template_name = "blogs/article_create.html"
-    login_url = reverse_lazy("login")
-
-    def get_context_data(self, **kwargs):
-        context = super(ArticleCreate, self).get_context_data(**kwargs)
-        return dict(list(context.items()) + list(self.get_user_context().items()))
-
-    def form_valid(self, form, *args, **kwargs):
-        article = form.save()
-        article.authors.add(AuthorsProfile.objects.get(user=self.request.user))
-        article.save()
-        return HttpResponseRedirect(reverse_lazy("article-update", kwargs={"slug": article.slug}))
-
-
-class ArticleUpdate(LoginRequiredMixin, ArticleModificationMixin, MenuMixin, UpdateView):
-    model = Article
-    form_class = ArticleCreateForm
-    template_name = "blogs/article_update.html"
-    success_url = reverse_lazy("home")
-    login_url = reverse_lazy("login")
-
-    def get_context_data(self, **kwargs):
-        context = super(ArticleUpdate, self).get_context_data(**kwargs)
-        return dict(list(context.items()) + list(self.get_user_context().items()))
-
-
 class ArchiveView(MenuMixin, ListView):
     model = Volume
     template_name = "blogs/archives.html"
@@ -86,10 +54,6 @@ class ArchiveView(MenuMixin, ListView):
         context = super(ArchiveView, self).get_context_data(**kwargs)
 
         context["current_volume"] = Volume.objects.filter(status_str="Активный")[0]
-        if "/ru/" in context["current_path"]:
-            context["title"] = "Архивы | UJCR"
-        else:
-            context["title"] = "Archives | UJCR"
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
 
@@ -101,7 +65,7 @@ class IssueDetail(MenuMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(IssueDetail, self).get_context_data(**kwargs)
         slug = self.kwargs['slug']
-        context["articles"] = Article.objects.filter(is_active=True,
+        context["articles"] = Article.objects.filter(is_draft=False,
                                                      linked_volume=self.model.objects.filter(slug=slug)[0].id)
 
         a = set()
@@ -125,7 +89,7 @@ class TagCloudPage(MenuMixin, ListView):
         print(self.request.user.id)
         # сортируем теги по количеству статей
         for tag in Tags.objects.all():
-            related_articles = Article.objects.filter(tags=tag)
+            related_articles = Article.objects.filter(status="опубликован", is_draft=False,tags=tag)
             tag.related_articles_number = related_articles.count()
             tag.save()
 

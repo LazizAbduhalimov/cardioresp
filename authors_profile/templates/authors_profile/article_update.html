@@ -1,10 +1,17 @@
 {% extends "main_app/base.html" %}
 {% load i18n %}
 {% block title %}
-    {% trans "Создание статьи" %}
+    {% trans "Изменение статьи" %}
 {% endblock %}
 {% block content %}
-    <h1> {% trans "Добавить статью" %} </h1>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-primary" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <h1> {% trans "Изменение статьи" %} </h1>
     <div class="form-group">
         <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}

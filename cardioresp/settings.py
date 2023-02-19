@@ -123,6 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGES = [
     ('ru', _('Russian')),
     ('en', _('English')),
+    ('uz', _('Uzbek')),
 ]
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'ru'
 MODELTRANSLATION_PREPOPULATE_LANGUAGE = 'ru'

@@ -1,3 +1,5 @@
+from enum import Enum
+
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
@@ -14,6 +16,23 @@ from io import BytesIO
 from django.core.files import File
 from PIL import Image, ImageDraw
 from ckeditor.fields import RichTextField
+
+
+class ArticleStatusEnum(str, Enum):
+    draft = "черновик"
+    reviewing = "рецензируется"
+    denied = "отклонено"
+    accepted = "принят"
+    published = "опубликован"
+
+
+article_status_choices = [
+    (ArticleStatusEnum.draft.value, 'Черновик'),
+    (ArticleStatusEnum.reviewing.value, 'Рецензируется'),
+    (ArticleStatusEnum.denied.value, 'Отклонено'),
+    (ArticleStatusEnum.accepted.value, 'Принят'),
+    (ArticleStatusEnum.published.value, 'Опубликован'),
+]
 
 
 class State(models.Model):
@@ -159,8 +178,8 @@ class Article(models.Model):
     created_date = models.DateTimeField(_("Дата создания"), auto_now_add=True)
     updated_date = models.DateTimeField(_("Дата последнего изменения"), auto_now=True)
     published_date = models.DateField(_("Дата публикации"), default=now, editable=True)
-
-    is_active = models.BooleanField(_("Показывать на сайте"), default=False)
+    status = models.CharField(_("Статус"), max_length=100, default=ArticleStatusEnum.draft, choices=article_status_choices)
+    is_draft = models.BooleanField(_("Черновик"), default=True)
 
     viewers = models.ManyToManyField(UniqueViewers, verbose_name=_("Просмотры"), related_name="viewers")
 
@@ -168,12 +187,11 @@ class Article(models.Model):
         self.slug = slugify(self.title)
         super(Article, self).save(*args, **kwargs)
 
-    def clean(self):
-        if self.is_active and self.slug == "":
-            raise ValidationError("Поле slug не может быть пустым при публикации")
-
     def get_absolute_url(self):
         return reverse('article', kwargs={'slug': self.slug})
+
+    def get_update_url(self):
+        return reverse('article-update', kwargs={'slug': self.slug})
 
     def cut_title(self):
 

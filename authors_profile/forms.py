@@ -1,5 +1,5 @@
 from django import forms
-from .models import Article
+from blogs.models import Article
 from modeltranslation.forms import TranslationModelForm
 
 
@@ -12,17 +12,21 @@ class ArticleCreateForm(TranslationModelForm):
             "for_quoting",
             "doi",
             "file",
-            "authors_text",
+            # "authors_text",
             "tags",
+            "is_draft",
         ]
         widgets = {
-            'title': forms.TextInput(attrs={"class": "form-control", }),
+            'title': forms.TextInput(attrs={"class": "form-control"}),
             'for_quoting': forms.Textarea(attrs={"class": "form-control", 'rows': 3}),
             'doi': forms.TextInput(attrs={"class": "form-control", }),
             'file': forms.FileInput(attrs={"class": "form-control", }),
             'linked_volume': forms.Select(attrs={"class": "form-control", }),
             'chapter': forms.Select(attrs={"class": "form-control", }),
             'authors': forms.SelectMultiple(attrs={"class": "form-control", }),
-            'authors_text': forms.TextInput(attrs={"class": "form-control", }),
+            # 'authors_text': forms.TextInput(attrs={"class": "form-control", }),
             'tags': forms.SelectMultiple(attrs={"class": "form-control", }),
         }
+
+    def group1(self):
+        return [self[name] for name in filter(lambda x: x.endwith('_ru'), self.fields.values())]

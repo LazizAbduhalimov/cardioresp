@@ -1,11 +1,27 @@
 {% extends "main_app/base.html" %}
 {% load i18n %}
-{% block title %}{{ object.user.first_name }}| {% trans "Профиль" %}{% endblock %}
+{% block title %}{{ object.full_name }}| {% trans "Профиль" %}{% endblock %}
 {% block content %}
-    <h1> {{ object.user.first_name }}</h1>
-
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <h1> {{ object.full_name }}</h1>
+    <h3>{% trans "Ваши статьи:" %}</h3>
     {% for article in articles %}
-        {{ article.title }}
+        <div class="obj_article_summary">
+            <div class="title">
+                <p><a href="{{ article.get_update_url }}">{{ article.title }}</a></p>
+            </div>
+            <hr>
+            <div class="meta">
+                <div class="status">
+                    {% trans "Cтатус:" %} {{ article.status }}
+                </div>
+            </div>
+        </div>
     {% endfor %}
-
 {% endblock %}

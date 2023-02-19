@@ -40,7 +40,11 @@ class SubmissionPage(MenuMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(SubmissionPage, self).get_context_data(**kwargs)
         context["object"] = self.model.objects.get(slug="submission")
-
+        try:
+            is_author = AuthorsProfile.objects.get(user=self.request.user)
+        except:
+            is_author = None
+        context["is_author"] = bool(is_author)
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
 
@@ -54,9 +58,8 @@ class Search(MenuMixin, ListView):
                 title__icontains=self.request.GET.get("q"))
             return queryset.distinct()
 
-        queryset = Article.objects.filter(is_active=True)
+        queryset = Article.objects.filter(status="опубликован", is_draft=False)
         tags = self.request.GET.getlist("tag")
-        print(self.request.GET.getlist("tag"))
         for tag in tags:
             queryset = queryset.filter(tags=tag)
 
@@ -74,7 +77,7 @@ class Search(MenuMixin, ListView):
             context["q"] = ""
 
         for tag in Tags.objects.all():
-            related_articles = Article.objects.filter(tags=tag)
+            related_articles = Article.objects.filter(status="опубликован", is_draft=False, tags=tag)
             tag.related_articles_number = related_articles.count()
             tag.save()
 
@@ -119,6 +122,8 @@ class AuthorsPage(MenuMixin, ListView):
     def get_queryset(self):
         if "/ru/" in self.request.path:
             queryset = self.model.objects.order_by("full_name_ru")
+        elif "/uz/" in self.request.path:
+            queryset = self.model.objects.order_by("full_name_uz")
         else:
             queryset = self.model.objects.order_by("full_name_en")
         print(queryset)

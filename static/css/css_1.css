@@ -3395,7 +3395,7 @@ img {
 }
 
 @media (min-width: 768px) {
-    .obj_article_summary .authors {
+    .obj_article_summary .authors .status{
         padding-right: 5em
     }
 
