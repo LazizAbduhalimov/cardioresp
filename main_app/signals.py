@@ -1,7 +1,6 @@
 from django.db.models.signals import post_delete, post_migrate
 from django.dispatch import receiver
 from .models import LinkLocation
-from blogs.models import State
 
 __default_linklocation_objects = ("Hidden", "About us", "Side bar", "Menu")
 

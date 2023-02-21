@@ -3,11 +3,11 @@ from django.views.generic import ListView, DetailView
 from django.views.decorators.cache import cache_control
 from django.views.decorators.http import require_GET
 
-from blogs.models import Article, Tags, ArticleSection
+from blogs.models import Article, Tags, ArticleSection, ArticleStatusEnum
 from main_app.models import *
 from main_app.utils import MenuMixin
 from django.conf import settings
-from authors_profile.models import AuthorsProfile
+from profiles.models import AuthorsProfile
 
 
 @require_GET
@@ -58,7 +58,7 @@ class Search(MenuMixin, ListView):
                 title__icontains=self.request.GET.get("q"))
             return queryset.distinct()
 
-        queryset = Article.objects.filter(status="опубликован", is_draft=False)
+        queryset = Article.objects.filter(status=ArticleStatusEnum.published.value, is_draft=False)
         tags = self.request.GET.getlist("tag")
         for tag in tags:
             queryset = queryset.filter(tags=tag)
@@ -77,7 +77,7 @@ class Search(MenuMixin, ListView):
             context["q"] = ""
 
         for tag in Tags.objects.all():
-            related_articles = Article.objects.filter(status="опубликован", is_draft=False, tags=tag)
+            related_articles = Article.objects.filter(status=ArticleStatusEnum.published.value, is_draft=False, tags=tag)
             tag.related_articles_number = related_articles.count()
             tag.save()
 

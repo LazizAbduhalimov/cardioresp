@@ -14,7 +14,7 @@ urlpatterns = [
     path("", index, name="home"),
     path("", include("blogs.urls")),
     path("", include("registration.urls")),
-    path("", include("authors_profile.urls")),
+    path("", include("profiles.urls")),
     path("", include("main_app.urls")),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
@@ -23,7 +23,7 @@ urlpatterns += i18n_patterns(
     path("il8n/", include("django.conf.urls.i18n")),
     path('search/', Search.as_view(), name="search"),
     path("", include("blogs.urls")),
-    path("", include("authors_profile.urls")),
+    path("", include("profiles.urls")),
     path("", include("registration.urls")),
     path("", include("main_app.urls")),
 )

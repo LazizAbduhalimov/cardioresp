@@ -4,14 +4,6 @@ from .models import *
 from modeltranslation.admin import TabbedTranslationAdmin
 
 
-@admin.register(State)
-class AdminState(admin.ModelAdmin):
-    list_display = [
-        "title",
-    ]
-    list_per_page = 15
-
-
 @admin.register(Volume)
 class AdminVolume(TabbedTranslationAdmin):
     list_display = [
@@ -21,7 +13,7 @@ class AdminVolume(TabbedTranslationAdmin):
         "slug",
         "get_status_color",
     ]
-    readonly_fields = ["status_str", "slug"]
+    readonly_fields = ["slug"]
     exclude = ["qr"]
 
     def get_doi_color(self, object):

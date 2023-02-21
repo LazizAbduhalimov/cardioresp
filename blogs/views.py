@@ -48,12 +48,12 @@ class ArticleView(MenuMixin, DetailView):
 class ArchiveView(MenuMixin, ListView):
     model = Volume
     template_name = "blogs/archives.html"
-    queryset = model.objects.filter(status_str="Архивный")
+    queryset = model.objects.filter(status=VolumeStatusEnum.archive.value)
 
     def get_context_data(self, **kwargs):
         context = super(ArchiveView, self).get_context_data(**kwargs)
 
-        context["current_volume"] = Volume.objects.filter(status_str="Активный")[0]
+        context["current_volume"] = Volume.objects.filter(status=VolumeStatusEnum.active.value)[0]
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
 
@@ -89,7 +89,7 @@ class TagCloudPage(MenuMixin, ListView):
         print(self.request.user.id)
         # сортируем теги по количеству статей
         for tag in Tags.objects.all():
-            related_articles = Article.objects.filter(status="опубликован", is_draft=False,tags=tag)
+            related_articles = Article.objects.filter(status=ArticleStatusEnum.published.value, is_draft=False,tags=tag)
             tag.related_articles_number = related_articles.count()
             tag.save()
 

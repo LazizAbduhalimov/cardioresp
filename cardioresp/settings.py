@@ -44,13 +44,14 @@ INSTALLED_APPS = [
     # extra apps
     'ckeditor',
     'django_unused_media',
+    'django_countries',
 ]
 
 CUSTOM_APPS = [
     'main_app',
     'blogs',
     'registration',
-    'authors_profile',
+    'profiles',
 ]
 INSTALLED_APPS += CUSTOM_APPS
 

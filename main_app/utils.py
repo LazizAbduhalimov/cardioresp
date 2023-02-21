@@ -1,5 +1,6 @@
 from blogs.models import *
 from main_app.models import *
+from profiles.models import AuthorsProfile
 
 
 class MenuMixin:
@@ -16,7 +17,7 @@ class MenuMixin:
 
         context["side_bar_links"] = Page.objects.filter(linklocation__title="Side bar")
         try:
-            context["next_volume"] = Volume.objects.filter(status_str="Следующий")[0]
+            context["next_volume"] = Volume.objects.filter(status="Следующий")[0]
         except IndexError:
             context["next_volume"] = None
         context["current_path"] = str(self.request.path)[3:]

@@ -1,6 +1,5 @@
 from enum import Enum
 
-from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
 from django.utils.safestring import mark_safe
@@ -10,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 
 import qrcode
 
-from authors_profile.models import AuthorsProfile
+from profiles.models import AuthorsProfile
 from cardioresp.settings import MEDIA_ROOT
 from io import BytesIO
 from django.core.files import File
@@ -18,10 +17,25 @@ from PIL import Image, ImageDraw
 from ckeditor.fields import RichTextField
 
 
+class VolumeStatusEnum(str, Enum):
+    active = "Активный"
+    inactive = "Неактивный"
+    archive = "Архивный"
+    next = "Следующий"
+
+
+volume_status_choices = [
+    (VolumeStatusEnum.active.value, 'Активный'),
+    (VolumeStatusEnum.inactive.value, 'Неактивный'),
+    (VolumeStatusEnum.archive.value, 'Архивный'),
+    (VolumeStatusEnum.next.value, 'Следующий'),
+]
+
+
 class ArticleStatusEnum(str, Enum):
     draft = "черновик"
     reviewing = "рецензируется"
-    denied = "отклонено"
+    rejected = "отклонено"
     accepted = "принят"
     published = "опубликован"
 
@@ -29,21 +43,10 @@ class ArticleStatusEnum(str, Enum):
 article_status_choices = [
     (ArticleStatusEnum.draft.value, 'Черновик'),
     (ArticleStatusEnum.reviewing.value, 'Рецензируется'),
-    (ArticleStatusEnum.denied.value, 'Отклонено'),
+    (ArticleStatusEnum.rejected.value, 'Отклонено'),
     (ArticleStatusEnum.accepted.value, 'Принят'),
     (ArticleStatusEnum.published.value, 'Опубликован'),
 ]
-
-
-class State(models.Model):
-    title = models.CharField("Название статуса", max_length=150)
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = "Статус"
-        verbose_name_plural = "Статусы"
 
 
 class Tags(models.Model):
@@ -68,14 +71,12 @@ class Volume(models.Model):
     qr = models.ImageField("QR-код", upload_to="images/volumes/QR/", blank=True)
 
     slug = models.SlugField("Slug тома", max_length=200, blank=True, null=True)
-    status = models.ForeignKey(State, verbose_name="Статус", on_delete=models.DO_NOTHING)
-    status_str = models.CharField("Строка статуса", blank=True, max_length=100)
+    status = models.CharField("Строка статуса", blank=True, max_length=100, choices=volume_status_choices)
 
     def get_absolute_url(self):
         return reverse('issue-detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
-        self.status_str = str(self.status)
         self.slug = slugify(self.title)
 
         # Создание и сохранение qr-code
@@ -91,10 +92,10 @@ class Volume(models.Model):
         canvas.close()
 
         # При статусе Неактивынй отключаем все связанные Статьи, а иначе включаем их
-        if self.status_str == "Неактивный" or self.status_str == "Следующий":
-            if self.status_str == "Следующий":
-                for i in Volume.objects.exclude(title=self.title).filter(status_str="Следующий"):
-                    i.status = State.objects.get(title="Активный")
+        if self.status == VolumeStatusEnum.inactive.value or self.status == VolumeStatusEnum.next.value:
+            if self.status == VolumeStatusEnum.next.value:
+                for i in Volume.objects.exclude(title=self.title).filter(status=VolumeStatusEnum.next.value):
+                    i.status = VolumeStatusEnum.active.value
                     i.save()
 
             for i in Article.objects.filter(linked_volume=self):
@@ -106,10 +107,10 @@ class Volume(models.Model):
                 i.save()
 
         # Если модель получит статус Активный то другая модель с таким же статусом станет Архивной
-        if self.status_str == "Активный":
+        if self.status == VolumeStatusEnum.archive.value:
 
-            for i in Volume.objects.exclude(title=self.title).filter(status_str="Активный"):
-                i.status = State.objects.get(title="Архивный")
+            for i in Volume.objects.exclude(title=self.title).filter(status=VolumeStatusEnum.archive.value):
+                i.status = VolumeStatusEnum.archive.value
                 i.save()
 
         super(Volume, self).save(*args, **kwargs)
@@ -174,6 +175,7 @@ class Article(models.Model):
     chapter = models.ForeignKey(ArticleSection, verbose_name=_("Раздел"), null=True, on_delete=models.DO_NOTHING)
     authors = models.ManyToManyField(AuthorsProfile, verbose_name=_("Связанные Авторы"), related_name='authors', blank=True)
     authors_text = models.CharField(_("Авторы (Текст)"), max_length=255, default="")
+    tags_text = models.TextField(_("Ключевые слова (от автора)"), default="")
     tags = models.ManyToManyField(Tags, verbose_name=_("Ключевые слова"), related_name='tags', blank=True)
     created_date = models.DateTimeField(_("Дата создания"), auto_now_add=True)
     updated_date = models.DateTimeField(_("Дата последнего изменения"), auto_now=True)
@@ -185,6 +187,10 @@ class Article(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
+        # tags_title = str(self.tags_text).replace(" ", "").replace(";", ",").split(",")
+        # for title in tags_title:
+        #     tag = Tags.objects.get(title=title)
+        #     self.tags.add(tag)
         super(Article, self).save(*args, **kwargs)
 
     def get_absolute_url(self):

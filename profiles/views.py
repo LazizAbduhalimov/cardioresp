@@ -4,7 +4,7 @@ from django.views.generic import UpdateView, DetailView, CreateView
 from django.urls import reverse_lazy
 from django.contrib import messages
 
-from authors_profile.forms import ArticleCreateForm
+from profiles.forms import ArticleCreateForm
 from blogs.utils import ArticleModificationMixin
 from main_app.utils import MenuMixin
 from .models import AuthorsProfile
@@ -76,7 +76,7 @@ class ArticleUpdate(LoginRequiredMixin, ArticleModificationMixin, MenuMixin, Upd
         params = ""
 
         if not article.is_draft and (article.status == ArticleStatusEnum.draft.value or
-                                     article.status == ArticleStatusEnum.denied.value):
+                                     article.status == ArticleStatusEnum.rejected.value):
             article.status = ArticleStatusEnum.reviewing.value
             params = "?isSuccessful=True"
 
