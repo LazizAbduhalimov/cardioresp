@@ -9,3 +9,11 @@ class AdminState(TabbedTranslationAdmin):
         "user",
     ]
     list_per_page = 15
+
+
+@admin.register(ReviewersProfile)
+class AdminState(TabbedTranslationAdmin):
+    list_display = [
+        "user",
+    ]
+    list_per_page = 15

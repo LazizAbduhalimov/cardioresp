@@ -75,3 +75,12 @@ class AdminPartner(admin.ModelAdmin):
         "user_id",
     ]
     list_per_page = 50
+
+
+@admin.register(Comment)
+class AdminPartner(admin.ModelAdmin):
+    list_display = [
+        "reviewer",
+        "article",
+    ]
+    list_per_page = 50

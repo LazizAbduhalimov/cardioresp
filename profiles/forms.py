@@ -1,6 +1,7 @@
 from django import forms
-from blogs.models import Article
+from blogs.models import Article, Comment
 from modeltranslation.forms import TranslationModelForm
+from django.utils.translation import gettext_lazy as _
 
 
 class ArticleCreateForm(TranslationModelForm):
@@ -28,5 +29,18 @@ class ArticleCreateForm(TranslationModelForm):
             'tags': forms.SelectMultiple(attrs={"class": "form-control", }),
         }
 
-    def group1(self):
-        return [self[name] for name in filter(lambda x: x.endwith('_ru'), self.fields.values())]
+
+class CommentCreateForm(TranslationModelForm):
+    class Meta:
+        model = Comment
+        fields = [
+            "text",
+            "is_recommended",
+        ]
+        widgets = {
+            'text': forms.Textarea(attrs={"class": "form-control", 'rows': 3}),
+        }
+        labels = {
+            "text": _("Ваш комментарий"),
+            "is_recommended": _("Рекомендовать статью для публикации?")
+        }

@@ -40,7 +40,6 @@ class ArticleView(MenuMixin, DetailView):
         context["object"] = Article.objects.get(slug=slug)
         context["published_date"] = Article.objects.get(slug=slug).published_date.strftime("%Y/%m/%d")
         context["authors"] = Article.objects.get(slug=slug).authors_text.strip().split(",")
-        context["current_lang"] = str(self.request.path)[:3]
 
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
@@ -65,7 +64,7 @@ class IssueDetail(MenuMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(IssueDetail, self).get_context_data(**kwargs)
         slug = self.kwargs['slug']
-        context["articles"] = Article.objects.filter(is_draft=False,
+        context["articles"] = Article.objects.filter(is_draft=False, status=ArticleStatusEnum.published.value,
                                                      linked_volume=self.model.objects.filter(slug=slug)[0].id)
 
         a = set()

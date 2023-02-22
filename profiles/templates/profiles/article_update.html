@@ -20,4 +20,14 @@
             <button class="btn btn-dark" type="submit">{% trans "Изменить статью" %}</button>
         </form>
     </div>
+    <div>
+        {% if comments %}
+            <h1>{% trans "Отзывы от рецензентов" %}</h1>
+            {% for comment in comments %}
+                <h3>{{ comment.reviewer.full_name }}</h3>
+                <p>{{ comment.text|safe }}</p>
+            {% endfor %}
+
+        {% endif %}
+    </div>
 {% endblock %}

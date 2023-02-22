@@ -1,0 +1,39 @@
+{% extends "main_app/base.html" %}
+{% load i18n %}
+{% block title %}{{ object.full_name }}| {% trans "Профиль" %}{% endblock %}
+{% block content %}
+    <h1>{{ object.full_name }}</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% if articles %}
+        <h3>{% trans "Статьи для рецензирования" %}</h3>
+        {% for article in articles %}
+            <div class="obj_article_summary">
+                <div class="title">
+                    <p><a href="{{ article.get_review_url }}">{{ article.title }}</a></p>
+                </div>
+                <hr>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h3><i>{% trans "На текущий момент не статей для рецензирования" %}</i></h3>
+    {% endif %}
+    {% if comments %}
+        <h3>{% trans "Статьи рецензированные вами" %}</h3>
+        {% for comment in comments %}
+            <div class="obj_article_summary">
+                <div class="title">
+                    <p><a href="{{ comment.get_absolute_url }}">{{ comment.article.title }}</a></p>
+                </div>
+                <hr>
+            </div>
+        {% endfor %}
+
+    {% endif %}
+
+{% endblock %}

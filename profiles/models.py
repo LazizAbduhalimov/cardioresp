@@ -5,7 +5,7 @@ from registration.models import User
 
 
 class AuthorsProfile(models.Model):
-    user = models.OneToOneField(User, verbose_name="Зарегестрированный пользователь", related_name="user", on_delete=models.DO_NOTHING)
+    user = models.OneToOneField(User, verbose_name="Зарегестрированный пользователь", related_name="author_user", on_delete=models.DO_NOTHING)
     full_name = models.CharField("Имя, Фамилия", max_length=255, default="", blank=True)
     slug = models.SlugField("Slug статьи", max_length=200, blank=True)
 
@@ -21,3 +21,19 @@ class AuthorsProfile(models.Model):
     class Meta:
         verbose_name = "Автора"
         verbose_name_plural = "Авторы"
+
+
+class ReviewersProfile(models.Model):
+    user = models.OneToOneField(User, verbose_name="Зарегестрированный пользователь", related_name="reviewer_user", on_delete=models.DO_NOTHING)
+    full_name = models.CharField("Имя, Фамилия", max_length=255, default="", blank=True)
+    slug = models.SlugField("Slug статьи", max_length=200, blank=True)
+
+    def get_absolute_url(self):
+        return reverse('reviewer-profile', kwargs={'slug': self.slug})
+
+    def __str__(self):
+        return self.user.get_full_name()
+
+    class Meta:
+        verbose_name = "Рецензента"
+        verbose_name_plural = "Рецензенты"

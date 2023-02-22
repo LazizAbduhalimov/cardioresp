@@ -1,0 +1,96 @@
+{% extends "main_app/base.html" %}
+{% load i18n %}
+{% block title %}{{ object.title }}|{% trans "Рецензирование" %}{% endblock %}
+{% block content %}
+<div class="page page_article">
+    <article class="obj_article_details">
+        <h1 class="page_title">{{ object.title|safe }}</h1>
+        <div class="row">
+            <div class="main_entry">
+                <img style="width: 200px; float: right" src="{{ object.linked_volume.qr.url }}" alt="qr-код">
+                <ul class="item authors">
+                    <li>
+                        <span class="name">
+
+                            {% for author in authors %}
+                                {{ author }}<br>
+                            {% endfor %}
+
+                         </span>
+                    </li>
+                </ul>
+                <div style="padding-top: 10px" class="item doi">
+                    <span class="label"> DOI: </span>
+                    <span class="value"><a href="{{ object.doi }}"> {{ object.doi }} </a></span>
+                </div>
+
+                <div class="item abstract">
+                    {{ object.annotation|safe }}
+                </div>
+
+            </div>
+            <!-- .main_entry -->
+
+            <div class="entry_details">
+                <div class="item galleys">
+                    <ul class="value galleys_links">
+                        <li>
+                            <a class="obj_galley_link pdf"
+                               href="{% url "pdf-view" object.slug %}"> {% trans "Скачать" %} PDF </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="item issue">
+                    <div class="sub_item">
+                        <div class="label">{% trans "Выпуск" %}</div>
+                        <div class="value">
+                            <a class="title"
+                               href="{{ object.linked_volume.get_absolute_url }}"> {{ object.linked_volume.title }} </a>
+                        </div>
+                    </div>
+
+                </div>
+                {% if object.for_quoting %}
+                    <div class="item copyright">
+                        <div class="sub_item">
+                            <div class="label">{% trans "Для цитирования" %}</div>
+                            <div class="value">
+                                {{ object.for_quoting|safe }}
+                            </div>
+                        </div>
+
+                    </div>
+                {% endif %}
+
+
+                <div class="item keywords">
+                    <div class="label">{% trans "Ключевые слова" %}</div>
+                    <div class="value">
+                        {% for tag in object.tags.all %}
+
+                            {% if tag == object.tags.last %}
+                                <a href="{{ current_lang }}/search/?q=&tag={{ tag.id }}">{{ tag }}</a>
+                            {% else %}
+                                <a href="{{ current_lang }}/search/?q=&tag={{ tag.id }}">{{ tag }};</a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- .entry_details -->
+        </div>
+        <!-- .row -->
+    </article>
+    <div class="form-group">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p }}
+            <button class="btn btn-dark" type="submit">{% trans "Изменить рецензию" %}</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

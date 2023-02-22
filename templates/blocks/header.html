@@ -69,9 +69,15 @@
                 <nav class="pkp_navigation_user_wrapper" id="navigationUserWrapper" aria-label="Навигация пользователя">
                     <ul id="navigationUser" class="pkp_navigation_user pkp_nav_list">
                         <li class="profile">
-                            {% if is_authorized %}
+                            {% if is_author %}
                                 <span style="color: white">Имя:
                                     <a href="{{ author_profile.get_absolute_url }}">
+                                        <strong>{{ request.user.username }}</strong>
+                                    </a>
+                                </span>
+                            {% elif is_reviewer %}
+                                <span style="color: white">Имя:
+                                    <a href="{{ reviewer_profile.get_absolute_url }}">
                                         <strong>{{ request.user.username }}</strong>
                                     </a>
                                 </span>

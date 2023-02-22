@@ -13,7 +13,13 @@ class MenuMixin:
             context["author_profile"] = AuthorsProfile.objects.filter(user=self.request.user).first()
         except TypeError:
             context["author_profile"] = None
-        context["is_authorized"] = bool(context["author_profile"])
+        context["is_author"] = bool(context["author_profile"])
+
+        try:
+            context["reviewer_profile"] = ReviewersProfile.objects.filter(user=self.request.user).first()
+        except TypeError:
+            context["reviewer_profile"] = None
+        context["is_reviewer"] = bool(context["reviewer_profile"])
 
         context["side_bar_links"] = Page.objects.filter(linklocation__title="Side bar")
         try:

@@ -16,6 +16,8 @@ from django.core.files import File
 from PIL import Image, ImageDraw
 from ckeditor.fields import RichTextField
 
+from profiles.models import ReviewersProfile
+
 
 class VolumeStatusEnum(str, Enum):
     active = "Активный"
@@ -173,24 +175,23 @@ class Article(models.Model):
 
     linked_volume = models.ForeignKey(Volume, verbose_name=_("Связанный том"), null=True, on_delete=models.DO_NOTHING)
     chapter = models.ForeignKey(ArticleSection, verbose_name=_("Раздел"), null=True, on_delete=models.DO_NOTHING)
-    authors = models.ManyToManyField(AuthorsProfile, verbose_name=_("Связанные Авторы"), related_name='authors', blank=True)
+    authors = models.ManyToManyField(AuthorsProfile, verbose_name=_("Связанные Авторы"), related_name='authors',
+                                     blank=True)
     authors_text = models.CharField(_("Авторы (Текст)"), max_length=255, default="")
     tags_text = models.TextField(_("Ключевые слова (от автора)"), default="")
     tags = models.ManyToManyField(Tags, verbose_name=_("Ключевые слова"), related_name='tags', blank=True)
     created_date = models.DateTimeField(_("Дата создания"), auto_now_add=True)
     updated_date = models.DateTimeField(_("Дата последнего изменения"), auto_now=True)
     published_date = models.DateField(_("Дата публикации"), default=now, editable=True)
-    status = models.CharField(_("Статус"), max_length=100, default=ArticleStatusEnum.draft, choices=article_status_choices)
+    status = models.CharField(_("Статус"), max_length=100, default=ArticleStatusEnum.draft,
+                              choices=article_status_choices)
     is_draft = models.BooleanField(_("Черновик"), default=True)
 
     viewers = models.ManyToManyField(UniqueViewers, verbose_name=_("Просмотры"), related_name="viewers")
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
-        # tags_title = str(self.tags_text).replace(" ", "").replace(";", ",").split(",")
-        # for title in tags_title:
-        #     tag = Tags.objects.get(title=title)
-        #     self.tags.add(tag)
+
         super(Article, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -198,6 +199,9 @@ class Article(models.Model):
 
     def get_update_url(self):
         return reverse('article-update', kwargs={'slug': self.slug})
+
+    def get_review_url(self):
+        return reverse('article-review', kwargs={'slug': self.slug})
 
     def cut_title(self):
 
@@ -219,3 +223,33 @@ class Article(models.Model):
         verbose_name_plural = "Статьи"
 
         ordering = ["published_date", "title"]
+
+
+class Comment(models.Model):
+    reviewer = models.ForeignKey(
+        ReviewersProfile,
+        verbose_name="Рецензент",
+        on_delete=models.CASCADE,
+        related_name='user_comment',
+        null=True
+    )
+    article = models.ForeignKey(Article, verbose_name="Статья", on_delete=models.CASCADE, related_name="comment_article")
+    text = models.TextField("Комментарий", default="")
+    slug = models.SlugField(_("Slug статьи"), max_length=200, blank=True)
+    published_date = models.DateTimeField("Время комментирования", editable=False, auto_now=True)
+    is_recommended = models.BooleanField("Рекомендация", default=False)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.id)
+        super(Comment, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('article-update-review', kwargs={'slug': self.slug})
+
+    def __str__(self):
+        return f'{self.reviewer}-{self.article_id}'
+
+    class Meta:
+        verbose_name = "Комментарий"
+        verbose_name_plural = "Комментарии"
+        ordering = ['-published_date']
