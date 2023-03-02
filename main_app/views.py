@@ -29,7 +29,6 @@ class SamePages(MenuMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(SamePages, self).get_context_data(**kwargs)
         slug = self.kwargs['slug']
-        context["object"] = Page.objects.get(slug=slug)
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
 
@@ -54,11 +53,12 @@ class Search(MenuMixin, ListView):
 
     def get_queryset(self):
         if self.request.GET.get("q") != "" and 'tag' not in self.request.GET:
-            queryset = Article.objects.filter(is_active=True).filter(
+            queryset = Article.objects.filter(is_draft=False).filter(
                 title__icontains=self.request.GET.get("q"))
             return queryset.distinct()
 
-        queryset = Article.objects.filter(status=ArticleStatusEnum.published.value, is_draft=False)
+        queryset = Article.objects.filter(status=ArticleStatusEnum.published.value, is_draft=False).\
+            select_related("chapter").prefetch_related("authors")
         tags = self.request.GET.getlist("tag")
         for tag in tags:
             queryset = queryset.filter(tags=tag)

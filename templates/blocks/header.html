@@ -1,4 +1,5 @@
-{% load i18n %}
+{% load i18n cache %}
+{% cache 300 menu %}
 {% get_current_language as CURRENT_LANGUAGE %}
 <header class="pkp_structure_head" id="headerNavigationContainer" role="banner">
     <div style="background-image: url('/static/images/header_background.jpg'); background-size: cover">
@@ -110,3 +111,4 @@
     </div>
     <!-- .pkp_head_wrapper -->
 </header>
+{% endcache %}

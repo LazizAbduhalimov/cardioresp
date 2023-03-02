@@ -21,8 +21,7 @@ class ArticleView(MenuMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ArticleView, self).get_context_data(**kwargs)
-        slug = self.kwargs['slug']
-        if self.model.objects.get(slug=slug).is_draft:
+        if self.object.is_draft:
             raise Http404()
 
         ip = get_client_ip(self.request)
@@ -33,13 +32,12 @@ class ArticleView(MenuMixin, DetailView):
             user.save()
 
         viewer = UniqueViewers.objects.get(user_id=user_id)
-        a = Article.objects.get(slug=slug)
-        a.viewers.add(viewer)
-        a.save()
-
-        context["object"] = Article.objects.get(slug=slug)
-        context["published_date"] = Article.objects.get(slug=slug).published_date.strftime("%Y/%m/%d")
-        context["authors"] = Article.objects.get(slug=slug).authors_text.strip().split(",")
+        article = self.object
+        if viewer not in article.viewers.all():
+            article.viewers.add(viewer)
+            article.save()
+        context["authors"] = self.object.authors.all()
+        context["published_date"] = self.object.published_date.strftime("%Y/%m/%d")
 
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
@@ -64,17 +62,13 @@ class IssueDetail(MenuMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(IssueDetail, self).get_context_data(**kwargs)
         slug = self.kwargs['slug']
-        context["articles"] = Article.objects.filter(is_draft=False, status=ArticleStatusEnum.published.value,
-                                                     linked_volume=self.model.objects.filter(slug=slug)[0].id)
-
-        a = set()
-        for i in context["articles"]:
-            if i.chapter is None:
-                continue
-            a.add(i.chapter)
-
+        articles = Article.objects.filter(
+            is_draft=False, status=ArticleStatusEnum.published.value,
+            linked_volume=self.model.objects.filter(slug=slug)[0].id).select_related("chapter", ).\
+            prefetch_related("authors")
+        context["articles"] = articles
+        a = set(map(lambda x: x.chapter, articles))
         context["article_section"] = ArticleSection.objects.filter(title__in=list(a))
-        context["title"] = Volume.objects.get(slug=self.kwargs["slug"])
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
 
@@ -85,13 +79,6 @@ class TagCloudPage(MenuMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(TagCloudPage, self).get_context_data(**kwargs)
-        print(self.request.user.id)
-        # сортируем теги по количеству статей
-        for tag in Tags.objects.all():
-            related_articles = Article.objects.filter(status=ArticleStatusEnum.published.value, is_draft=False,tags=tag)
-            tag.related_articles_number = related_articles.count()
-            tag.save()
-
         context["tags"] = Tags.objects.order_by("-related_articles_number")
 
         return dict(list(context.items()) + list(self.get_user_context().items()))

@@ -1,5 +1,6 @@
 from enum import Enum
 
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
 from django.utils.safestring import mark_safe
@@ -177,7 +178,6 @@ class Article(models.Model):
     chapter = models.ForeignKey(ArticleSection, verbose_name=_("Раздел"), null=True, on_delete=models.DO_NOTHING)
     authors = models.ManyToManyField(AuthorsProfile, verbose_name=_("Связанные Авторы"), related_name='authors',
                                      blank=True)
-    authors_text = models.CharField(_("Авторы (Текст)"), max_length=255, default="")
     tags_text = models.TextField(_("Ключевые слова (от автора)"), default="")
     tags = models.ManyToManyField(Tags, verbose_name=_("Ключевые слова"), related_name='tags', blank=True)
     created_date = models.DateTimeField(_("Дата создания"), auto_now_add=True)
@@ -191,7 +191,6 @@ class Article(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
-
         super(Article, self).save(*args, **kwargs)
 
     def get_absolute_url(self):

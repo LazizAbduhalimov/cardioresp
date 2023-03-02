@@ -16,7 +16,7 @@ class AuthorsProfile(models.Model):
         return reverse("author-detail", kwargs={'slug': self.slug})
 
     def __str__(self):
-        return self.user.get_full_name()
+        return self.full_name
 
     class Meta:
         verbose_name = "Автора"

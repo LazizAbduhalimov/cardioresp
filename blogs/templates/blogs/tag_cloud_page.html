@@ -2,7 +2,10 @@
 
 {% block content %}
     {% include "blocks/poster.html" %}
+    <div class="additional_content">
     {% for tag in tags %}
-        <a href="{% url 'search' %}?q=&tag={{ tag.id }}">{{ tag.title|title }} ({{ tag.related_articles_number }})</a><br>
+        <a class="btn btn-outline-primary" role="button"
+           href="{% url 'search' %}?q=&tag={{ tag.id }}">{{ tag.title|title }}</a>
     {% endfor %}
+    </div>
 {% endblock %}

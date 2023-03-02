@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'django_unused_media',
     'django_countries',
+    'debug_toolbar',
 ]
 
 CUSTOM_APPS = [
@@ -64,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'cardioresp.urls'
@@ -178,3 +180,14 @@ CKEDITOR_CONFIGS = {
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, 'cardioresp_cache'),
+    }
+}

@@ -1,57 +1,60 @@
-{% load i18n %}
-<div class="pkp_structure_sidebar left" role="complementary" aria-label="Боковая панель">
-    <div class="pkp_block block_custom" id="customblock-Send">
-        <div class="content">
-            <p><a href="{% url 'submission' %}"><img src="/static/images/send.png" alt="" height="90"></a></p>
+{% load i18n cache %}
+
+{% cache 300 sidebar %}
+    <div class="pkp_structure_sidebar left" role="complementary" aria-label="Боковая панель">
+        <div class="pkp_block block_custom" id="customblock-Send">
+            <div class="content">
+                <p><a href="{% url 'submission' %}"><img src="/static/images/send.png" alt="" height="90"></a></p>
+            </div>
         </div>
-    </div>
-    <div class="pkp_block block_custom" id="customblock-Flags">
-        <div class="content">
-            {% get_current_language as CURRENT_LANGUAGE %}
-            {% get_available_languages as AVAILABLE_LANGUAGES %}
-            {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
+        <div class="pkp_block block_custom" id="customblock-Flags">
+            <div class="content">
+                {% get_current_language as CURRENT_LANGUAGE %}
+                {% get_available_languages as AVAILABLE_LANGUAGES %}
+                {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
 
-            <div class="languages">
-                <p>{% trans "Язык" %}:</p>
-                <p>
-                    {% for language in languages %}
-                        {% if language.code == "ru" %}
-                            <a href="/{{ language.code }}{{ current_path }}">
-                                <img src="/static/images/flags/flag_ru.png" alt="Русский">
-                            </a>
-                        {% elif language.code == "en" %}
-                            <a href="/{{ language.code }}{{ current_path }}">
-                                <img src="/static/images/flags/flag_en.png" alt="English">
-                            </a>
-                        {% elif language.code == "uz" %}
-                            <a href="/{{ language.code }}{{ current_path }}">
-                                <img src="/static/images/flags/flag_uz.png" alt="Uzbek">
-                            </a>
-                        {% endif %}
+                <div class="languages">
+                    <p>{% trans "Язык" %}:</p>
+                    <p>
+                        {% for language in languages %}
+                            {% if language.code == "ru" %}
+                                <a href="/{{ language.code }}{{ current_path }}">
+                                    <img src="/static/images/flags/flag_ru.png" alt="Русский">
+                                </a>
+                            {% elif language.code == "en" %}
+                                <a href="/{{ language.code }}{{ current_path }}">
+                                    <img src="/static/images/flags/flag_en.png" alt="English">
+                                </a>
+                            {% elif language.code == "uz" %}
+                                <a href="/{{ language.code }}{{ current_path }}">
+                                    <img src="/static/images/flags/flag_uz.png" alt="Uzbek">
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+
+                </div>
+            </div>
+        </div>
+        <div class="pkp_block block_information">
+            <span class="title">{% trans "Информация" %}</span>
+            <div class="content">
+                <ul>
+                    {% for side_bar_link in side_bar_links %}
+                        <li>
+                            <a href="{{ side_bar_link.get_absolute_url }}"> {{ side_bar_link.title }}</a>
+                        </li>
                     {% endfor %}
-                </p>
-
+                    <br>
+                    <li>
+                        <a href="{% url 'authors' %}">{% trans 'Авторы' %}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'tag-cloud' %}">{% trans 'Ключевые слова' %}</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
-    <div class="pkp_block block_information">
-        <span class="title">{% trans "Информация" %}</span>
-        <div class="content">
-            <ul>
-                {% for side_bar_link in side_bar_links %}
-                    <li>
-                        <a href="{{ side_bar_link.get_absolute_url }}"> {{ side_bar_link.title }}</a>
-                    </li>
-                {% endfor %}
-                <br>
-                <li>
-                    <a href="{% url 'authors' %}">{% trans 'Авторы' %}</a>
-                </li>
-                <li>
-                    <a href="{% url 'tag-cloud' %}">{% trans 'Ключевые слова' %}</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
-<!-- pkp_sidebar.left -->
+    <!-- pkp_sidebar.left -->
+{% endcache %}

@@ -20,15 +20,9 @@ class AuthorsProfilePage(LoginRequiredMixin, MenuMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(AuthorsProfilePage, self).get_context_data(**kwargs)
         slug = self.kwargs['slug']
-        author = self.model.objects.get(slug=slug)
+        author = self.object
         if self.request.user != author.user:
             raise Http404()
-        if self.request.GET.get("isSuccessful"):
-            messages.add_message(
-                self.request, messages.INFO,
-                "Статья добавлена в очередь рецензирования. Мы отправим вам уведомление на почту после проверки вашей статьи"
-            )
-        context["object"] = author
         context["articles"] = Article.objects.filter(authors=author)
 
         return dict(list(context.items()) + list(self.get_user_context().items()))
@@ -49,7 +43,11 @@ class ArticleCreate(LoginRequiredMixin, MenuMixin, CreateView):
         #     article.status = "рецензируется"
         article.authors.add(AuthorsProfile.objects.get(user=self.request.user))
         article.save()
-        return HttpResponseRedirect("{}?isSuccessful=True".format(reverse_lazy("article-update", kwargs={"slug": article.slug})))
+        messages.add_message(
+            self.request, messages.INFO,
+            "Для заполнения полей на других языках переключайтесь между языками в правой панеле"
+        )
+        return HttpResponseRedirect(reverse_lazy("article-update", kwargs={"slug": article.slug}))
 
 
 class ArticleUpdate(LoginRequiredMixin, ArticleModificationMixin, MenuMixin, UpdateView):
@@ -61,32 +59,32 @@ class ArticleUpdate(LoginRequiredMixin, ArticleModificationMixin, MenuMixin, Upd
 
     def get_context_data(self, **kwargs):
         context = super(ArticleUpdate, self).get_context_data(**kwargs)
-        slug = self.kwargs["slug"]
-        article = self.model.objects.get(slug=slug)
-        context["comments"] = Comment.objects.filter(article=article)
-
-        if self.request.GET.get("isSuccessful"):
-            messages.add_message(
-                self.request, messages.INFO,
-                "Для заполнения полей на других языках переключайтесь между языками в правой панеле"
-            )
+        article = self.object
+        context["comments"] = Comment.objects.filter(article=article).select_related("reviewer")\
+            .only("text", "reviewer__full_name")
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
     def form_valid(self, form, *args, **kwargs):
         article = form.save()
+        article.authors.add(AuthorsProfile.objects.get(user=self.request.user))
         author = AuthorsProfile.objects.get(user=self.request.user)
         params = ""
 
         if not article.is_draft and (article.status == ArticleStatusEnum.draft.value or
                                      article.status == ArticleStatusEnum.rejected.value):
             article.status = ArticleStatusEnum.reviewing.value
-            params = "?isSuccessful=True"
-
+            messages.add_message(
+                self.request, messages.INFO,
+                "Статья добавлена в очередь рецензирования. Мы отправим вам уведомление на почту после проверки вашей статьи"
+            )
         if article.is_draft:
+            messages.add_message(
+                self.request, messages.INFO,
+                "Статья успешно добавлена в черновики"
+            )
             article.status = ArticleStatusEnum.draft.value
-
         article.save()
-        return HttpResponseRedirect("{}{}".format(author.get_absolute_url(), params))
+        return HttpResponseRedirect(author.get_absolute_url())
 
 
 class ReviewersProfilePage(LoginRequiredMixin, MenuMixin, DetailView):
@@ -101,16 +99,6 @@ class ReviewersProfilePage(LoginRequiredMixin, MenuMixin, DetailView):
         reviewer = self.model.objects.get(slug=slug)
         if self.request.user != reviewer.user:
             raise Http404()
-        if self.request.GET.get("isSuccessful"):
-            messages.add_message(
-                self.request, messages.INFO,
-                "Ваша рецензия была принята!"
-            )
-        if self.request.GET.get("isUpdated"):
-            messages.add_message(
-                self.request, messages.INFO,
-                "Ваша рецензия успешно изменена!"
-            )
         context["object"] = reviewer
         context["articles"] = Article.objects.filter(is_draft=False, status=ArticleStatusEnum.reviewing.value).exclude(
             comment_article__reviewer=reviewer).distinct()
@@ -141,7 +129,11 @@ class ArticleReviewing(MenuMixin, CreateView):
         reviewer = ReviewersProfile.objects.get(user=self.request.user)
         comment.reviewer = reviewer
         comment.save()
-        return HttpResponseRedirect("{}?isSuccessful=True".format(reverse_lazy("reviewer-profile", kwargs={"slug": reviewer.slug})))
+        messages.add_message(
+            self.request, messages.INFO,
+            "Ваша рецензия была принята!"
+        )
+        return HttpResponseRedirect(reverse_lazy("reviewer-profile", kwargs={"slug": reviewer.slug}))
 
 
 class ArticleUpdatingReview(LoginRequiredMixin, MenuMixin, UpdateView):
@@ -167,4 +159,7 @@ class ArticleUpdatingReview(LoginRequiredMixin, MenuMixin, UpdateView):
         comment = form.save()
         reviewer = ReviewersProfile.objects.get(user=self.request.user)
         comment.save()
-        return HttpResponseRedirect("{}?isUpdated=True".format(reviewer.get_absolute_url()))
+        messages.add_message(
+            self.request, messages.INFO,
+            "Ваша рецензия успешно изменена!")
+        return HttpResponseRedirect(reviewer.get_absolute_url())

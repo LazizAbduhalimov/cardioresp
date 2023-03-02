@@ -3,7 +3,7 @@
 {% block title %}{{ object.title }}{% endblock %}
 {% block extra_meta %}
     <meta name="citation_title" content="{{ object.title|safe }}">
-    {% for author in object.authors.all %}
+    {% for author in authors %}
         <meta name="citation_author" content="{{ author }}">
     {% endfor %}
     <meta name="citation_publication_date" content="{{ published_date }}">
@@ -29,12 +29,12 @@
                              </span>
                         </li>
                     </ul>
+
                     <div style="padding-top: 10px" class="item doi">
                         <span class="label"> DOI: </span>
                         <span class="value">
-                                            <a href="{{ object.doi }}"> {{ object.doi }} </a>
-                                        </span>
-
+                            <a href="{{ object.doi }}"> {{ object.doi }} </a>
+                        </span>
                     </div>
 
                     <div class="item abstract">
@@ -90,12 +90,8 @@
                         <div class="label">{% trans "Ключевые слова" %}</div>
                         <div class="value">
                             {% for tag in object.tags.all %}
-
-                                {% if tag == object.tags.last %}
-                                    <a href="{{ current_lang }}/search/?q=&tag={{ tag.id }}">{{ tag }}</a>
-                                {% else %}
-                                    <a href="{{ current_lang }}/search/?q=&tag={{ tag.id }}">{{ tag }};</a>
-                                {% endif %}
+                                <a class="btn btn-outline-primary" role="button"
+                                   href="{{ current_lang }}/search/?q=&tag={{ tag.id }}">{{ tag }}</a>
                             {% endfor %}
                         </div>
 

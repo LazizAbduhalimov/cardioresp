@@ -62,7 +62,7 @@ class AdminArticle(TabbedTranslationAdmin):
     ]
     filter_horizontal = ["authors", ]
     prepopulated_fields = {"slug": ("title",)}
-    exclude = ["viewers"]
+    exclude = ["viewers", "tags"]
     readonly_fields = ["created_date", "updated_date"]
 
     list_filter = ["linked_volume", "chapter"]

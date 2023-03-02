@@ -9,7 +9,7 @@ class VolumeTranslationOptions(TranslationOptions):
 
 @register(Article)
 class ArticleTranslationOptions(TranslationOptions):
-    fields = ("title", "annotation", "file", "for_quoting", "authors_text")
+    fields = ("title", "annotation", "file", "for_quoting",)
 
 
 @register(ArticleSection)

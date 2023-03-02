@@ -1,18 +1,19 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.signals import pre_save, post_save, m2m_changed
 from django.dispatch import receiver
 
-from .models import Article, Tags
+from .models import Article, Tags, ArticleStatusEnum
 
 
 @receiver(pre_save, sender=Article)
 def create_default_objects(sender, instance, **kwargs):
-    # for tag in instance.tags.all():
-    #     instance.tags.remove(tag.id)
+    instance.tags.clear()
+
     tags_title = str(instance.tags_text).replace(" ", "").replace(";", ",").split(",")
     for title in tags_title:
         try:
             tag = Tags.objects.get(title=title)
-        except:
+        except ObjectDoesNotExist:
             tag = Tags(title=title)
             tag.save()
 

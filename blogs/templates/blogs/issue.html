@@ -53,11 +53,9 @@
                                                 <div class="authors">
 
                                                     {% for author in article.authors.all %}
-                                                        {% if author == article.authors.last %}
-                                                            {{ author }}
-                                                        {% else %}
-                                                            {{ author }},
-                                                        {% endif %}
+                                                        <div class="d-inline-flex p-2 border border-primary">
+                                                            {{ author.full_name }}
+                                                        </div>
                                                     {% endfor %}
                                                 </div>
                                             </div>
