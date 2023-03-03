@@ -1,5 +1,4 @@
-{% load i18n cache %}
-{% cache 300 menu %}
+{% load i18n %}
 {% get_current_language as CURRENT_LANGUAGE %}
 <header class="pkp_structure_head" id="headerNavigationContainer" role="banner">
     <div style="background-image: url('/static/images/header_background.jpg'); background-size: cover">
@@ -71,19 +70,19 @@
                     <ul id="navigationUser" class="pkp_navigation_user pkp_nav_list">
                         <li class="profile">
                             {% if is_author %}
-                                <span style="color: white">Имя:
+                                <span style="color: white">login:
                                     <a href="{{ author_profile.get_absolute_url }}">
                                         <strong>{{ request.user.username }}</strong>
                                     </a>
                                 </span>
                             {% elif is_reviewer %}
-                                <span style="color: white">Имя:
+                                <span style="color: white">login:
                                     <a href="{{ reviewer_profile.get_absolute_url }}">
                                         <strong>{{ request.user.username }}</strong>
                                     </a>
                                 </span>
                             {% else %}
-                                <span style="color: white">Имя:
+                                <span style="color: white">login:
                                     <strong>{{ request.user.username }}</strong>
                                 </span>
                             {% endif %}
@@ -111,4 +110,3 @@
     </div>
     <!-- .pkp_head_wrapper -->
 </header>
-{% endcache %}
