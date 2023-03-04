@@ -10,6 +10,7 @@ __pycache__/
 .idea/
 .Python
 media/
+cardioresp_cache/
 build/
 develop-eggs/
 dist/

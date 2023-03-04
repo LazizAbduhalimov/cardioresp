@@ -1,0 +1,383 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-03-03 21:38+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: .\blogs\models.py:169
+msgid "Заголовок статьи"
+msgstr "Заголовок статьи"
+
+#: .\blogs\models.py:170 .\blogs\models.py:237
+msgid "Slug статьи"
+msgstr "Slug статьи"
+
+#: .\blogs\models.py:171
+msgid "Аннотация"
+msgstr "Аннотация"
+
+#: .\blogs\models.py:172 .\blogs\templates\blogs\article.html:79
+#: .\profiles\templates\profiles\article_reviewing.html:57
+#: .\profiles\templates\profiles\article_update_review.html:57
+msgid "Для цитирования"
+msgstr "Для цитирования"
+
+#: .\blogs\models.py:174
+msgid "DOI ссылка"
+msgstr "DOI ссылка"
+
+#: .\blogs\models.py:175
+msgid "Файл (PDF)"
+msgstr "Файл (PDF)"
+
+#: .\blogs\models.py:177
+msgid "Связанный том"
+msgstr "Связанный том"
+
+#: .\blogs\models.py:178
+msgid "Раздел"
+msgstr "Раздел"
+
+#: .\blogs\models.py:179
+msgid "Связанные Авторы"
+msgstr "Связанные Авторы"
+
+#: .\blogs\models.py:181
+msgid "Ключевые слова (от автора)"
+msgstr "Ключевые слова (от автора)"
+
+#: .\blogs\models.py:182 .\blogs\templates\blogs\article.html:90
+#: .\profiles\templates\profiles\article_reviewing.html:68
+#: .\profiles\templates\profiles\article_update_review.html:68
+#: .\templates\blocks\left_sidebar.html:51
+msgid "Ключевые слова"
+msgstr "Ключевые слова"
+
+#: .\blogs\models.py:183
+msgid "Дата создания"
+msgstr "Дата создания"
+
+#: .\blogs\models.py:184
+msgid "Дата последнего изменения"
+msgstr "Дата последнего изменения"
+
+#: .\blogs\models.py:185
+msgid "Дата публикации"
+msgstr "Дата публикации"
+
+#: .\blogs\models.py:186
+msgid "Статус"
+msgstr "Статус"
+
+#: .\blogs\models.py:188
+msgid "Черновик"
+msgstr "Черновик"
+
+#: .\blogs\models.py:190 .\blogs\templates\blogs\article.html:57
+msgid "Просмотры"
+msgstr "Просмотры"
+
+#: .\blogs\templates\blogs\archives.html:4
+msgid "Архивы | Cardioresp"
+msgstr "Архивы | Cardioresp"
+
+#: .\blogs\templates\blogs\archives.html:10 .\templates\blocks\header.html:32
+msgid "Выпуски"
+msgstr "Выпуски"
+
+#: .\blogs\templates\blogs\archives.html:11
+msgid "Текущий выпуск"
+msgstr "Текущий выпуск"
+
+#: .\blogs\templates\blogs\archives.html:25
+msgid "Предыдущие выпуски"
+msgstr "Предыдущие выпуски"
+
+#: .\blogs\templates\blogs\article.html:52
+#: .\blogs\templates\blogs\issue.html:29 .\blogs\templates\blogs\issue.html:66
+#: .\main_app\templates\main_app\author's_articles.html:37
+#: .\profiles\templates\profiles\article_reviewing.html:39
+#: .\profiles\templates\profiles\article_update_review.html:39
+msgid "Скачать"
+msgstr "Скачать"
+
+#: .\blogs\templates\blogs\article.html:62
+#: .\blogs\templates\blogs\issue.html:22
+msgid "Опубликован"
+msgstr "Опубликован"
+
+#: .\blogs\templates\blogs\article.html:68
+#: .\profiles\templates\profiles\article_reviewing.html:46
+#: .\profiles\templates\profiles\article_update_review.html:46
+msgid "Выпуск"
+msgstr "Выпуск"
+
+#: .\cardioresp\settings.py:127
+msgid "Russian"
+msgstr "Russian"
+
+#: .\cardioresp\settings.py:128
+msgid "English"
+msgstr "English"
+
+#: .\cardioresp\settings.py:129
+msgid "Uzbek"
+msgstr "Uzbek"
+
+#: .\main_app\templates\main_app\authors.html:4
+#: .\templates\blocks\left_sidebar.html:48
+msgid "Авторы"
+msgstr "Авторы"
+
+#: .\main_app\templates\main_app\editorial_page.html:4
+#: .\templates\blocks\header.html:27
+msgid "Редакция"
+msgstr "Редакция"
+
+#: .\main_app\templates\main_app\search.html:7
+msgid "Поиск"
+msgstr "Поиск"
+
+#: .\main_app\templates\main_app\search.html:28
+#: .\main_app\templates\main_app\search.html:52
+#: .\templates\blocks\header.html:57 .\templates\blocks\header.html:60
+msgid "Найти"
+msgstr "Найти"
+
+#: .\main_app\templates\main_app\search.html:33
+msgid "Поиск статей"
+msgstr "Поиск статей"
+
+#: .\main_app\templates\main_app\search.html:39
+msgid "Поиск по тегам"
+msgstr "Поиск по тегам"
+
+#: .\main_app\templates\main_app\search.html:85
+msgid "Ничего не найдено"
+msgstr "Ничего не найдено"
+
+#: .\main_app\templates\main_app\search.html:91
+msgid "Задана пустая строка"
+msgstr "Задана пустая строка"
+
+#: .\profiles\forms.py:44
+msgid "В статье должно быть более 5 ключевых слов"
+msgstr "В статье должно быть более 5 ключевых слов"
+
+#: .\profiles\forms.py:50
+msgid "Аннотация статьи должна содержать более 100 слов"
+msgstr "Аннотация статьи должна содержать более 100 слов"
+
+#: .\profiles\forms.py:65
+msgid "Ваш комментарий"
+msgstr "Ваш комментарий"
+
+#: .\profiles\forms.py:66
+msgid "Рекомендовать статью для публикации?"
+msgstr "Рекомендовать статью для публикации?"
+
+#: .\profiles\templates\profiles\article_create.html:4
+msgid "Создание статьи"
+msgstr "Создание статьи"
+
+#: .\profiles\templates\profiles\article_create.html:14
+#: .\profiles\templates\profiles\article_create.html:21
+msgid "Добавить статью"
+msgstr "Добавить статью"
+
+#: .\profiles\templates\profiles\article_reviewing.html:3
+#: .\profiles\templates\profiles\article_update_review.html:3
+msgid "Рецензирование"
+msgstr "Рецензирование"
+
+#: .\profiles\templates\profiles\article_reviewing.html:92
+msgid "Отправить рецензию"
+msgstr "Отправить рецензию"
+
+#: .\profiles\templates\profiles\article_update.html:4
+#: .\profiles\templates\profiles\article_update.html:14
+msgid "Изменение статьи"
+msgstr "Изменение статьи"
+
+#: .\profiles\templates\profiles\article_update.html:20
+msgid "Изменить статью"
+msgstr "Изменить статью"
+
+#: .\profiles\templates\profiles\article_update.html:25
+msgid "Отзывы от рецензентов"
+msgstr "Отзывы от рецензентов"
+
+#: .\profiles\templates\profiles\article_update_review.html:92
+msgid "Изменить рецензию"
+msgstr "Изменить рецензию"
+
+#: .\profiles\templates\profiles\authors_profile.html:3
+#: .\profiles\templates\profiles\reviewer_profile.html:3
+msgid "Профиль"
+msgstr "Профиль"
+
+#: .\profiles\templates\profiles\authors_profile.html:13
+msgid "Ваши статьи:"
+msgstr "Ваши статьи"
+
+#: .\profiles\templates\profiles\authors_profile.html:22
+msgid "Cтатус:"
+msgstr "Cтатус"
+
+#: .\profiles\templates\profiles\reviewer_profile.html:14
+msgid "Статьи для рецензирования"
+msgstr "Статьи для рецензирования"
+
+#: .\profiles\templates\profiles\reviewer_profile.html:24
+msgid "На текущий момент не статей для рецензирования"
+msgstr "На текущий момент не статей для рецензирования"
+
+#: .\profiles\templates\profiles\reviewer_profile.html:27
+msgid "Статьи рецензированные вами"
+msgstr "Статьи рецензированные вами"
+
+#: .\registration\forms.py:9
+msgid "Логин"
+msgstr "Логин"
+
+#: .\registration\forms.py:16
+msgid "Пароль"
+msgstr "Пароль"
+
+#: .\registration\forms.py:24
+msgid "Подтверждение пароля"
+msgstr "Подтверждение пароля"
+
+#: .\registration\models.py:9
+msgid "Отчество"
+msgstr "Отчество"
+
+#: .\registration\models.py:10
+msgid "Должность"
+msgstr "Должность"
+
+#: .\registration\models.py:11
+msgid "Место работы"
+msgstr "Место работы"
+
+#: .\registration\models.py:12
+msgid "ORCHID"
+msgstr "ORCHID"
+
+#: .\registration\models.py:13
+msgid "Страна"
+msgstr "Страна"
+
+#: .\registration\templates\registration\email_activation_page.html:5
+msgid "Аккаунт активирован. Теперь вы можете авторизоваться на сайте!"
+msgstr "Аккаунт активирован. Теперь вы можете авторизоваться на сайте!"
+
+#: .\registration\templates\registration\email_confirm_page.html:5
+msgid "Пожалуйста, подтвердите свою почту, чтобы активировать аккаунт"
+msgstr "Пожалуйста, подтвердите свою почту, чтобы активировать аккаунт"
+
+#: .\registration\templates\registration\invalid_link.html:6
+msgid "&#10060Неккоректная ссылка. Пожалуйста, зарегестрируйтесь заново&#10060"
+msgstr ""
+"&#10060Неккоректная ссылка. Пожалуйста, зарегестрируйтесь заново&#10060"
+
+#: .\registration\templates\registration\login.html:4
+msgid "UJCR|Вход"
+msgstr "UJCR|Вход"
+
+#: .\registration\templates\registration\login.html:23
+msgid "Забыли пароль?"
+msgstr "Забыли пароль?"
+
+#: .\registration\templates\registration\password_reset_email.html:2
+#, python-format
+msgid ""
+"Hey, You're receiving this email because you requested a password reset for "
+"your user account at %(site_name)s."
+msgstr ""
+
+#: .\registration\templates\registration\password_reset_email.html:4
+msgid "Please go to the following page and choose a new password:"
+msgstr ""
+
+#: .\registration\templates\registration\password_reset_email.html:8
+msgid "Your username, in case you've forgotten:"
+msgstr ""
+
+#: .\registration\templates\registration\password_reset_email.html:10
+msgid "Thanks for using our site!"
+msgstr ""
+
+#: .\registration\templates\registration\password_reset_email.html:12
+#, python-format
+msgid "The %(site_name)s team"
+msgstr ""
+
+#: .\registration\templates\registration\password_reset_subject.txt:2
+#, python-format
+msgid "Password reset on %(site_name)s"
+msgstr ""
+
+#: .\registration\templates\registration\registration.html:3
+msgid "Регистрация|UJCR"
+msgstr "Регистрация|UJCR"
+
+#: .\templates\404.html:6
+msgid "Страница не найдена | Ошибка 404"
+msgstr "Страница не найдена | Ошибка 404"
+
+#: .\templates\blocks\footer.html:7
+msgid "Об этой издательской системе"
+msgstr "Об этой издательской системе"
+
+#: .\templates\blocks\header.html:18
+msgid "О нас"
+msgstr "О нас"
+
+#: .\templates\blocks\header.html:36
+msgid "Админ панель"
+msgstr "Админ панель"
+
+#: .\templates\blocks\header.html:47
+msgid "Следующий выпуск"
+msgstr "Следующий выпуск"
+
+#: .\templates\blocks\header.html:92
+msgid "Выйти"
+msgstr "Выйти"
+
+#: .\templates\blocks\header.html:101
+#, fuzzy
+#| msgid "Регистрация|UJCR"
+msgid "Регистрация"
+msgstr "Регистрация|UJCR"
+
+#: .\templates\blocks\header.html:104
+#, fuzzy
+#| msgid "UJCR|Вход"
+msgid "Вход"
+msgstr "UJCR|Вход"
+
+#: .\templates\blocks\left_sidebar.html:15
+msgid "Язык"
+msgstr "Язык"
+
+#: .\templates\blocks\left_sidebar.html:38
+msgid "Информация"
+msgstr "Информация"

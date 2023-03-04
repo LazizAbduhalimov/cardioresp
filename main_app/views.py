@@ -84,7 +84,7 @@ class Search(MenuMixin, ListView):
         context["filter_tags"] = self.request.GET.getlist("tag")
         context["tags"] = Tags.objects.order_by("-related_articles_number")
 
-        context["current_path"] = f"{str(self.request.path)[3:]}?q="
+        context["GET_params"] = "?q="
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
 

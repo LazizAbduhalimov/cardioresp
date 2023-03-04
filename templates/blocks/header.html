@@ -54,10 +54,10 @@
 
                         <input name="q" value type="text" aria-label="Поисковый запрос"/>
 
-                        <button type="submit">Найти</button>
+                        <button type="submit">{% trans "Найти" %}</button>
                         <div class="search_controls" aria-hidden="true">
                             <a href="#"
-                               class="headerSearchPrompt search_prompt" aria-hidden="true"> Найти </a>
+                               class="headerSearchPrompt search_prompt" aria-hidden="true"> {% trans "Найти" %} </a>
                             <a href="#" class="search_cancel headerSearchCancel" aria-hidden="true"></a>
                             <span class="search_loading" aria-hidden="true"></span>
                         </div>
@@ -89,7 +89,7 @@
 
                         </li>
                         <li class="profile">
-                            <a href="{% url 'exit' %}"> Выйти </a>
+                            <a href="{% url 'exit' %}"> {% trans "Выйти" %} </a>
                         </li>
 
                     </ul>
@@ -98,10 +98,10 @@
                 <nav class="pkp_navigation_user_wrapper" id="navigationUserWrapper" aria-label="Навигация пользователя">
                     <ul id="navigationUser" class="pkp_navigation_user pkp_nav_list">
                         <li class="profile">
-                            <a href="{% url 'registration' %}"> Регистрация </a>
+                            <a href="{% url 'registration' %}"> {% trans "Регистрация" %} </a>
                         </li>
                         <li class="profile">
-                            <a href="{% url 'login' %}"> Вход </a>
+                            <a href="{% url 'login' %}"> {% trans "Вход" %} </a>
                         </li>
                     </ul>
                 </nav>
