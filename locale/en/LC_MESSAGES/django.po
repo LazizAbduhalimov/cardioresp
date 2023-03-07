@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-03 21:38+0500\n"
+"POT-Creation-Date: 2023-03-07 19:41+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -95,7 +95,7 @@ msgstr "Views"
 msgid "Архивы | Cardioresp"
 msgstr "Archives | Cardioresp"
 
-#: .\blogs\templates\blogs\archives.html:10 .\templates\blocks\header.html:32
+#: .\blogs\templates\blogs\archives.html:10 .\templates\blocks\header.html:30
 msgid "Выпуски"
 msgstr "Issues"
 
@@ -126,15 +126,15 @@ msgstr "Published"
 msgid "Выпуск"
 msgstr "Issue"
 
-#: .\cardioresp\settings.py:127
+#: .\cardioresp\settings.py:123
 msgid "Russian"
 msgstr "Russian"
 
-#: .\cardioresp\settings.py:128
+#: .\cardioresp\settings.py:124
 msgid "English"
 msgstr "English"
 
-#: .\cardioresp\settings.py:129
+#: .\cardioresp\settings.py:125
 msgid "Uzbek"
 msgstr "Uzbek"
 
@@ -144,7 +144,7 @@ msgid "Авторы"
 msgstr "Authors"
 
 #: .\main_app\templates\main_app\editorial_page.html:4
-#: .\templates\blocks\header.html:27
+#: .\templates\blocks\header.html:25
 msgid "Редакция"
 msgstr "Editorial Office"
 
@@ -154,7 +154,7 @@ msgstr "Search"
 
 #: .\main_app\templates\main_app\search.html:28
 #: .\main_app\templates\main_app\search.html:52
-#: .\templates\blocks\header.html:57 .\templates\blocks\header.html:60
+#: .\templates\blocks\header.html:55 .\templates\blocks\header.html:58
 msgid "Найти"
 msgstr "Search"
 
@@ -173,6 +173,61 @@ msgstr "Not found"
 #: .\main_app\templates\main_app\search.html:91
 msgid "Задана пустая строка"
 msgstr "Search bar is blank"
+
+#: .\main_app\templates\main_app\search.html:124
+msgid "\"Выберите ключевые слова\" "
+msgstr "\"Choose keywords\" "
+
+#: .\main_app\templates\main_app\submission.html:13
+msgid "Отправка материалов"
+msgstr "Submission"
+
+#: .\main_app\templates\main_app\submission.html:16
+#, python-format
+msgid ""
+"\n"
+"            Нажмите <a href=\"%(create_url)s\">сюда</a> для отправки "
+"материала.\n"
+"        "
+msgstr ""
+"\n"
+"            Click <a href=\"%(create_url)s\">here</a> for submission         "
+
+#: .\main_app\templates\main_app\submission.html:22
+#, python-format
+msgid ""
+"\n"
+"            Чтобы отправить материалы вы должны стать нашим автором.\n"
+"            <a class=\"alert-link\" href=\"%(login_url)s\">Войти</a> в "
+"систему или\n"
+"            <a class=\"alert-link\" href=\"%(registration_url)s"
+"\">Зарегистрироваться.</a>\n"
+"        "
+msgstr ""
+"\n"
+"            For submissions, you have to become our author.\n"
+"            <a class=\"alert-link\" href=\"%(login_url)s\">Sign in</a> "
+"or            <a class=\"alert-link\" href=\"%(registration_url)s\">Sign up."
+"</a>\n"
+"        "
+
+#: .\main_app\templates\main_app\submission.html:30
+#, python-format
+msgid ""
+"\n"
+"            Для отправки материала вам нужно\n"
+"            <a class=\"alert-link\" href=\"%(login_url)s\">Войти</a> в "
+"систему или\n"
+"            <a class=\"alert-link\" href=\"%(registration_url)s"
+"\">Зарегистрироваться.</a>\n"
+"        "
+msgstr ""
+"\n"
+"            For submissions you have to \n"
+"            <a class=\"alert-link\" href=\"%(login_url)s\">Sign in </a>or\n"
+"            <a class=\"alert-link\" href=\"%(registration_url)s\">Sign up</"
+"a>\n"
+"        "
 
 #: .\profiles\forms.py:44
 msgid "В статье должно быть более 5 ключевых слов"
@@ -298,6 +353,19 @@ msgstr "&#10060Invalid link. Please register again&#10060"
 msgid "UJCR|Вход"
 msgstr "UJCR|Login"
 
+#: .\registration\templates\registration\login.html:8
+#: .\registration\templates\registration\login.html:15
+#: .\registration\templates\registration\registration.html:25
+msgid "Войти в систему"
+msgstr "Sign in"
+
+#: .\registration\templates\registration\login.html:19
+#: .\registration\templates\registration\registration.html:6
+#: .\registration\templates\registration\registration.html:23
+#: .\templates\blocks\header.html:99
+msgid "Регистрация"
+msgstr "Registration"
+
 #: .\registration\templates\registration\login.html:23
 msgid "Забыли пароль?"
 msgstr "Forgot your password?"
@@ -339,37 +407,25 @@ msgstr "Registration|UJCR"
 msgid "Страница не найдена | Ошибка 404"
 msgstr "Page not found | 404 Error"
 
-#: .\templates\blocks\footer.html:7
-msgid "Об этой издательской системе"
-msgstr "About this publishing system"
-
-#: .\templates\blocks\header.html:18
+#: .\templates\blocks\header.html:16
 msgid "О нас"
 msgstr "About us"
 
-#: .\templates\blocks\header.html:36
+#: .\templates\blocks\header.html:34
 msgid "Админ панель"
 msgstr "Admin panel"
 
-#: .\templates\blocks\header.html:47
+#: .\templates\blocks\header.html:45
 msgid "Следующий выпуск"
 msgstr "Next Issue"
 
-#: .\templates\blocks\header.html:92
+#: .\templates\blocks\header.html:90
 msgid "Выйти"
 msgstr "Exit"
 
-#: .\templates\blocks\header.html:101
-#, fuzzy
-#| msgid "Регистрация|UJCR"
-msgid "Регистрация"
-msgstr "Registration|UJCR"
-
-#: .\templates\blocks\header.html:104
-#, fuzzy
-#| msgid "UJCR|Вход"
+#: .\templates\blocks\header.html:102
 msgid "Вход"
-msgstr "UJCR|Login"
+msgstr "Login"
 
 #: .\templates\blocks\left_sidebar.html:15
 msgid "Язык"
@@ -378,3 +434,6 @@ msgstr "Language"
 #: .\templates\blocks\left_sidebar.html:38
 msgid "Информация"
 msgstr "Information"
+
+#~ msgid "Об этой издательской системе"
+#~ msgstr "About this publishing system"

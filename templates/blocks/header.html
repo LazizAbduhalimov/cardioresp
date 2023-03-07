@@ -1,112 +1,109 @@
 {% load i18n %}
 {% get_current_language as CURRENT_LANGUAGE %}
 <header class="pkp_structure_head" id="headerNavigationContainer" role="banner">
-    <div style="background-image: url('/static/images/header_background.jpg'); background-size: cover">
-        <div class="pkp_head_wrapper">
-            <div class="pkp_site_name_wrapper">
-                <h1 class="pkp_site_name">
-                    <a href="https://www.sammi.uz/ru/journals/9" style="text-decoration: none; color: #ffffff">
-                        <img style="width: 15%; padding-bottom: 2.5%" src="/static/images/sammi_logo.png">
-                    </a>
-                    <img style="width: 20%;" src="/static/images/ujcr_logo.png">
-                </h1>
-            </div>
-            <nav class="pkp_navigation_primary_row" aria-label="Навигация сайта">
-                <div class="pkp_navigation_primary_wrapper">
-                    <ul id="navigationPrimary" class="pkp_navigation_primary pkp_nav_list">
-                        <li class>
-                            <a href=""> {% trans "О нас" %} </a>
+    <div class="pkp_head_wrapper">
+        <div class="pkp_site_name_wrapper">
+            <h1 class="pkp_site_name">
+                <a href="https://www.sammi.uz/ru/journals/9" style="text-decoration: none; color: #ffffff">
+                    <img style="width: 15%; padding-bottom: 2.5%" src="/static/images/sammi_logo.png">
+                </a>
+            </h1>
+        </div>
+        <nav class="pkp_navigation_primary_row" aria-label="Навигация сайта">
+            <div class="pkp_navigation_primary_wrapper">
+                <ul id="navigationPrimary" class="pkp_navigation_primary pkp_nav_list">
+                    <li class>
+                        <a href=""> {% trans "О нас" %} </a>
 
-                            <ul>
-                                {% for link in links %}
-                                    <li class>
-                                        <a href="{{ link.get_absolute_url }}"> {{ link.title }} </a>
-                                    </li>
-                                {% endfor %}
+                        <ul>
+                            {% for link in links %}
                                 <li class>
-                                    <a href="{% url 'editorial-team' %}"> {% trans "Редакция" %} </a>
+                                    <a href="{{ link.get_absolute_url }}"> {{ link.title }} </a>
                                 </li>
-                            </ul>
-                        </li>
-                        <li class>
-                            <a href="{% url 'issue' %}"> {% trans "Выпуски" %} </a>
-                        </li>
-                        {% if user.is_staff %}
+                            {% endfor %}
                             <li class>
-                                <a href="/admin/"> {% trans "Админ панель" %} </a>
+                                <a href="{% url 'editorial-team' %}"> {% trans "Редакция" %} </a>
                             </li>
-                        {% endif %}
-                        {% for link in menu_links %}
-                            <li>
-                                <a href={{ link.get_absolute_url }}>{{ link.title }}</a>
-                            </li>
-                        {% endfor %}
+                        </ul>
+                    </li>
+                    <li class>
+                        <a href="{% url 'issue' %}"> {% trans "Выпуски" %} </a>
+                    </li>
+                    {% if user.is_staff %}
+                        <li class>
+                            <a href="/admin/"> {% trans "Админ панель" %} </a>
+                        </li>
+                    {% endif %}
+                    {% for link in menu_links %}
+                        <li>
+                            <a href={{ link.get_absolute_url }}>{{ link.title }}</a>
+                        </li>
+                    {% endfor %}
 
-                        {% if next_volume %}
-                            <li>
-                                <a href="{% url 'pdf-view-volume' next_volume.slug %}">{% trans "Следующий выпуск" %}</a>
-                            </li>
-                        {% endif %}
-                    </ul>
+                    {% if next_volume %}
+                        <li>
+                            <a href="{% url 'pdf-view-volume' next_volume.slug %}">{% trans "Следующий выпуск" %}</a>
+                        </li>
+                    {% endif %}
+                </ul>
 
-                    <form class="pkp_search" action="{% url 'search' %}"
-                          method="get" role="search">
+                <form class="pkp_search" action="{% url 'search' %}"
+                      method="get" role="search">
 
-                        <input name="q" value type="text" aria-label="Поисковый запрос"/>
+                    <input name="q" value type="text" aria-label="Поисковый запрос"/>
 
-                        <button type="submit">{% trans "Найти" %}</button>
-                        <div class="search_controls" aria-hidden="true">
-                            <a href="#"
-                               class="headerSearchPrompt search_prompt" aria-hidden="true"> {% trans "Найти" %} </a>
-                            <a href="#" class="search_cancel headerSearchCancel" aria-hidden="true"></a>
-                            <span class="search_loading" aria-hidden="true"></span>
-                        </div>
-                    </form>
+                    <button type="submit">{% trans "Найти" %}</button>
+                    <div class="search_controls" aria-hidden="true">
+                        <a href="#"
+                           class="headerSearchPrompt search_prompt" aria-hidden="true"> {% trans "Найти" %} </a>
+                        <a href="#" class="search_cancel headerSearchCancel" aria-hidden="true"></a>
+                        <span class="search_loading" aria-hidden="true"></span>
+                    </div>
+                </form>
 
-                </div>
-            </nav>
-            {% if user.is_authenticated %}
-                <nav class="pkp_navigation_user_wrapper" id="navigationUserWrapper" aria-label="Навигация пользователя">
-                    <ul id="navigationUser" class="pkp_navigation_user pkp_nav_list">
-                        <li class="profile">
-                            {% if is_author %}
-                                <span style="color: white">login:
+            </div>
+        </nav>
+        {% if user.is_authenticated %}
+            <nav class="pkp_navigation_user_wrapper" id="navigationUserWrapper" aria-label="Навигация пользователя">
+                <ul id="navigationUser" class="pkp_navigation_user pkp_nav_list">
+                    <li class="profile">
+                        {% if is_author %}
+                            <span style="color: white">login:
                                     <a href="{{ author_profile.get_absolute_url }}">
                                         <strong>{{ request.user.username }}</strong>
                                     </a>
                                 </span>
-                            {% elif is_reviewer %}
-                                <span style="color: white">login:
+                        {% elif is_reviewer %}
+                            <span style="color: white">login:
                                     <a href="{{ reviewer_profile.get_absolute_url }}">
                                         <strong>{{ request.user.username }}</strong>
                                     </a>
                                 </span>
-                            {% else %}
-                                <span style="color: white">login:
+                        {% else %}
+                            <span style="color: white">login:
                                     <strong>{{ request.user.username }}</strong>
                                 </span>
-                            {% endif %}
+                        {% endif %}
 
-                        </li>
-                        <li class="profile">
-                            <a href="{% url 'exit' %}"> {% trans "Выйти" %} </a>
-                        </li>
+                    </li>
+                    <li class="profile">
+                        <a href="{% url 'exit' %}"> {% trans "Выйти" %} </a>
+                    </li>
 
-                    </ul>
-                </nav>
-            {% else %}
-                <nav class="pkp_navigation_user_wrapper" id="navigationUserWrapper" aria-label="Навигация пользователя">
-                    <ul id="navigationUser" class="pkp_navigation_user pkp_nav_list">
-                        <li class="profile">
-                            <a href="{% url 'registration' %}"> {% trans "Регистрация" %} </a>
-                        </li>
-                        <li class="profile">
-                            <a href="{% url 'login' %}"> {% trans "Вход" %} </a>
-                        </li>
-                    </ul>
-                </nav>
-            {% endif %}
-        </div>
+                </ul>
+            </nav>
+        {% else %}
+            <nav class="pkp_navigation_user_wrapper" id="navigationUserWrapper" aria-label="Навигация пользователя">
+                <ul id="navigationUser" class="pkp_navigation_user pkp_nav_list">
+                    <li class="profile">
+                        <a href="{% url 'registration' %}?next={{ request.path }}"> {% trans "Регистрация" %} </a>
+                    </li>
+                    <li class="profile">
+                        <a href="{% url 'login' %}?next={{ request.path }}"> {% trans "Вход" %} </a>
+                    </li>
+                </ul>
+            </nav>
+        {% endif %}
     </div>
     <!-- .pkp_head_wrapper -->
 </header>

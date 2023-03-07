@@ -1,25 +1,37 @@
 {% extends "main_app/base.html" %}
+{% load i18n %}
 {% block title %}
     Submissions
 {% endblock %}
 
+
+
 {% block content %}
-    <h1> Отправка материалов </h1>
+    {% url "login" as login_url %}
+    {% url "article-create" as create_url %}
+    {% url "registration" as registration_url %}
+    <h1> {% trans "Отправка материалов" %} </h1>
     {% if is_author %}
         <div class="cmp_notification">
-            Нажмите <a class="alert-link"  href="{% url 'article-create' %}">cюда</a> для отправки материала.
+        {% blocktranslate %}
+            Нажмите <a href="{{ create_url }}">сюда</a> для отправки материала.
+        {% endblocktranslate %}
         </div>
     {% elif user.is_authenticated %}
         <div class="cmp_notification">
+        {% blocktranslate %}
             Чтобы отправить материалы вы должны стать нашим автором.
-            <a class="alert-link" href="{% url 'login' %}">Войти</a> в систему или
-            <a class="alert-link" href="{% url 'registration' %}">Зарегистрироваться.</a>
+            <a class="alert-link" href="{{ login_url }}">Войти</a> в систему или
+            <a class="alert-link" href="{{ registration_url }}">Зарегистрироваться.</a>
+        {% endblocktranslate %}
         </div>
     {% else %}
         <div class="cmp_notification">
+        {% blocktranslate %}
             Для отправки материала вам нужно
-            <a class="alert-link" href="{% url 'login' %}">Войти</a> в систему или
-            <a class="alert-link" href="{% url 'registration' %}">Зарегистрироваться.</a>
+            <a class="alert-link" href="{{ login_url }}">Войти</a> в систему или
+            <a class="alert-link" href="{{ registration_url }}">Зарегистрироваться.</a>
+        {% endblocktranslate %}
         </div>
     {% endif %}
     {{ object.content | safe }}

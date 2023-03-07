@@ -11,6 +11,7 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.auth import get_user_model
+from django.utils.translation import get_language
 
 from blogs.models import Volume
 from registration.forms import RegisterUserForm
@@ -120,9 +121,11 @@ class LoginUser(MenuMixin, LoginView):
     template_name = "registration/login.html"
 
     def get_context_data(self, **kwargs):
+        print(self.request.META.get('HTTP_REFERER'))
         context = super(LoginUser, self).get_context_data(**kwargs)
 
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
     def get_success_url(self):
-        return reverse_lazy("home")
+        print(get_language())
+        return f"/{get_language()}/home/"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-03 21:38+0500\n"
+"POT-Creation-Date: 2023-03-07 19:40+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,92 +20,92 @@ msgstr ""
 
 #: .\blogs\models.py:169
 msgid "Заголовок статьи"
-msgstr ""
+msgstr "Maqola sarlavhasi"
 
 #: .\blogs\models.py:170 .\blogs\models.py:237
 msgid "Slug статьи"
-msgstr ""
+msgstr "Maqolani slug'i"
 
 #: .\blogs\models.py:171
 msgid "Аннотация"
-msgstr ""
+msgstr "Xulosa"
 
 #: .\blogs\models.py:172 .\blogs\templates\blogs\article.html:79
 #: .\profiles\templates\profiles\article_reviewing.html:57
 #: .\profiles\templates\profiles\article_update_review.html:57
 msgid "Для цитирования"
-msgstr ""
+msgstr "Iqtibos uchun"
 
 #: .\blogs\models.py:174
 msgid "DOI ссылка"
-msgstr ""
+msgstr "DOI havola"
 
 #: .\blogs\models.py:175
 msgid "Файл (PDF)"
-msgstr ""
+msgstr "Fayl (PDF)"
 
 #: .\blogs\models.py:177
 msgid "Связанный том"
-msgstr ""
+msgstr "Tegishli jild"
 
 #: .\blogs\models.py:178
 msgid "Раздел"
-msgstr ""
+msgstr "Bo'lim"
 
 #: .\blogs\models.py:179
 msgid "Связанные Авторы"
-msgstr ""
+msgstr "Tegishli Mualliflar"
 
 #: .\blogs\models.py:181
 msgid "Ключевые слова (от автора)"
-msgstr ""
+msgstr "Kalit so'zlar"
 
 #: .\blogs\models.py:182 .\blogs\templates\blogs\article.html:90
 #: .\profiles\templates\profiles\article_reviewing.html:68
 #: .\profiles\templates\profiles\article_update_review.html:68
 #: .\templates\blocks\left_sidebar.html:51
 msgid "Ключевые слова"
-msgstr ""
+msgstr "Kalit so'zlar"
 
 #: .\blogs\models.py:183
 msgid "Дата создания"
-msgstr ""
+msgstr "Yaratilgan sana"
 
 #: .\blogs\models.py:184
 msgid "Дата последнего изменения"
-msgstr ""
+msgstr "Oxirgi o'zgartirilgan sana"
 
 #: .\blogs\models.py:185
 msgid "Дата публикации"
-msgstr ""
+msgstr "Nashr qilingan sana"
 
 #: .\blogs\models.py:186
 msgid "Статус"
-msgstr ""
+msgstr "Holati"
 
 #: .\blogs\models.py:188
 msgid "Черновик"
-msgstr ""
+msgstr "Qoralama"
 
 #: .\blogs\models.py:190 .\blogs\templates\blogs\article.html:57
 msgid "Просмотры"
-msgstr ""
+msgstr "Ko'rishlar"
 
 #: .\blogs\templates\blogs\archives.html:4
 msgid "Архивы | Cardioresp"
-msgstr ""
+msgstr "Arxivlar | Cardioresp"
 
-#: .\blogs\templates\blogs\archives.html:10 .\templates\blocks\header.html:32
+#: .\blogs\templates\blogs\archives.html:10 .\templates\blocks\header.html:30
 msgid "Выпуски"
-msgstr ""
+msgstr "Nashrlar"
 
 #: .\blogs\templates\blogs\archives.html:11
 msgid "Текущий выпуск"
-msgstr ""
+msgstr "Joriy nashr"
 
 #: .\blogs\templates\blogs\archives.html:25
 msgid "Предыдущие выпуски"
-msgstr ""
+msgstr "Oldingi nashrlar"
 
 #: .\blogs\templates\blogs\article.html:52
 #: .\blogs\templates\blogs\issue.html:29 .\blogs\templates\blogs\issue.html:66
@@ -113,30 +113,30 @@ msgstr ""
 #: .\profiles\templates\profiles\article_reviewing.html:39
 #: .\profiles\templates\profiles\article_update_review.html:39
 msgid "Скачать"
-msgstr ""
+msgstr "Yuklab olish"
 
 #: .\blogs\templates\blogs\article.html:62
 #: .\blogs\templates\blogs\issue.html:22
 msgid "Опубликован"
-msgstr ""
+msgstr "Nashr qilingan"
 
 #: .\blogs\templates\blogs\article.html:68
 #: .\profiles\templates\profiles\article_reviewing.html:46
 #: .\profiles\templates\profiles\article_update_review.html:46
 msgid "Выпуск"
-msgstr ""
+msgstr "Chiqarish"
 
-#: .\cardioresp\settings.py:127
+#: .\cardioresp\settings.py:123
 msgid "Russian"
-msgstr ""
+msgstr "Russian"
 
-#: .\cardioresp\settings.py:128
+#: .\cardioresp\settings.py:124
 msgid "English"
-msgstr ""
+msgstr "English"
 
-#: .\cardioresp\settings.py:129
+#: .\cardioresp\settings.py:125
 msgid "Uzbek"
-msgstr ""
+msgstr "Uzbek"
 
 #: .\main_app\templates\main_app\authors.html:4
 #: .\templates\blocks\left_sidebar.html:48
@@ -144,163 +144,230 @@ msgid "Авторы"
 msgstr ""
 
 #: .\main_app\templates\main_app\editorial_page.html:4
-#: .\templates\blocks\header.html:27
+#: .\templates\blocks\header.html:25
 msgid "Редакция"
-msgstr ""
+msgstr "Mualliflar"
 
 #: .\main_app\templates\main_app\search.html:7
 msgid "Поиск"
-msgstr ""
+msgstr "Qidiruv"
 
 #: .\main_app\templates\main_app\search.html:28
 #: .\main_app\templates\main_app\search.html:52
-#: .\templates\blocks\header.html:57 .\templates\blocks\header.html:60
+#: .\templates\blocks\header.html:55 .\templates\blocks\header.html:58
 msgid "Найти"
-msgstr ""
+msgstr "Topish"
 
 #: .\main_app\templates\main_app\search.html:33
 msgid "Поиск статей"
-msgstr ""
+msgstr "Maqolalarni qidirish"
 
 #: .\main_app\templates\main_app\search.html:39
 msgid "Поиск по тегам"
-msgstr ""
+msgstr "Kalit so'zlar bo'yicha qidirish"
 
 #: .\main_app\templates\main_app\search.html:85
 msgid "Ничего не найдено"
-msgstr ""
+msgstr "Hech narsa topilmadi"
 
 #: .\main_app\templates\main_app\search.html:91
 msgid "Задана пустая строка"
+msgstr "Bo'sh satr berilgan"
+
+#: .\main_app\templates\main_app\search.html:124
+msgid "\"Выберите ключевые слова\" "
+msgstr "\"Kalit so'zlarni tanlang\" "
+
+#: .\main_app\templates\main_app\submission.html:13
+msgid "Отправка материалов"
+msgstr "Materiallarni yuborish"
+
+#: .\main_app\templates\main_app\submission.html:16
+#, python-format
+msgid ""
+"Нажмите <a href=\"%(create_url)s\">сюда</a> для отправки "
+"материала.\n"
+"        "
 msgstr ""
+"Materiallarni yuborish uchun  <a href=\" %(create_url) s\"> bu yerga</a> boisng "
+" "
+
+#: .\main_app\templates\main_app\submission.html:22
+#, python-format
+msgid ""
+"\n"
+"            Чтобы отправить материалы вы должны стать нашим автором.\n"
+"            <a class=\"alert-link\" href=\"%(login_url)s\">Войти</a> в "
+"систему или\n"
+"            <a class=\"alert-link\" href=\"%(registration_url)s"
+"\">Зарегистрироваться.</a>\n"
+"        "
+msgstr ""
+"\n"
+"Materiallarni yuborish uchun siz bizning muallifimiz bo'lishingiz kerak.\n"
+"<a class=\"alert-link\" href=\"%(login_url) s\"> Tizimga kiring/a>"
+" yoki\n"
+"            <a class=\"alert-link\" href=\"%(registration_url)s"
+"\">Ro'yxatdan o'tish.</a>\n"
+"        "
+#: .\main_app\templates\main_app\submission.html:30
+#, python-format
+msgid ""
+"\n"
+"            Для отправки материала вам нужно\n"
+"            <a class=\"alert-link\" href=\"%(login_url)s\">Войти</a> в "
+"систему или\n"
+"            <a class=\"alert-link\" href=\"%(registration_url)s"
+"\">Зарегистрироваться.</a>\n"
+"        "
+msgstr ""
+"\n"
+"Materialni yuborish uchun sizga \n"
+"<a class=\"alert-link\" href= \"%(login_url) s\"> kirishingiz </a> kerak yoki "
+"            <a class=\"alert-link\" href=\"%(registration_url)s"
+"\">ro'yxatdan o'tishingiz.</a> kerak\n"
+"        "
 
 #: .\profiles\forms.py:44
 msgid "В статье должно быть более 5 ключевых слов"
-msgstr ""
+msgstr "Maqolada 5 dan ortiq kalit so'zlar bo'lishi kerak"
 
 #: .\profiles\forms.py:50
 msgid "Аннотация статьи должна содержать более 100 слов"
-msgstr ""
+msgstr "Maqolaning annotatsiyasi 100 dan ortiq so'zni o'z ichiga olishi kerak"
 
 #: .\profiles\forms.py:65
 msgid "Ваш комментарий"
-msgstr ""
+msgstr "Sizning sharhingiz"
 
 #: .\profiles\forms.py:66
 msgid "Рекомендовать статью для публикации?"
-msgstr ""
+msgstr "Maqolani nashr qilish uchun tavsiya qilasizmi?"
 
 #: .\profiles\templates\profiles\article_create.html:4
 msgid "Создание статьи"
-msgstr ""
+msgstr "Maqolani yaratish"
 
 #: .\profiles\templates\profiles\article_create.html:14
 #: .\profiles\templates\profiles\article_create.html:21
 msgid "Добавить статью"
-msgstr ""
+msgstr "Maqolani qo'shish"
 
 #: .\profiles\templates\profiles\article_reviewing.html:3
 #: .\profiles\templates\profiles\article_update_review.html:3
 msgid "Рецензирование"
-msgstr ""
+msgstr "Ko'rib chiqish"
 
 #: .\profiles\templates\profiles\article_reviewing.html:92
 msgid "Отправить рецензию"
-msgstr ""
+msgstr "Sharh yuboring"
 
 #: .\profiles\templates\profiles\article_update.html:4
 #: .\profiles\templates\profiles\article_update.html:14
 msgid "Изменение статьи"
-msgstr ""
+msgstr "Maqolani o'zgartirish"
 
 #: .\profiles\templates\profiles\article_update.html:20
 msgid "Изменить статью"
-msgstr ""
+msgstr "Maqolani tahrirlash"
 
 #: .\profiles\templates\profiles\article_update.html:25
 msgid "Отзывы от рецензентов"
-msgstr ""
+msgstr "Sharhlovchilarning sharhlari"
 
 #: .\profiles\templates\profiles\article_update_review.html:92
 msgid "Изменить рецензию"
-msgstr ""
+msgstr "Sharhni o'zgartirish"
 
 #: .\profiles\templates\profiles\authors_profile.html:3
 #: .\profiles\templates\profiles\reviewer_profile.html:3
 msgid "Профиль"
-msgstr ""
+msgstr "Profil"
 
 #: .\profiles\templates\profiles\authors_profile.html:13
 msgid "Ваши статьи:"
-msgstr ""
+msgstr "Sizning maqolalaringiz:"
 
 #: .\profiles\templates\profiles\authors_profile.html:22
 msgid "Cтатус:"
-msgstr ""
+msgstr "Holati:"
 
 #: .\profiles\templates\profiles\reviewer_profile.html:14
 msgid "Статьи для рецензирования"
-msgstr ""
+msgstr "Ko'rib chiqish uchun maqolalar"
 
 #: .\profiles\templates\profiles\reviewer_profile.html:24
 msgid "На текущий момент не статей для рецензирования"
-msgstr ""
+msgstr "Hozirgi vaqtda ko'rib chiqish uchun maqolalar yo'q"
 
 #: .\profiles\templates\profiles\reviewer_profile.html:27
 msgid "Статьи рецензированные вами"
-msgstr ""
+msgstr "Siz ko'rib chiqqan maqolalar"
 
 #: .\registration\forms.py:9
 msgid "Логин"
-msgstr ""
+msgstr "Kirish"
 
 #: .\registration\forms.py:16
 msgid "Пароль"
-msgstr ""
+msgstr "Parol"
 
 #: .\registration\forms.py:24
 msgid "Подтверждение пароля"
-msgstr ""
+msgstr "Parolni tasdiqlash"
 
 #: .\registration\models.py:9
 msgid "Отчество"
-msgstr ""
+msgstr "Otasining ismi"
 
 #: .\registration\models.py:10
 msgid "Должность"
-msgstr ""
+msgstr "Lavozim"
 
 #: .\registration\models.py:11
 msgid "Место работы"
-msgstr ""
+msgstr "Ish joyi"
 
 #: .\registration\models.py:12
 msgid "ORCHID"
-msgstr ""
+msgstr "ORCHID"
 
 #: .\registration\models.py:13
 msgid "Страна"
-msgstr ""
+msgstr "Mamlakat"
 
 #: .\registration\templates\registration\email_activation_page.html:5
 msgid "Аккаунт активирован. Теперь вы можете авторизоваться на сайте!"
-msgstr ""
+msgstr "Hisob faollashtirildi. Endi siz saytga kirishingiz mumkin!"
 
 #: .\registration\templates\registration\email_confirm_page.html:5
 msgid "Пожалуйста, подтвердите свою почту, чтобы активировать аккаунт"
-msgstr ""
+msgstr "Iltimos, hisobingizni faollashtirish uchun pochtangizni tasdiqlang"
 
 #: .\registration\templates\registration\invalid_link.html:6
 msgid "&#10060Неккоректная ссылка. Пожалуйста, зарегестрируйтесь заново&#10060"
-msgstr ""
+msgstr "&#10060Noto'g'ri havola. Iltimos, qayta ro'yxatdan o'ting&#10060"
 
 #: .\registration\templates\registration\login.html:4
 msgid "UJCR|Вход"
-msgstr ""
+msgstr "UJCR|Kirish"
+
+#: .\registration\templates\registration\login.html:8
+#: .\registration\templates\registration\login.html:15
+#: .\registration\templates\registration\registration.html:25
+msgid "Войти в систему"
+msgstr "Tizimga kirish"
+
+#: .\registration\templates\registration\login.html:19
+#: .\registration\templates\registration\registration.html:6
+#: .\registration\templates\registration\registration.html:23
+#: .\templates\blocks\header.html:99
+msgid "Регистрация"
+msgstr "Ro'yxatdan o'tish"
 
 #: .\registration\templates\registration\login.html:23
 msgid "Забыли пароль?"
-msgstr ""
+msgstr "Parolni unutdingizmi?"
 
 #: .\registration\templates\registration\password_reset_email.html:2
 #, python-format
@@ -333,44 +400,36 @@ msgstr ""
 
 #: .\registration\templates\registration\registration.html:3
 msgid "Регистрация|UJCR"
-msgstr ""
+msgstr "Ro'yxatdan o'tish|UJCR"
 
 #: .\templates\404.html:6
 msgid "Страница не найдена | Ошибка 404"
-msgstr ""
+msgstr "Sahifa topilmadi | 404 xato"
 
-#: .\templates\blocks\footer.html:7
-msgid "Об этой издательской системе"
-msgstr ""
-
-#: .\templates\blocks\header.html:18
+#: .\templates\blocks\header.html:16
 msgid "О нас"
-msgstr ""
+msgstr "Biz haqimizda"
 
-#: .\templates\blocks\header.html:36
+#: .\templates\blocks\header.html:34
 msgid "Админ панель"
-msgstr ""
+msgstr "Administrator paneli"
 
-#: .\templates\blocks\header.html:47
+#: .\templates\blocks\header.html:45
 msgid "Следующий выпуск"
-msgstr ""
+msgstr "Keyingi nashr"
 
-#: .\templates\blocks\header.html:92
+#: .\templates\blocks\header.html:90
 msgid "Выйти"
-msgstr ""
+msgstr "Chiqish"
 
-#: .\templates\blocks\header.html:101
-msgid "Регистрация"
-msgstr ""
-
-#: .\templates\blocks\header.html:104
+#: .\templates\blocks\header.html:102
 msgid "Вход"
-msgstr ""
+msgstr "Kirish"
 
 #: .\templates\blocks\left_sidebar.html:15
 msgid "Язык"
-msgstr ""
+msgstr "Til"
 
 #: .\templates\blocks\left_sidebar.html:38
 msgid "Информация"
-msgstr ""
+msgstr "Ma'lumot"

@@ -5,18 +5,18 @@
 {% endblock %}
 {% block content %}
     <div class="page page_login">
-        <h1>Войти в систему</h1>
+        <h1>{% trans "Войти в систему" %}</h1>
 
         <form class="cmp_form cmp_form login" id="login" method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <div class="buttons">
                 <button class="submit" type="submit">
-                    Войти в систему
+                    {% trans "Войти в систему" %}
                 </button>
 
                 <a href="{% url 'registration' %}" class="register">
-                    Регистрация
+                    {% trans "Регистрация" %}
                 </a>
             </div>
         </form>

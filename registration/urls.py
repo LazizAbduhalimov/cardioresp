@@ -1,7 +1,8 @@
 from django.urls import path
 from django.contrib.auth.views import LogoutView
-from .views import *
 from django.contrib.auth.views import PasswordResetView, PasswordResetCompleteView, PasswordResetDoneView, PasswordResetConfirmView
+
+from .views import *
 
 urlpatterns = [
     path('activate/<uidb64>/<token>/', activate, name='activate'),

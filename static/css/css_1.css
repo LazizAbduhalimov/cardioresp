@@ -888,7 +888,7 @@ template {
     font-size: 13px;
     line-height: 28px;
     font-weight: 700;
-    color: #e86a1e;
+    color: #291471;
     text-decoration: none
 }
 
@@ -1199,7 +1199,7 @@ template {
     padding: 20px;
     margin-bottom: 40px;
     background: #ddd;
-    border-left: 5px solid #e86a1e;
+    border-left: 5px solid #291471;
     font-size: 14px;
     line-height: 20px
 }
@@ -1496,7 +1496,7 @@ img {
 }
 
 .pkp_structure_head {
-    background-color: #e86a1e;
+    background-color: #291471;
     border-bottom: 1px solid #ddd
 }
 
@@ -1800,7 +1800,7 @@ img {
         background: #fff;
         border-left: 1px solid #ddd;
         border-bottom: 1px solid #ddd;
-        color: #e86a1e
+        color: #291471
     }
 
     .pkp_head_wrapper .pkp_search.is_open .search_prompt:hover, .pkp_head_wrapper .pkp_search.is_open .search_prompt:focus {
@@ -2703,14 +2703,14 @@ img {
     border-bottom-right-radius: 3px;
     line-height: 30px;
     text-align: center;
-    background: #e86a1e;
+    background: #291471;
     box-shadow: inset 0 -1em 1em rgba(0, 0, 0, 0.2);
     color: #fff
 }
 
 .page_search .submit button:hover:after, .page_search .submit button:focus:after {
     box-shadow: inset 0 1em 1em rgba(0, 0, 0, 0.2);
-    background: #e86a1e
+    background: #291471
 }
 
 .page_search .submit button:after {
