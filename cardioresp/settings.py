@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-@xlh(p@7u@!ckb=mgv#_kf@a1*o%@+m7!$$bb)nkja^e0n-99g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['cardioresp.uz', 'www.cardioresp.uz']
 
 
 # Application definition
@@ -95,8 +95,15 @@ WSGI_APPLICATION = 'cardioresp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        #'ENGINE': 'django.db.backends.sqlite3',
+        #'NAME': BASE_DIR / 'db.sqlite3',
+        
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'z91526kz_cardio',
+        'USER': 'z91526kz_cardio',
+        'PASSWORD': 'j7kOj*W5',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
@@ -154,7 +161,8 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [(BASE_DIR / 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR / 'static')
+STATICFILES_DIRS = []
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = str(BASE_DIR / 'media')
