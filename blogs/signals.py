@@ -1,14 +1,12 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models.signals import pre_save, post_save, m2m_changed
+from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 
-from .models import Article, Tags, ArticleStatusEnum
+from .models import Article, Tags
 
 
 @receiver(pre_save, sender=Article)
 def create_default_objects(sender, instance, **kwargs):
-    instance.tags.clear()
-
     tags_title = str(instance.tags_text).replace(" ", "").replace(";", ",").split(",")
     for title in tags_title:
         try:
@@ -20,6 +18,7 @@ def create_default_objects(sender, instance, **kwargs):
 
 @receiver(post_save, sender=Article)
 def update_tags_number(sender, instance, *args, **kwargs):
+    instance.tags.clear()
     tags_title = str(instance.tags_text).replace(" ", "").replace(";", ",").split(",")
     for title in tags_title:
         tag = Tags.objects.get(title=title)

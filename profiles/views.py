@@ -1,30 +1,36 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect, Http404
-from django.views.generic import UpdateView, DetailView, CreateView
+from django.views.generic import UpdateView, CreateView, ListView
 from django.urls import reverse_lazy
 from django.contrib import messages
 
-from profiles.forms import ArticleCreateForm, CommentCreateForm
-from blogs.utils import ArticleModificationMixin
-from main_app.utils import MenuMixin
 from .models import AuthorsProfile, ReviewersProfile
+from .forms import ArticleCreateForm, CommentCreateForm
+
+from main_app.utils import MenuMixin, get_or_none
+from blogs.utils import ArticleModificationMixin
 from blogs.models import Article, ArticleStatusEnum, Comment
 
 
-class AuthorsProfilePage(LoginRequiredMixin, MenuMixin, DetailView):
+class ProfilePage(LoginRequiredMixin, MenuMixin, ListView):
     login_url = reverse_lazy("login")
     model = AuthorsProfile
     template_name = "profiles/authors_profile.html"
-    slug_field = "slug"
 
     def get_context_data(self, **kwargs):
-        context = super(AuthorsProfilePage, self).get_context_data(**kwargs)
-        slug = self.kwargs['slug']
-        author = self.object
-        if self.request.user != author.user:
+        context = super(ProfilePage, self).get_context_data(**kwargs)
+        user = self.request.user
+        reviewer = get_or_none(ReviewersProfile, user=user)
+        author = get_or_none(AuthorsProfile, user=user)
+        context["is_author"] = bool(author)
+        context["is_reviewer"] = bool(reviewer)
+        if not (author or reviewer):
             raise Http404()
         context["articles"] = Article.objects.filter(authors=author)
-
+        context["reviews"] = Article.objects.filter(is_draft=False, status=ArticleStatusEnum.reviewing.value).exclude(
+            comment_article__reviewer=reviewer).distinct()
+        context["comments"] = Comment.objects.filter(reviewer=reviewer).exclude(
+            article__is_draft=True, article__status=ArticleStatusEnum.draft.value).distinct()
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
 
@@ -85,27 +91,6 @@ class ArticleUpdate(LoginRequiredMixin, ArticleModificationMixin, MenuMixin, Upd
             article.status = ArticleStatusEnum.draft.value
         article.save()
         return HttpResponseRedirect(author.get_absolute_url())
-
-
-class ReviewersProfilePage(LoginRequiredMixin, MenuMixin, DetailView):
-    login_url = reverse_lazy("login")
-    model = ReviewersProfile
-    template_name = "profiles/reviewer_profile.html"
-    slug_field = "slug"
-
-    def get_context_data(self, **kwargs):
-        context = super(ReviewersProfilePage, self).get_context_data(**kwargs)
-        slug = self.kwargs['slug']
-        reviewer = self.model.objects.get(slug=slug)
-        if self.request.user != reviewer.user:
-            raise Http404()
-        context["object"] = reviewer
-        context["articles"] = Article.objects.filter(is_draft=False, status=ArticleStatusEnum.reviewing.value).exclude(
-            comment_article__reviewer=reviewer).distinct()
-        context["comments"] = Comment.objects.filter(reviewer=reviewer).exclude(
-            article__is_draft=True, article__status=ArticleStatusEnum.draft.value).distinct()
-
-        return dict(list(context.items()) + list(self.get_user_context().items()))
 
 
 class ArticleReviewing(MenuMixin, CreateView):

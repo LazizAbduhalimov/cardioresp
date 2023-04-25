@@ -4,8 +4,11 @@
     <div class="pkp_head_wrapper">
         <div class="pkp_site_name_wrapper">
             <h1 class="pkp_site_name">
-                <a href="https://www.sammi.uz/ru/journals/9" style="text-decoration: none; color: #ffffff">
+                <a href="#" style="text-decoration: none; color: #ffffff">
                     <img style="width: 15%; padding-bottom: 2.5%" src="/static/images/sammi_logo.png">
+                </a>
+                <a href="#" style="text-decoration: none; color: #ffffff">
+                    <img style="width: 15%; padding-bottom: 2.5%" src="/static/images/Logo.png">
                 </a>
             </h1>
         </div>
@@ -67,15 +70,9 @@
             <nav class="pkp_navigation_user_wrapper" id="navigationUserWrapper" aria-label="Навигация пользователя">
                 <ul id="navigationUser" class="pkp_navigation_user pkp_nav_list">
                     <li class="profile">
-                        {% if is_author %}
+                        {% if is_author or is_reviewer %}
                             <span style="color: white">login:
-                                    <a href="{{ author_profile.get_absolute_url }}">
-                                        <strong>{{ request.user.username }}</strong>
-                                    </a>
-                                </span>
-                        {% elif is_reviewer %}
-                            <span style="color: white">login:
-                                    <a href="{{ reviewer_profile.get_absolute_url }}">
+                                    <a href="{% url "author-profile" %}">
                                         <strong>{{ request.user.username }}</strong>
                                     </a>
                                 </span>

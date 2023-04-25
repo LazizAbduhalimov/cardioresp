@@ -35,7 +35,7 @@ class ArticleView(MenuMixin, DetailView):
         article = self.object
         if viewer not in article.viewers.all():
             article.viewers.add(viewer)
-            article.save()
+
         context["authors"] = self.object.authors.all()
         context["published_date"] = self.object.published_date.strftime("%Y/%m/%d")
 

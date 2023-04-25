@@ -88,7 +88,7 @@ class Volume(models.Model):
         canvas = Image.new("RGB", (qrcode_image.pixel_size, qrcode_image.pixel_size), "white")
         draw = ImageDraw.Draw(canvas)
         canvas.paste(qrcode_image)
-        file_name = f"qrcode-{self.title}.png"
+        file_name = f"qrcode-{self.slug}.png"
         buffer = BytesIO()
         canvas.save(buffer, "PNG")
         self.qr.save(file_name, File(buffer), save=False)

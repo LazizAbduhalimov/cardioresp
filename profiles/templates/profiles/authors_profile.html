@@ -1,6 +1,8 @@
 {% extends "main_app/base.html" %}
 {% load i18n %}
 {% block title %}{{ object.full_name }}| {% trans "Профиль" %}{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="/static/css/my_style.css" type="text/css"/> {% endblock %}
 {% block content %}
     {% if messages %}
         {% for message in messages %}
@@ -9,19 +11,186 @@
             </div>
         {% endfor %}
     {% endif %}
-    <h1> {{ object.full_name }}</h1>
-    <h3>{% trans "Ваши статьи:" %}</h3>
-    {% for article in articles %}
-        <div class="obj_article_summary">
-            <div class="title">
-                <p><a href="{{ article.get_update_url }}">{{ article.title }}</a></p>
-            </div>
-            <hr>
-            <div class="meta">
-                <div class="status">
-                    {% trans "Cтатус:" %} {{ article.status }}
+    <div class="container clearfix">
+        <div class="row clearfix">
+            <div class="col-md-12">
+                <div class="heading-block border-0">
+                    <h3>{{ user.get_full_name }}</h3>
                 </div>
+
+                <div class="clear"></div>
+
+                <div class="row clearfix">
+
+                    <div class="col-lg-12">
+
+                        <div class="tabs tabs-alt clearfix" id="tabs-profile">
+
+                            <ul class="tab-nav clearfix">
+                                {% if is_reviewer %}
+                                    <li><a href="#tab-feeds"><i class="icon-rss2"></i> Рецензии</a></li>
+                                    <li><a href="#review-history"><i class="icon-rss2"></i> История рецензий</a></li>
+                                {% endif %}
+                            {% if is_author %}
+                                <li><a href="#tab-posts"><i class="icon-pencil2"></i> Статьи </a></li>
+                            {% endif %}
+
+                                <!--<li><a href="#tab-connections"><i class="icon-users"></i> Авторы </a></li>-->
+                            </ul>
+                            <div class="tab-container">
+                            {% if is_reviewer %}
+                                <div class="tab-content clearfix" id="tab-feeds">
+                                    <div class="row gutter-40 posts-md mt-4 bottommargin-sm">
+                                        {% if reviews %}
+                                            {% for review in reviews %}
+                                                <div class="entry col-12">
+                                                    <div class="grid-inner row align-items-center no-gutters">
+                                                        <div class="col-md-12 pl-md-4">
+                                                            <div class="entry-title title-sm">
+                                                                <h3>
+                                                                    <a href="{{ review.get_review_url }}">{{ review.title }}</a>
+                                                                </h3>
+                                                            </div>
+                                                            <div class="entry-meta">
+                                                                <ul>
+                                                                    <li>{{ review.status }}</li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="entry-content">
+                                                                <a href="#" class="more-link">Read More</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        {% else %}
+                                            <div class="entry col-md-12">
+                                                <h3><i>{% trans "На текущий момент не статей для рецензирования" %}</i>
+                                                </h3>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="tab-content clearfix" id="review-history">
+                                    <div class="row gutter-40 posts-md mt-4 bottommargin-sm">
+                                        {% if comments %}
+                                            {% for comment in comments %}
+                                                <div class="entry col-12">
+                                                    <div class="grid-inner row align-items-center no-gutters">
+                                                        <div class="col-md-12 pl-md-4">
+                                                            <div class="entry-title title-sm">
+                                                                <h3>
+                                                                    <a href="{{ comment.get_absolute_url }}">{{ comment.article.title }}</a>
+                                                                </h3>
+                                                            </div>
+                                                            <div class="entry-meta">
+                                                                <ul>
+                                                                    <li>[Тип статьи]</li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="entry-content">
+                                                                <a href="#" class="more-link">Read More</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        {% else %}
+                                            <div class="entry col-md-12">
+                                                <h3><i>{% trans "Вы ещё не оставляли рецензии на статьи" %}</i></h3>
+                                            </div>
+                                        {% endif %}
+
+                                    </div>
+
+                                </div>
+                            {% endif %}
+                            {% if is_author %}
+                                <div class="tab-content clearfix" id="tab-posts">
+                                    <div class="row gutter-40 posts-md mt-4 bottommargin-sm">
+                                        {% if articles %}
+                                            {% for article in articles %}
+                                                <div class="entry col-12">
+                                                    <div class="grid-inner row align-items-center no-gutters">
+                                                        <div class="col-md-12 pl-md-4">
+                                                            <div class="entry-title title-sm">
+                                                                <h3>
+                                                                    <a href="{{ article.get_update_url }}">{{ article.title }}</a>
+                                                                </h3>
+                                                            </div>
+                                                            <div class="entry-meta">
+                                                                <ul>
+                                                                    <li>{{ article.status }}</li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="entry-content">
+                                                                <a href="#" class="more-link">Read More</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        {% else %}
+                                            <div class="entry col-md-12">
+                                                <h3><i>{% trans "У вас нет опубликованных статей" %}</i></h3>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <a class="btn btn-primary" href="{% url 'article-create' %}"
+                                       role="button">{% trans "Добавить статью" %}</a>
+                                </div>
+                            {% endif %}
+
+                                <div class="tab-content clearfix" id="tab-connections">
+                                    <div class="container text-center bottommargin">
+                                        <div class="row row-cols-2">
+                                            <div class="col">
+                                                <div class="team-desc">
+                                                    <div class="team-title"><h4>John Doe</h4><span>CEO</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="team-desc">
+                                                    <div class="team-title"><h4>John Doe</h4><span>CEO</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="team-desc">
+                                                    <div class="team-title"><h4>John Doe</h4><span>CEO</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a class="btn btn-primary" href="#"
+                                       role="button">{% trans "Зарегестрировать нового автора" %}</a>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
         </div>
-    {% endfor %}
+    </div>
+{% endblock %}
+{% block extra_js %}
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/plugins.min.js"></script>
+
+    <!-- Footer Scripts
+    ============================================= -->
+    <script src="/static/js/functions.js"></script>
+
+    <script>
+        jQuery("#tabs-profile").on("tabsactivate", function (event, ui) {
+            jQuery('.flexslider .slide').resize();
+        });
+    </script>
 {% endblock %}

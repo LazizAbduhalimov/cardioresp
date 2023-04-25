@@ -9,5 +9,5 @@ class User(AbstractUser):
     middle_name = models.CharField(_("Отчество"), max_length=255, default="")
     post = models.CharField(_("Должность"), max_length=255, default="")
     workplace = models.CharField(_("Место работы"), max_length=255, default="")
-    orcid = models.CharField(_("ORCHID"), max_length=255, default="")
+    orcid = models.CharField(_("ORCID"), max_length=255, default="")
     country = CountryField(verbose_name=_("Страна"), default="")
