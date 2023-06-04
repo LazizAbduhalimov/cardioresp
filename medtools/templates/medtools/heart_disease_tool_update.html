@@ -1,0 +1,63 @@
+{% extends "main_app/base.html" %}
+{% load i18n %}
+{% block title %} Прогнозирование коронарной болезни сердца в зависимости от психоэмоционального
+    состояния
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h2>Основная информация</h2>
+            {{ form.media }}
+            {{ form.as_p }}
+
+            <p>
+                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample2" role="button"
+                   aria-expanded="false" aria-controls="collapseExample">
+                    Эхокардиография
+                </a>
+            </p>
+            <div class="collapse" id="collapseExample2">
+                <div class="card card-body">
+                    {{ Echocardiography.as_p }}
+                </div>
+            </div>
+
+
+            <p>
+                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample3" role="button"
+                   aria-expanded="false" aria-controls="collapseExample">
+                    Генетическое Исследование
+                </a>
+            </p>
+            <div class="collapse" id="collapseExample3">
+                <div class="card card-body">
+                    {{ GeneticResearch.as_p }}
+                </div>
+            </div>
+            <p>
+                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample4" role="button"
+                   aria-expanded="false" aria-controls="collapseExample">
+                    Иммунологическое Исследование
+                </a>
+            </p>
+            <div class="collapse" id="collapseExample4">
+                <div class="card card-body">
+                    {{ ImmunologicalResearch.as_p }}
+                </div>
+            </div>
+            <p>
+                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample1" role="button"
+                   aria-expanded="false" aria-controls="collapseExample">
+                    Индекс массы тела
+                </a>
+            </p>
+            <div class="collapse" id="collapseExample1">
+                {{ BodyMassIndex.as_p }}
+            </div>
+
+            <button class="btn btn-dark" type="submit">{% trans "Изменить" %}</button>
+        </form>
+    </div>
+{% endblock %}

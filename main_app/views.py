@@ -28,7 +28,6 @@ class SamePages(MenuMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(SamePages, self).get_context_data(**kwargs)
-        slug = self.kwargs['slug']
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
 

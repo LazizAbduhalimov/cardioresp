@@ -1,0 +1,10 @@
+{% extends "main_app/base.html" %}
+{% load i18n %}
+{% block title %}
+    {% trans "Инструменты" %}
+{% endblock %}
+
+{% block content %}
+    <h2>{% trans "Выберите программу" %}</h2>
+    <a href="{% url 'heart-disease-tool' %}">Прогнозирование коронарной болезни сердца в зависимости от психоэмоционального состояния</a>
+{% endblock %}

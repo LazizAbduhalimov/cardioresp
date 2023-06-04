@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django_unused_media',
     'django_countries',
     'debug_toolbar',
+    'extra_views',
 ]
 
 CUSTOM_APPS = [
@@ -52,6 +53,7 @@ CUSTOM_APPS = [
     'blogs',
     'registration',
     'profiles',
+    'medtools',
 ]
 INSTALLED_APPS += CUSTOM_APPS
 
