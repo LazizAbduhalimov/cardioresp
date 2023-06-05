@@ -21,8 +21,10 @@ class ToolsPage(MenuMixin, ListView):
 class HeartDiseaseToolPage(NamedFormsetsMixin, MenuMixin, CreateWithInlinesView):
     model = Patient
     form_class = PatientCreateForm
-    inlines = [EchocardiographyInLine, GeneticResearchInLine, ImmunologicalResearchInLine, BodyMassIndexInLine]
-    inlines_names = ["Echocardiography", "GeneticResearch", "ImmunologicalResearch", "BodyMassIndex"]
+    inlines = [EchocardiographyInLine, GeneticResearchInLine, ImmunologicalResearchInLine, BodyMassIndexInLine,
+               PilidogramInLine, BiochemicalBloodAnalysisInLine, CoronaryAngiographyInLine, ECGInLine]
+    inlines_names = ["Echocardiography", "GeneticResearch", "ImmunologicalResearch", "BodyMassIndex",
+                     "Pilidogram", "BiochemicalBloodAnalysis", "CoronaryAngiography", "ECG"]
     template_name = "medtools/heart_disease_tool.html"
 
     def get_context_data(self, **kwargs):
@@ -36,8 +38,10 @@ class HeartDiseaseToolPage(NamedFormsetsMixin, MenuMixin, CreateWithInlinesView)
 class HeartDiseaseToolUpdatePage(NamedFormsetsMixin, MenuMixin, UpdateWithInlinesView):
     model = Patient
     form_class = PatientCreateForm
-    inlines = [EchocardiographyInLine, GeneticResearchInLine, ImmunologicalResearchInLine, BodyMassIndexInLine]
-    inlines_names = ["Echocardiography", "GeneticResearch", "ImmunologicalResearch", "BodyMassIndex"]
+    inlines = [EchocardiographyInLine, GeneticResearchInLine, ImmunologicalResearchInLine, BodyMassIndexInLine,
+               PilidogramInLine, BiochemicalBloodAnalysisInLine, CoronaryAngiographyInLine, ECGInLine]
+    inlines_names = ["Echocardiography", "GeneticResearch", "ImmunologicalResearch", "BodyMassIndex",
+                     "Pilidogram", "BiochemicalBloodAnalysis", "CoronaryAngiography", "ECG"]
     template_name = "medtools/heart_disease_tool_update.html"
 
     def get_context_data(self, **kwargs):

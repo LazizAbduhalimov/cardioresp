@@ -7,6 +7,7 @@ from .enums import (
     pain_duration_choices, mk_choices, genetic_choices,
     coronary_angiography_choices, ECG_choices, genetic_alt_choices, PainDurationEnum
 )
+from .utils import get_verbose_name
 
 
 class Patient(models.Model):
@@ -27,9 +28,9 @@ class Patient(models.Model):
 
     def get_heart_rate_disease(self):
         if self.heart_rate < 60:
-            return "брадикардия"
+            return "Брадикардия"
         elif self.heart_rate > 90:
-            return "тахикардия"
+            return "Тахикардия"
 
     def get_pain_duration_text(self):
         if self.pain_duration == PainDurationEnum.less_20_min.value:
@@ -38,6 +39,27 @@ class Patient(models.Model):
             return "Острый коронарный синдром"
         if self.pain_duration == PainDurationEnum.more_24_hours.value:
             return "Острый инфаркт миокарда"
+
+    def get_disease_list(self):
+        result = list()
+        result.append(self.get_heart_rate_disease())
+        result.append(self.get_pain_duration_text())
+        if self.congestive_heart_failure:
+            txt = get_verbose_name(self, "congestive_heart_failure")
+            result.append(txt)
+        if self.chronic_heart_failure:
+            txt = get_verbose_name(self, "chronic_heart_failure")
+            result.append(txt)
+        if self.heart_rhythm_disturbances:
+            txt = get_verbose_name(self, "heart_rhythm_disturbances")
+            result.append(txt)
+        if self.congestive_pneumonia:
+            txt = get_verbose_name(self, "congestive_pneumonia")
+            result.append(txt)
+        if self.underlying_disease:
+            txt = get_verbose_name(self, "underlying_disease")
+            result.append((txt))
+        return result
 
     def __str__(self):
         return "{}".format(self.id)

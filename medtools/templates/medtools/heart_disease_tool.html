@@ -8,10 +8,16 @@
     <div class="container">
         <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <h2>Основная информация</h2>
-            {{ form.media }}
-            {{ form.as_p }}
+            <div class="row">
+                <div class="col">
+                    <h2>Основная информация</h2>
+                    {{ form.media }}
+                    {{ form.as_p }}
+                </div>
+                <div class="col">
 
+                </div>
+            </div>
             <p>
                 <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample2" role="button"
                    aria-expanded="false" aria-controls="collapseExample">

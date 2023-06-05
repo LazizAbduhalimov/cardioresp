@@ -10,7 +10,7 @@ class PatientCreateForm(forms.ModelForm):
     class Meta:
         model = Patient
         fields = "__all__"
-        
+
         widgets = {
             'name': forms.TextInput(attrs={"class": "form-control", 'rows': 3}),
             'sex': forms.Select(attrs={"class": "form-control", }),
@@ -25,10 +25,15 @@ class EchocardiographyForm(forms.ModelForm):
     class Meta:
         model = Echocardiography
         exclude = ["patient"]
-
         widgets = {
-            'patient': forms.Select(attrs={"class": "form-control", }),
+            'ejection_fraction': forms.NumberInput(attrs={"class": "form-control"}),
+            'kcr': forms.NumberInput(attrs={"class": "form-control"}),
+            'kdr': forms.NumberInput(attrs={"class": "form-control"}),
+            'eslj': forms.NumberInput(attrs={"class": "form-control"}),
+            'mjp': forms.NumberInput(attrs={"class": "form-control"}),
+            'pj': forms.NumberInput(attrs={"class": "form-control"}),
             'mk': forms.Select(attrs={"class": "form-control", }),
+            'lp': forms.NumberInput(attrs={"class": "form-control"}),
         }
 
 
@@ -50,6 +55,13 @@ class ImmunologicalResearchForm(forms.ModelForm):
         model = ImmunologicalResearch
         exclude = ["patient"]
 
+        widgets = {
+            'IL_1b': forms.NumberInput(attrs={"class": "form-control"}),
+            'TNF_a': forms.NumberInput(attrs={"class": "form-control"}),
+            'IL_4': forms.NumberInput(attrs={"class": "form-control"}),
+            'IL_10': forms.NumberInput(attrs={"class": "form-control"}),
+        }
+
 
 class BodyMassIndexForm(forms.ModelForm):
     class Meta:
@@ -57,8 +69,59 @@ class BodyMassIndexForm(forms.ModelForm):
         exclude = ["patient"]
 
         widgets = {
-            'mass': forms.TextInput(attrs={"class": "form-control", 'rows': 3}),
-            'height': forms.TextInput(attrs={"class": "form-control", 'rows': 3}),
+            'mass': forms.NumberInput(attrs={"class": "form-control"}),
+            'height': forms.NumberInput(attrs={"class": "form-control"}),
+        }
+
+
+class PilidogramForm(forms.ModelForm):
+    class Meta:
+        model = Pilidogram
+        exclude = ["patient"]
+        widgets = {
+            'HS': forms.NumberInput(attrs={"class": "form-control"}),
+            'HS_LLNP': forms.NumberInput(attrs={"class": "form-control"}),
+            'HS_LLVP': forms.NumberInput(attrs={"class": "form-control"}),
+            'TG': forms.NumberInput(attrs={"class": "form-control"}),
+            'KAT': forms.NumberInput(attrs={"class": "form-control"}),
+        }
+
+
+class BiochemicalBloodAnalysisForm(forms.ModelForm):
+    class Meta:
+        model = BiochemicalBloodAnalysis
+        exclude = ["patient"]
+        widgets = {
+            'ALAT': forms.NumberInput(attrs={"class": "form-control"}),
+            'ACAT': forms.NumberInput(attrs={"class": "form-control"}),
+            'HS_LLVP': forms.NumberInput(attrs={"class": "form-control"}),
+            'creotenin': forms.NumberInput(attrs={"class": "form-control"}),
+            'urea': forms.NumberInput(attrs={"class": "form-control"}),
+            'uric_acid': forms.NumberInput(attrs={"class": "form-control"}),
+            'bilirubin_common': forms.NumberInput(attrs={"class": "form-control"}),
+            'bilirubin_direct': forms.NumberInput(attrs={"class": "form-control"}),
+            'bilirubin_indirect': forms.NumberInput(attrs={"class": "form-control"}),
+            'glucose': forms.NumberInput(attrs={"class": "form-control"}),
+        }
+
+
+class CoronaryAngiographyForm(forms.ModelForm):
+    class Meta:
+        model = CoronaryAngiography
+        exclude = ["patient"]
+
+        widgets = {
+            'field': forms.Select(attrs={"class": "form-control", }),
+        }
+
+
+class ECGForm(forms.ModelForm):
+    class Meta:
+        model = ECG
+        exclude = ["patient"]
+
+        widgets = {
+            'field': forms.Select(attrs={"class": "form-control", }),
         }
 
 
@@ -80,3 +143,23 @@ class ImmunologicalResearchInLine(InlineFormSetFactory):
 class BodyMassIndexInLine(InlineFormSetFactory):
     form_class = BodyMassIndexForm
     model = BodyMassIndex
+
+
+class PilidogramInLine(InlineFormSetFactory):
+    form_class = PilidogramForm
+    model = Pilidogram
+
+
+class BiochemicalBloodAnalysisInLine(InlineFormSetFactory):
+    form_class = BiochemicalBloodAnalysisForm
+    model = BiochemicalBloodAnalysis
+
+
+class CoronaryAngiographyInLine(InlineFormSetFactory):
+    form_class = CoronaryAngiographyForm
+    model = CoronaryAngiography
+
+
+class ECGInLine(InlineFormSetFactory):
+    form_class = ECGForm
+    model = ECG

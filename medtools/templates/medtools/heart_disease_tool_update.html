@@ -8,10 +8,36 @@
     <div class="container">
         <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <h2>Основная информация</h2>
-            {{ form.media }}
-            {{ form.as_p }}
-
+            <div class="row">
+                <div class="col">
+                    <h2>Основная информация</h2>
+                    {{ form.media }}
+                    <div class="row">
+                        {% for field in form %}
+                            {% if 1 < forloop.counter and forloop.counter < 4 %}
+                                <p>
+                                <div class="col-6"><p>{{ field.label_tag }} {{ field }}</p></div>
+                            {% elif forloop.counter > 8 and forloop.counter < 11 %}
+                                <div class="col-6"><p>{{ field.label_tag }} {{ field }}</p></div>
+                            {% else %}
+                                <div class="col-12"><p>{{ field.label_tag }} {{ field }}</p></div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col">
+                    <h2></h2>
+                    <p class="h6">
+                    <ul class="list-group">
+                        {% for disease in object.get_disease_list %}
+                            {% if disease %}
+                                <li class="list-group-item list-group-item-danger">{{ disease }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                    </p>
+                </div>
+            </div>
             <p>
                 <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample2" role="button"
                    aria-expanded="false" aria-controls="collapseExample">
@@ -20,7 +46,18 @@
             </p>
             <div class="collapse" id="collapseExample2">
                 <div class="card card-body">
-                    {{ Echocardiography.as_p }}
+                    <div class="row">
+                        {% for formset in Echocardiography %}
+                            {% for field in formset %}
+                                {% if  forloop.counter < 7 %}
+                                    <div class="col-4"><p>{{ field.label_tag }} {{ field }}</p></div>
+                                {% elif forloop.counter < 9 %}
+                                    <div class="col-12"><p>{{ field.label_tag }} {{ field }}</p></div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                {{ Echocardiography.as_p }}
                 </div>
             </div>
 
@@ -33,7 +70,16 @@
             </p>
             <div class="collapse" id="collapseExample3">
                 <div class="card card-body">
-                    {{ GeneticResearch.as_p }}
+                    <div class="row">
+                        {% for formset in GeneticResearch %}
+                            {% for field in formset %}
+                                {% if forloop.counter < 5 %}
+                                    <div class="col-6"><p>{{ field.label_tag }} {{ field }}</p></div>
+                                {% endif %}
+
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
             <p>
@@ -44,7 +90,15 @@
             </p>
             <div class="collapse" id="collapseExample4">
                 <div class="card card-body">
-                    {{ ImmunologicalResearch.as_p }}
+                    <div class="row">
+                        {% for formset in ImmunologicalResearch %}
+                            {% for field in formset %}
+                                {% if  forloop.counter < 5 %}
+                                    <div class="col-6"><p>{{ field.label_tag }} {{ field }}</p></div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
             <p>
@@ -54,9 +108,85 @@
                 </a>
             </p>
             <div class="collapse" id="collapseExample1">
-                {{ BodyMassIndex.as_p }}
+                <div class="row">
+                    {% for formset in BodyMassIndex %}
+                        {% for field in formset %}
+                            {% if  forloop.counter < 3 %}
+                                <div class="col-6"><p>{{ field.label_tag }} {{ field }}</p></div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
-
+            <p>
+                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample8" role="button"
+                   aria-expanded="false" aria-controls="collapseExample">
+                    Пилидограмма
+                </a>
+            </p>
+            <div class="collapse" id="collapseExample8">
+                <div class="row">
+                    {% for formset in Pilidogram %}
+                        {% for field in formset %}
+                            {% if  forloop.counter < 6 %}
+                                <div class="col-6"><p>{{ field.label_tag }} {{ field }}</p></div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+            <p>
+                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample5" role="button"
+                   aria-expanded="false" aria-controls="collapseExample">
+                    Биохимическое ИК
+                </a>
+            </p>
+            <div class="collapse" id="collapseExample5">
+                <div class="row">
+                    {% for formset in BiochemicalBloodAnalysis %}
+                        {% for field in formset %}
+                            {% if  forloop.counter < 10 %}
+                                <div class="col-4"><p>{{ field.label_tag }} {{ field }}</p></div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+            <p>
+                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample6" role="button"
+                   aria-expanded="false" aria-controls="collapseExample">
+                    Коронарная ангиография
+                </a>
+            </p>
+            <div class="collapse" id="collapseExample6">
+                <div class="row">
+                    {% for formset in CoronaryAngiography %}
+                        {% for field in formset %}
+                            {% if  forloop.counter == 1 %}
+                                <div class="col-12"><p>{{ field.label_tag }} {{ field }}</p></div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+            <p>
+                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample7" role="button"
+                   aria-expanded="false" aria-controls="collapseExample">
+                    ЭКГ
+                </a>
+            </p>
+            <div class="collapse" id="collapseExample7">
+                <div class="row">
+                    {% for formset in ECG %}
+                        {% for field in formset %}
+                            {% if  forloop.counter == 1 %}
+                                <div class="col-12"><p>{{ field.label_tag }} {{ field }}</p></div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+            <br>
             <button class="btn btn-dark" type="submit">{% trans "Изменить" %}</button>
         </form>
     </div>
