@@ -27,6 +27,9 @@ class HeartDiseaseToolPage(NamedFormsetsMixin, MenuMixin, CreateWithInlinesView)
                      "Pilidogram", "BiochemicalBloodAnalysis", "CoronaryAngiography", "ECG"]
     template_name = "medtools/heart_disease_tool.html"
 
+    factory_kwargs = {'extra': 1, 'max_num': 1,
+                      'can_order': False, 'can_delete': False}
+
     def get_context_data(self, **kwargs):
         context = super(HeartDiseaseToolPage, self).get_context_data(**kwargs)
         return dict(list(context.items()) + list(self.get_user_context().items()))
@@ -43,6 +46,9 @@ class HeartDiseaseToolUpdatePage(NamedFormsetsMixin, MenuMixin, UpdateWithInline
     inlines_names = ["Echocardiography", "GeneticResearch", "ImmunologicalResearch", "BodyMassIndex",
                      "Pilidogram", "BiochemicalBloodAnalysis", "CoronaryAngiography", "ECG"]
     template_name = "medtools/heart_disease_tool_update.html"
+
+    factory_kwargs = {'extra': 1, 'max_num': 1,
+                      'can_order': False, 'can_delete': False}
 
     def get_context_data(self, **kwargs):
         context = super(HeartDiseaseToolUpdatePage, self).get_context_data(**kwargs)

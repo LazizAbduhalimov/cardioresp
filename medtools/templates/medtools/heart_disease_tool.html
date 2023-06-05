@@ -12,10 +12,18 @@
                 <div class="col">
                     <h2>Основная информация</h2>
                     {{ form.media }}
-                    {{ form.as_p }}
-                </div>
-                <div class="col">
-
+                    <div class="row">
+                        {% for field in form %}
+                            {% if 1 < forloop.counter and forloop.counter < 4 %}
+                                <p>
+                                <div class="col-6"><p>{{ field.label_tag }} {{ field }}</p></div>
+                            {% elif forloop.counter > 8 and forloop.counter < 11 %}
+                                <div class="col-6"><p>{{ field.label_tag }} {{ field }}</p></div>
+                            {% else %}
+                                <div class="col-12"><p>{{ field.label_tag }} {{ field }}</p></div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
             <p>
@@ -61,6 +69,47 @@
             </p>
             <div class="collapse" id="collapseExample1">
                 {{ BodyMassIndex.as_p }}
+            </div>
+
+
+            <p>
+                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample8" role="button"
+                   aria-expanded="false" aria-controls="collapseExample">
+                    Пилидограмма
+                </a>
+            </p>
+            <div class="collapse" id="collapseExample8">
+                {{ Pilidogram.as_p }}
+            </div>
+
+            <p>
+                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample5" role="button"
+                   aria-expanded="false" aria-controls="collapseExample">
+                    Биохимическое ИК
+                </a>
+            </p>
+            <div class="collapse" id="collapseExample5">
+                {{ BiochemicalBloodAnalysis.as_p }}
+            </div>
+
+            <p>
+                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample6" role="button"
+                   aria-expanded="false" aria-controls="collapseExample">
+                    Коронарная ангиография
+                </a>
+            </p>
+            <div class="collapse" id="collapseExample6">
+                {{ CoronaryAngiography.as_p }}
+            </div>
+
+            <p>
+                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample7" role="button"
+                   aria-expanded="false" aria-controls="collapseExample">
+                    ЭКГ
+                </a>
+            </p>
+            <div class="collapse" id="collapseExample7">
+                {{ ECG.as_p }}
             </div>
 
             <button class="btn btn-dark" type="submit">{% trans "Создать" %}</button>

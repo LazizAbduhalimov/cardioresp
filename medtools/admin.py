@@ -2,49 +2,49 @@ from django.contrib import admin
 from .models import *
 
 
-class EchocardiographyInline(admin.TabularInline):
+class EchocardiographyInline(admin.StackedInline):
     model = Echocardiography
     extra = 0
     max_num = 1
 
 
-class GeneticResearchInline(admin.TabularInline):
+class GeneticResearchInline(admin.StackedInline):
     model = GeneticResearch
     extra = 0
     max_num = 1
 
 
-class ImmunologicalResearchInline(admin.TabularInline):
+class ImmunologicalResearchInline(admin.StackedInline):
     model = ImmunologicalResearch
     extra = 0
     max_num = 1
 
 
-class PilidogramInline(admin.TabularInline):
+class PilidogramInline(admin.StackedInline):
     model = Pilidogram
     extra = 0
     max_num = 1
 
 
-class BodyMassIndexInLine(admin.TabularInline):
+class BodyMassIndexInLine(admin.StackedInline):
     model = BodyMassIndex
     extra = 0
     max_num = 1
 
 
-class BiochemicalBloodAnalysisInline(admin.TabularInline):
+class BiochemicalBloodAnalysisInline(admin.StackedInline):
     model = BiochemicalBloodAnalysis
     extra = 0
     max_num = 1
 
 
-class CoronaryAngiographyInline(admin.TabularInline):
+class CoronaryAngiographyInline(admin.StackedInline):
     model = CoronaryAngiography
     extra = 0
     max_num = 1
 
 
-class ECGInline(admin.TabularInline):
+class ECGInline(admin.StackedInline):
     model = ECG
     extra = 0
     max_num = 1

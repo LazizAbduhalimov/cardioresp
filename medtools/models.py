@@ -2,10 +2,11 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.db import models
 
+from registration.models import User
 from .enums import (
     sex_choices, age_choices, social_status_choices,
     pain_duration_choices, mk_choices, genetic_choices,
-    coronary_angiography_choices, ECG_choices, genetic_alt_choices, PainDurationEnum
+    coronary_angiography_choices, ECG_choices, genetic_alt_choices, PainDurationEnum, SexEnum
 )
 from .utils import get_verbose_name
 
@@ -19,8 +20,10 @@ class Patient(models.Model):
     heart_rhythm_disturbances = models.BooleanField(_("Нарушение ритма"), default=False)
     congestive_pneumonia = models.BooleanField(_("Застойчивая пневмония"), default=False)
     underlying_disease = models.BooleanField(_("Фоновое заболевание"), default=False)
-    social_position = models.CharField(_("Социальное положение"), default="", max_length=1, choices=social_status_choices)
-    pain_duration = models.CharField(_("Продолжительность боли"), default="", max_length=4, choices=pain_duration_choices)
+    social_position = models.CharField(_("Социальное положение"), default="", max_length=1,
+                                       choices=social_status_choices)
+    pain_duration = models.CharField(_("Продолжительность боли"), default="", max_length=4,
+                                     choices=pain_duration_choices)
     heart_rate = models.FloatField("ЧСС", default=0)
 
     def get_absolute_url(self):
@@ -67,9 +70,9 @@ class Patient(models.Model):
 
 def check_btw_nums(checked_num, limit1, limit2):
     if limit1 <= checked_num <= limit2:
-        return True
+        return None
     else:
-        return False, "Ненормировано"
+        return False
 
 
 class Echocardiography(models.Model):
@@ -85,11 +88,9 @@ class Echocardiography(models.Model):
 
     def is_ejection_fraction_normalized(self):
         if self.ejection_fraction < 40:
-            return False, "Сердечная недостаточность"
-        elif self. ejection_fraction < 55:
-            return False, "Сниженная ФВЛЖ"
-        else:
-            return True
+            return "Сердечная недостаточность"
+        elif self.ejection_fraction < 55:
+            return "Сниженная ФВЛЖ"
 
     def is_kcr_normalized(self):
         return check_btw_nums(self.kcr, 2.5, 3.6)
@@ -109,22 +110,24 @@ class Echocardiography(models.Model):
     def is_lp_normalized(self):
         return check_btw_nums(self.lp, 2, 3.5)
 
-    def get_absolute_data(self):
-        result = ""
+    def get_disease_list(self):
+        result = list()
+        result.append(self.is_ejection_fraction_normalized())
         if not self.is_eslj_normalized():
-            result += self.is_eslj_normalized()[1] + ", "
+            print(1)
+            result.append(self.is_eslj_normalized())
         if not self.is_kcr_normalized():
-            result += self.is_kcr_normalized()[1] + ", "
+            result.append("КСР ненормирован")
         if not self.is_kdr_normalized():
-            result += self.is_kdr_normalized()[1] + ", "
+            result.append("Увеличение размеров сердца")
         if not self.is_eslj_normalized():
-            result += self.is_eslj_normalized()[1] + ", "
+            result.append("ЭСЛЖ ненормирован")
         if not self.is_mjp_normalized():
-            result += self.is_mjp_normalized()[1] + ", "
+            result.append("МЖП ненормирован")
         if not self.is_pj_normalized():
-            result += self.is_pj_normalized()[1] + ", "
+            result.append("ПЖ ненормирован")
         if not self.is_lp_normalized():
-            result += self.is_lp_normalized()[1] + ", "
+            result.append("ЛП ненормирован")
 
         return result
 
@@ -167,6 +170,14 @@ class ImmunologicalResearch(models.Model):
     def is_IL_10_normalized(self):
         return check_btw_nums(self.IL_10, (15.2 - 1.02), (15.2 + 1.02))
 
+    def get_disease_list(self):
+        result = list()
+
+        if not (self.is_IL_1b_normalized() or self.is_TNF_a_normalized()):
+            result.append("Цитокиновый дисбаланс")
+
+        return result
+
     def __str__(self):
         return "{}".format(self.id)
 
@@ -180,6 +191,37 @@ class Pilidogram(models.Model):
     TG = models.FloatField(_("ТГ. ммоль/г"), default=0)
     KAT = models.FloatField(_("КАТ"), default=0)
 
+    def is_HS_normalized(self):
+        return check_btw_nums(self.HS, 2.2, 3.5)
+
+    def is_HS_LLNP_normalized(self):
+        return check_btw_nums(self.HS, 2.2, 3.5)
+
+    def is_HS_LLVP_normalized(self):
+        return check_btw_nums(self.HS, 2.2, 3.5)
+
+    def is_TG_normalized(self):
+        return check_btw_nums(self.HS, 2.2, 3.5)
+
+    def is_KAT_normalized(self):
+        return check_btw_nums(self.HS, 2.2, 3.5)
+
+    def get_disease_list(self):
+        result = list()
+
+        if (self.KAT > 5 or
+              self.HS_LLNP > 4.9 or
+              ((self.patient.sex == SexEnum.man.value and self.HS_LLVP < 1.16) or
+               self.patient.sex == SexEnum.woman.value and self.HS_LLVP < 0.9)):
+            result.append("Атеросклероз")
+        elif 3 < self.KAT < 4:
+            result.append("Присутствует риск атеросклероза и ишемической болезни сердца")
+
+        if self.KAT > 3.5 and self.TG > 2.8 and self.HS_LLVP < 1 and self.HS_LLNP > 3.37 and self.HS > 5.6:
+            result.append("Дислипидемия")
+
+        return result
+
     def __str__(self):
         return "{}".format(self.id)
 
@@ -187,21 +229,20 @@ class Pilidogram(models.Model):
 class BodyMassIndex(models.Model):
     patient = models.OneToOneField(Patient, verbose_name="Пациент", on_delete=models.CASCADE)
 
-    height = models.FloatField(_("Рост"), default=0)
-    mass = models.FloatField(_("Mass"), default=0)
+    height = models.FloatField(_("Рост (cм)"), default=0)
+    mass = models.FloatField(_("Mass (кг)"), default=0)
 
     def get_mass_index(self):
-        return self.mass / (self.height ** 2)
+        return self.mass / ((self.height / 100) ** 2)
 
     def get_mass_disease(self):
         mass_index = self.get_mass_index()
-
         if mass_index < 16.0:
             return "Выраженный дефицит массы тела"
         elif mass_index < 18.50:
             return "Недостаточная (дефицит) масса тела"
         elif mass_index < 25:
-            return "Норма"
+            return
         elif mass_index < 30:
             return "Избыточная масса тела (предожирение)"
         elif mass_index < 35:
@@ -218,15 +259,28 @@ class BodyMassIndex(models.Model):
 class BiochemicalBloodAnalysis(models.Model):
     patient = models.OneToOneField(Patient, verbose_name="Пациент", on_delete=models.CASCADE)
 
-    ALAT = models.FloatField(_("АЛАТ"), default=0)
-    ACAT = models.FloatField(_("АСАТ"), default=0)
-    creotenin = models.FloatField(_("Креотенин"), default=0)
-    urea = models.FloatField(_("Мочевина"), default=0)
-    uric_acid = models.FloatField(_("Мочевая кислота"), default=0)
-    bilirubin_common = models.FloatField(_("Билурибин общий"), default=0)
-    bilirubin_direct = models.FloatField(_("Билурибин прямой"), default=0)
-    bilirubin_indirect = models.FloatField(_("Билурибин непрямой"), default=0)
-    glucose = models.FloatField(_("Глюкоза (кровь)"), default=0)
+    ALAT = models.FloatField(_("АЛАТ (U/L)"), default=0)
+    ACAT = models.FloatField(_("АСАТ(U/L)"), default=0)
+    creotenin = models.FloatField(_("Креотенин (мкмоль/л)"), default=0)
+    urea = models.FloatField(_("Мочевина Креотенин (мкмоль/л)"), default=0)
+    uric_acid = models.FloatField(_("Мочевая кислота(мкмоль/л)"), default=0)
+    bilirubin_common = models.FloatField(_("Билурибин общий (мкмоль/л)"), default=0)
+    bilirubin_direct = models.FloatField(_("Билурибин прямой (мкмоль/л)"), default=0)
+    bilirubin_indirect = models.FloatField(_("Билурибин непрямой (мкмоль/л)"), default=0)
+    glucose = models.FloatField(_("Глюкоза (мкмоль/л)"), default=0)
+
+    def get_disease_list(self):
+        result = list()
+        if ((self.patient.sex == SexEnum.man.value and self.uric_acid > 432) or
+                (self.patient.sex == SexEnum.woman.value and self.uric_acid > 360)):
+            result.append("Гиперурикемия")
+
+        if self.glucose > 7:
+            result.append("нарушение толерантности к глюкозе")
+        elif self.glucose > 5.83:
+            result.append("сахарный диабет")
+
+        return result
 
     def __str__(self):
         return "{}".format(self.id)
@@ -235,7 +289,8 @@ class BiochemicalBloodAnalysis(models.Model):
 class CoronaryAngiography(models.Model):
     patient = models.OneToOneField(Patient, verbose_name="Пациент", on_delete=models.CASCADE)
 
-    field = models.CharField(_("Поле"), default="", max_length=1, choices=coronary_angiography_choices)
+    field = models.CharField(_("Количество поражений КА"), default="", max_length=1,
+                             choices=coronary_angiography_choices)
 
     def get_coronary_mark(self):
         return int(self.field)
@@ -259,9 +314,9 @@ class Survey(models.Model):
 
 class SurveyQuestion(models.Model):
     survey = models.ForeignKey(Survey, verbose_name="Опросник", on_delete=models.CASCADE)
-
     question = models.TextField("Вопрос", default="")
 
 
 class SurveyAnswer(models.Model):
+    user = models.OneToOneField(User, verbose_name="Пользователь", on_delete=models.CASCADE)
     question = models.ForeignKey(SurveyQuestion, verbose_name="Вопрос", on_delete=models.CASCADE)

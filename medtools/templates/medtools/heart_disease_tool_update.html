@@ -34,6 +34,30 @@
                                 <li class="list-group-item list-group-item-danger">{{ disease }}</li>
                             {% endif %}
                         {% endfor %}
+                        {% for disease in object.echocardiography.get_disease_list %}
+                            {% if disease %}
+                                <li class="list-group-item list-group-item-danger">{{ disease }}</li>
+                            {% endif %}
+                        {% endfor %}
+                        {% for disease in object.immunologicalresearch.get_disease_list %}
+                            {% if disease %}
+                                <li class="list-group-item list-group-item-danger">{{ disease }}</li>
+                            {% endif %}
+                        {% endfor %}
+                        {% for disease in object.biochemicalbloodanalysis.get_disease_list %}
+                            {% if disease %}
+                                <li class="list-group-item list-group-item-danger">{{ disease }}</li>
+                            {% endif %}
+                        {% endfor %}
+                        {% for disease in object.pilidogram.get_disease_list %}
+                            {% if disease %}
+                                <li class="list-group-item list-group-item-danger">{{ disease }}</li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if object.bodymassindex.get_mass_disease %}
+                            <li class="list-group-item list-group-item-danger">{{ object.bodymassindex.get_mass_disease }}</li>
+                        {% endif %}
+                        <li class="list-group-item list-group-item-danger">{{ object.ecg.get_field_display }}</li>
                     </ul>
                     </p>
                 </div>
@@ -46,18 +70,7 @@
             </p>
             <div class="collapse" id="collapseExample2">
                 <div class="card card-body">
-                    <div class="row">
-                        {% for formset in Echocardiography %}
-                            {% for field in formset %}
-                                {% if  forloop.counter < 7 %}
-                                    <div class="col-4"><p>{{ field.label_tag }} {{ field }}</p></div>
-                                {% elif forloop.counter < 9 %}
-                                    <div class="col-12"><p>{{ field.label_tag }} {{ field }}</p></div>
-                                {% endif %}
-                            {% endfor %}
-                        {% endfor %}
-                    </div>
-                {{ Echocardiography.as_p }}
+                    {{ Echocardiography.as_p }}
                 </div>
             </div>
 
@@ -70,16 +83,7 @@
             </p>
             <div class="collapse" id="collapseExample3">
                 <div class="card card-body">
-                    <div class="row">
-                        {% for formset in GeneticResearch %}
-                            {% for field in formset %}
-                                {% if forloop.counter < 5 %}
-                                    <div class="col-6"><p>{{ field.label_tag }} {{ field }}</p></div>
-                                {% endif %}
-
-                            {% endfor %}
-                        {% endfor %}
-                    </div>
+                    {{ GeneticResearch.as_p }}
                 </div>
             </div>
             <p>
@@ -90,15 +94,7 @@
             </p>
             <div class="collapse" id="collapseExample4">
                 <div class="card card-body">
-                    <div class="row">
-                        {% for formset in ImmunologicalResearch %}
-                            {% for field in formset %}
-                                {% if  forloop.counter < 5 %}
-                                    <div class="col-6"><p>{{ field.label_tag }} {{ field }}</p></div>
-                                {% endif %}
-                            {% endfor %}
-                        {% endfor %}
-                    </div>
+                    {{ ImmunologicalResearch.as_p }}
                 </div>
             </div>
             <p>
@@ -108,16 +104,9 @@
                 </a>
             </p>
             <div class="collapse" id="collapseExample1">
-                <div class="row">
-                    {% for formset in BodyMassIndex %}
-                        {% for field in formset %}
-                            {% if  forloop.counter < 3 %}
-                                <div class="col-6"><p>{{ field.label_tag }} {{ field }}</p></div>
-                            {% endif %}
-                        {% endfor %}
-                    {% endfor %}
-                </div>
+                {{ BodyMassIndex.as_p }}
             </div>
+
             <p>
                 <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample8" role="button"
                    aria-expanded="false" aria-controls="collapseExample">
@@ -125,16 +114,9 @@
                 </a>
             </p>
             <div class="collapse" id="collapseExample8">
-                <div class="row">
-                    {% for formset in Pilidogram %}
-                        {% for field in formset %}
-                            {% if  forloop.counter < 6 %}
-                                <div class="col-6"><p>{{ field.label_tag }} {{ field }}</p></div>
-                            {% endif %}
-                        {% endfor %}
-                    {% endfor %}
-                </div>
+                {{ Pilidogram.as_p }}
             </div>
+
             <p>
                 <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample5" role="button"
                    aria-expanded="false" aria-controls="collapseExample">
@@ -142,16 +124,9 @@
                 </a>
             </p>
             <div class="collapse" id="collapseExample5">
-                <div class="row">
-                    {% for formset in BiochemicalBloodAnalysis %}
-                        {% for field in formset %}
-                            {% if  forloop.counter < 10 %}
-                                <div class="col-4"><p>{{ field.label_tag }} {{ field }}</p></div>
-                            {% endif %}
-                        {% endfor %}
-                    {% endfor %}
-                </div>
+                {{ BiochemicalBloodAnalysis.as_p }}
             </div>
+
             <p>
                 <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample6" role="button"
                    aria-expanded="false" aria-controls="collapseExample">
@@ -159,16 +134,9 @@
                 </a>
             </p>
             <div class="collapse" id="collapseExample6">
-                <div class="row">
-                    {% for formset in CoronaryAngiography %}
-                        {% for field in formset %}
-                            {% if  forloop.counter == 1 %}
-                                <div class="col-12"><p>{{ field.label_tag }} {{ field }}</p></div>
-                            {% endif %}
-                        {% endfor %}
-                    {% endfor %}
-                </div>
+                {{ CoronaryAngiography.as_p }}
             </div>
+
             <p>
                 <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample7" role="button"
                    aria-expanded="false" aria-controls="collapseExample">
@@ -176,17 +144,9 @@
                 </a>
             </p>
             <div class="collapse" id="collapseExample7">
-                <div class="row">
-                    {% for formset in ECG %}
-                        {% for field in formset %}
-                            {% if  forloop.counter == 1 %}
-                                <div class="col-12"><p>{{ field.label_tag }} {{ field }}</p></div>
-                            {% endif %}
-                        {% endfor %}
-                    {% endfor %}
-                </div>
+                {{ ECG.as_p }}
             </div>
-            <br>
+
             <button class="btn btn-dark" type="submit">{% trans "Изменить" %}</button>
         </form>
     </div>
