@@ -125,6 +125,21 @@ class ECGForm(forms.ModelForm):
         }
 
 
+class SurveyAnswerForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        survey_question = kwargs.pop('survey_question', None)
+        super(SurveyAnswerForm, self).__init__(*args, **kwargs)
+        self.fields['choice'].queryset = SurveyQuestionChoices.objects.filter(question=survey_question)
+
+    class Meta:
+        model = SurveyAnswer
+        exclude = ["patient"]
+
+        widgets = {
+            'choice': forms.RadioSelect(attrs={"class": "form-check-input", }),
+        }
+
+
 class EchocardiographyInLine(InlineFormSetFactory):
     form_class = EchocardiographyForm
     model = Echocardiography

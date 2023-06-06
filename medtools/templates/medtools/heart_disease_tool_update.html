@@ -149,5 +149,14 @@
 
             <button class="btn btn-dark" type="submit">{% trans "Изменить" %}</button>
         </form>
+        <hr>
+
+        <h2>Опросники</h2>
+        {% for survey in surveys %}
+            <a class="title" href="{{ survey.surveyquestion_set.first.get_absolute_url }}">
+                            {{ survey.name }}
+            </a>
+        {% endfor %}
+
     </div>
 {% endblock %}

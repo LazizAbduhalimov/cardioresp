@@ -10,6 +10,7 @@ from django.urls import re_path
 
 urlpatterns = [
     path('admin/', admin.site.urls, name="admin-panel"),
+    path('_nested_admin/', include('nested_admin.urls')),
 
     path("", index, name="home"),
     path("", include("blogs.urls")),

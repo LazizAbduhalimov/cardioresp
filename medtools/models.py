@@ -316,7 +316,31 @@ class SurveyQuestion(models.Model):
     survey = models.ForeignKey(Survey, verbose_name="Опросник", on_delete=models.CASCADE)
     question = models.TextField("Вопрос", default="")
 
+    def get_absolute_url(self):
+        return reverse_lazy("heart-disease-survey", kwargs={"pk": self.pk})
+
+    def get_next_question(self):
+        all_questions = self.survey.surveyquestion_set.all()
+
+        for i in range(0, len(all_questions)):
+            if all_questions[i] == self:
+                try:
+                    return all_questions[i+1].get_absolute_url()
+                except IndexError:
+                    return None
+
+    def __str__(self):
+        return self.question
+
+
+class SurveyQuestionChoices(models.Model):
+    choice_text = models.CharField(_("Выбор"), max_length=100, default="")
+    question = models.ForeignKey(SurveyQuestion, verbose_name="Вопрос", on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return self.choice_text
+
 
 class SurveyAnswer(models.Model):
-    user = models.OneToOneField(User, verbose_name="Пользователь", on_delete=models.CASCADE)
-    question = models.ForeignKey(SurveyQuestion, verbose_name="Вопрос", on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, verbose_name="Пациент", on_delete=models.CASCADE, null=True)
+    choice = models.ForeignKey(SurveyQuestionChoices, verbose_name="Выбор", on_delete=models.CASCADE, null=True)

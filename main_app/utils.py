@@ -21,6 +21,7 @@ class MenuMixin:
 
         context["next_volume"] = get_or_none(Volume, status="Следующий")
         context["current_path"] = str(self.request.path)[3:]
+        context["patient_id"] = self.request.session.get("patient_id", None)
 
         if self.request.user.is_authenticated:
             context["author_profile"] = get_or_none(AuthorsProfile, user=self.request.user)

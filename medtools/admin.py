@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import *
 
+from nested_admin.nested import NestedModelAdmin, NestedTabularInline
 
 class EchocardiographyInline(admin.StackedInline):
     model = Echocardiography
@@ -78,3 +79,37 @@ class ImmunologicalResearchAdmin(admin.ModelAdmin):
 @admin.register(GeneticResearch)
 class GeneticResearchAdmin(admin.ModelAdmin):
     list_per_page = 15
+
+
+class SurveyQuestionChoicesInLine(NestedTabularInline):
+    model = SurveyQuestionChoices
+    extra = 2
+
+
+class SurveyQuestionInline(NestedTabularInline):
+    model = SurveyQuestion
+    extra = 0
+
+    inlines = [SurveyQuestionChoicesInLine]
+
+
+@admin.register(Survey)
+class SurveyAdmin(NestedModelAdmin):
+    list_display = [
+        "name",
+    ]
+
+    inlines = [
+        SurveyQuestionInline
+    ]
+
+    list_per_page = 15
+
+
+@admin.register(SurveyAnswer)
+class SurveyAnswerAdmin(admin.ModelAdmin):
+    list_display = [
+        "patient",
+    ]
+
+    list_per_page = 40

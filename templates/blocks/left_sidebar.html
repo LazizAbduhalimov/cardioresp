@@ -5,7 +5,8 @@
 <div class="pkp_structure_sidebar left" role="complementary" aria-label="Боковая панель">
     <div class="pkp_block block_custom" id="customblock-Send">
         <div class="content">
-            <p><a href="{% url 'submission' %}"><img src="/static/images/send/send-{{ CURRENT_LANGUAGE }}.png" alt="" height="90"></a></p>
+            <p><a href="{% url 'submission' %}"><img src="/static/images/send/send-{{ CURRENT_LANGUAGE }}.png" alt=""
+                                                     height="90"></a></p>
         </div>
     </div>
     <div class="pkp_block block_custom" id="customblock-Flags">
@@ -53,8 +54,12 @@
             </ul>
         </div>
     </div>
-        <div class="pkp_block block_information">
-            <a href="{% url 'tools' %}"><span class="title">{% trans "Инструменты" %}</span></a>
-        </div>
+    <div class="pkp_block block_information">
+        {% if patient_id %}
+            <a href="{% url 'heart-disease-tool-update' patient_id %}"><span class="title">{% trans "Инструменты" %}</span></a>
+        {% else %}
+            <a href="{% url 'heart-disease-tool' %}"><span class="title">{% trans "Инструменты" %}</span></a>
+        {% endif %}
+    </div>
 </div>
 <!-- pkp_sidebar.left -->

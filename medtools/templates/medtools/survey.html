@@ -1,0 +1,21 @@
+{% extends "main_app/base.html" %}
+{% load i18n %}
+{% block title %}
+    {{ object.name }}
+{% endblock %}
+
+{% block content %}
+    <p class="h3">{{ object.question }}</p>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+            <fieldset>
+                {% for radio in form.choice %}
+                    <div class="form-check form-check-inline">
+                        <p class="h5">{{ radio }}</p>
+                    </div>
+                {% endfor %}
+            </fieldset>
+        <br>
+        <button class="btn btn-dark" type="submit">{% trans "Далее" %}</button>
+    </form>
+{% endblock %}

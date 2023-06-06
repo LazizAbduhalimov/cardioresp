@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django_countries',
     'debug_toolbar',
     'extra_views',
+    'nested_admin',
 ]
 
 CUSTOM_APPS = [
@@ -151,6 +152,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [(BASE_DIR / 'static')]
 
