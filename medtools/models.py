@@ -114,7 +114,6 @@ class Echocardiography(models.Model):
         result = list()
         result.append(self.is_ejection_fraction_normalized())
         if not self.is_eslj_normalized():
-            print(1)
             result.append(self.is_eslj_normalized())
         if not self.is_kcr_normalized():
             result.append("КСР ненормирован")
@@ -311,12 +310,61 @@ class ECG(models.Model):
 class Survey(models.Model):
     name = models.CharField(_("Название"), max_length=255, default="")
 
+    def get_overall_score(self, patient_id):
+        question_number = len(self.surveyquestion_set.all())
+        answers = SurveyAnswer.objects.filter(patient_id=patient_id)[:question_number]
+        if len(answers) < question_number:
+            return
+
+        score = 0
+        for answer in answers:
+            score += answer.choice.mark
+
+        return score
+
+    def get_insd(self, patient_id):
+        result = 0
+        question_number = len(self.surveyquestion_set.all())
+        answers = SurveyMultipleAnswer.objects.filter(patient_id=patient_id)[:question_number]
+        for answer in answers:
+            result += answer.choice.all().count()
+
+        return result
+
+    def get_pri(self, patient_id):
+        result = 0
+        question_number = len(self.surveyquestion_set.all())
+        answers = SurveyMultipleAnswer.objects.filter(patient_id=patient_id)[:question_number]
+        for answer in answers:
+            choices = answer.choice.all()
+            for choice in choices:
+                result += choice.mark
+
+        return result
+
+    def __str__(self):
+        return self.name
+
+
+class SurveyResult(models.Model):
+    survey = models.ForeignKey(Survey, verbose_name=_("Опросник"), on_delete=models.CASCADE)
+    text = models.CharField(_("Текст"), max_length=255, default="")
+    mark_from = models.IntegerField(_("Мин балл для вывода"), default=0)
+    mark_to = models.IntegerField(_("Макс балл для вывода"), default=0)
+
+    def __str__(self):
+        return self.text
+
 
 class SurveyQuestion(models.Model):
     survey = models.ForeignKey(Survey, verbose_name="Опросник", on_delete=models.CASCADE)
     question = models.TextField("Вопрос", default="")
+    has_multiple_choice = models.BooleanField(_("Множественный выбор"), default=False)
 
     def get_absolute_url(self):
+        if self.has_multiple_choice:
+            return reverse_lazy("heart-disease-survey-multiple-choice", kwargs={"pk": self.pk})
+
         return reverse_lazy("heart-disease-survey", kwargs={"pk": self.pk})
 
     def get_next_question(self):
@@ -336,6 +384,7 @@ class SurveyQuestion(models.Model):
 class SurveyQuestionChoices(models.Model):
     choice_text = models.CharField(_("Выбор"), max_length=100, default="")
     question = models.ForeignKey(SurveyQuestion, verbose_name="Вопрос", on_delete=models.CASCADE, null=True)
+    mark = models.SmallIntegerField("Балл", default=0)
 
     def __str__(self):
         return self.choice_text
@@ -344,3 +393,14 @@ class SurveyQuestionChoices(models.Model):
 class SurveyAnswer(models.Model):
     patient = models.ForeignKey(Patient, verbose_name="Пациент", on_delete=models.CASCADE, null=True)
     choice = models.ForeignKey(SurveyQuestionChoices, verbose_name="Выбор", on_delete=models.CASCADE, null=True)
+
+    class Meta:
+        ordering = ["-id"]
+
+
+class SurveyMultipleAnswer(models.Model):
+    patient = models.ForeignKey(Patient, verbose_name="Пациент", on_delete=models.CASCADE, null=True)
+    choice = models.ManyToManyField(SurveyQuestionChoices, verbose_name="Выбор", related_name="choices", blank=True)
+
+    class Meta:
+        ordering = ["-id"]

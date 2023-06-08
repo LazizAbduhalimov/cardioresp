@@ -140,6 +140,21 @@ class SurveyAnswerForm(forms.ModelForm):
         }
 
 
+class SurveyMultipleAnswerForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        survey_question = kwargs.pop('survey_question', None)
+        super(SurveyMultipleAnswerForm, self).__init__(*args, **kwargs)
+        self.fields['choice'].queryset = SurveyQuestionChoices.objects.filter(question=survey_question)
+
+    class Meta:
+        model = SurveyMultipleAnswer
+        exclude = ["patient"]
+
+        widgets = {
+            'choice': forms.CheckboxSelectMultiple(attrs={"class": "form-check-input", }),
+        }
+
+
 class EchocardiographyInLine(InlineFormSetFactory):
     form_class = EchocardiographyForm
     model = Echocardiography

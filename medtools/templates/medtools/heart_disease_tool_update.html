@@ -58,6 +58,15 @@
                             <li class="list-group-item list-group-item-danger">{{ object.bodymassindex.get_mass_disease }}</li>
                         {% endif %}
                         <li class="list-group-item list-group-item-danger">{{ object.ecg.get_field_display }}</li>
+                        {% for result in surveys_result %}
+                            <li class="list-group-item list-group-item-danger">{{ result }}</li>
+                        {% endfor %}
+                        {% if INSD %}
+                            <li class="list-group-item list-group-item-danger">ИЧВД: {{ INSD }}</li>
+                        {% endif %}
+                        {% if PRI %}
+                            <li class="list-group-item list-group-item-danger">РИБ: {{ PRI }}</li>
+                        {% endif %}
                     </ul>
                     </p>
                 </div>
@@ -153,9 +162,10 @@
 
         <h2>Опросники</h2>
         {% for survey in surveys %}
-            <a class="title" href="{{ survey.surveyquestion_set.first.get_absolute_url }}">
-                            {{ survey.name }}
+            <p><a class="title" href="{{ survey.surveyquestion_set.first.get_absolute_url }}">
+                {{ survey.name }}
             </a>
+            </p>
         {% endfor %}
 
     </div>

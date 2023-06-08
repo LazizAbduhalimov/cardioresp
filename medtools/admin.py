@@ -110,6 +110,26 @@ class SurveyAdmin(NestedModelAdmin):
 class SurveyAnswerAdmin(admin.ModelAdmin):
     list_display = [
         "patient",
+        "choice",
+    ]
+
+    list_per_page = 40
+
+
+@admin.register(SurveyMultipleAnswer)
+class SurveyAnswerAdmin(admin.ModelAdmin):
+    list_display = [
+        "patient",
+    ]
+
+    list_per_page = 40
+
+
+@admin.register(SurveyResult)
+class SurveyAnswerAdmin(admin.ModelAdmin):
+    list_display = [
+        "survey",
+        "text",
     ]
 
     list_per_page = 40
