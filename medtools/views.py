@@ -51,10 +51,10 @@ class HeartDiseaseToolUpdatePage(NamedFormsetsMixin, MenuMixin, UpdateWithInline
             if survey_results_set.first() is None:
                 context["INSD"] = survey.get_insd(patient_id)
                 context["PRI"] = survey.get_pri(patient_id)
-                break
+                continue
 
             if overall_score is None:
-                break
+                continue
 
             for result in survey_results_set:
                 if result.mark_from <= overall_score <= result.mark_to:
