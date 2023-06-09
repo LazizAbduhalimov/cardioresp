@@ -1,11 +1,11 @@
 {% extends "main_app/base.html" %}
 {% load i18n %}
 {% block title %}
-    {{ object.name }}
+    {{ question.survey }}
 {% endblock %}
 
 {% block content %}
-    <p class="h3">{{ object.question }}</p>
+    <p class="h3">{{ question }}</p>
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
             <fieldset>

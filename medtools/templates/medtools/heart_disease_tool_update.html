@@ -162,10 +162,21 @@
 
         <h2>Опросники</h2>
         {% for survey in surveys %}
-            <p><a class="title" href="{{ survey.surveyquestion_set.first.get_absolute_url }}">
-                {{ survey.name }}
-            </a>
+            {% if survey.surveyquestion_set.first.has_multiple_choice %}
+                <p>
+                <a class="title"
+                   href="{% url 'heart-disease-survey-multiple-choice' %}?question_id={{ survey.surveyquestion_set.first.pk }}">
+                    {{ survey.name }}
+                </a>
             </p>
+            {% else %}
+            <p>
+                <a class="title"
+                   href="{% url 'heart-disease-survey' %}?question_id={{ survey.surveyquestion_set.first.pk }}">
+                    {{ survey.name }}
+                </a>
+            </p>
+            {% endif %}
         {% endfor %}
 
     </div>

@@ -363,9 +363,9 @@ class SurveyQuestion(models.Model):
 
     def get_absolute_url(self):
         if self.has_multiple_choice:
-            return reverse_lazy("heart-disease-survey-multiple-choice", kwargs={"pk": self.pk})
+            return reverse_lazy("heart-disease-survey-multiple-choice") + f"?question_id={self.pk}"
 
-        return reverse_lazy("heart-disease-survey", kwargs={"pk": self.pk})
+        return reverse_lazy("heart-disease-survey") + f"?question_id={self.pk}"
 
     def get_next_question(self):
         all_questions = self.survey.surveyquestion_set.all()
