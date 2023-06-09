@@ -55,7 +55,6 @@ class ECGInline(admin.StackedInline):
 class PatientAdmin(admin.ModelAdmin):
     list_display = [
         "id",
-        "name",
     ]
 
     inlines = [

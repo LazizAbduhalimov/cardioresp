@@ -12,7 +12,6 @@ from .utils import get_verbose_name
 
 
 class Patient(models.Model):
-    name = models.CharField(_("Имя"), max_length=255, default="")
     sex = models.CharField(_("Пол"), max_length=1, default="M", choices=sex_choices)
     age = models.CharField(_("Возраст"), default="", max_length=3, choices=age_choices)
     congestive_heart_failure = models.BooleanField(_("ОСН"), default=False)

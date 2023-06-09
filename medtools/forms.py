@@ -12,7 +12,6 @@ class PatientCreateForm(forms.ModelForm):
         fields = "__all__"
 
         widgets = {
-            'name': forms.TextInput(attrs={"class": "form-control", 'rows': 3}),
             'sex': forms.Select(attrs={"class": "form-control", }),
             'age': forms.Select(attrs={"class": "form-control", }),
             'heart_rate': forms.TextInput(attrs={"class": "form-control", 'rows': 3}),
