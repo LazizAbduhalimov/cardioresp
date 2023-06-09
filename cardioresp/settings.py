@@ -31,7 +31,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 INSTALLED_APPS = [
     'modeltranslation',
-    #'jazzmin',
+    'jazzmin',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
-    # extra apps
+]
+
+EXTRA_APPS = [
     'ckeditor',
     'django_unused_media',
     'django_countries',
@@ -56,7 +58,7 @@ CUSTOM_APPS = [
     'profiles',
     'medtools',
 ]
-INSTALLED_APPS += CUSTOM_APPS
+INSTALLED_APPS += EXTRA_APPS + CUSTOM_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
