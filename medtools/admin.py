@@ -22,7 +22,7 @@ class ImmunologicalResearchInline(admin.StackedInline):
 
 
 class PilidogramInline(admin.StackedInline):
-    model = Pilidogram
+    model = Lipidogram
     extra = 0
     max_num = 1
 

@@ -73,16 +73,16 @@ class BodyMassIndexForm(forms.ModelForm):
         }
 
 
-class PilidogramForm(forms.ModelForm):
+class LipidogramForm(forms.ModelForm):
     class Meta:
-        model = Pilidogram
+        model = Lipidogram
         exclude = ["patient"]
         widgets = {
             'HS': forms.NumberInput(attrs={"class": "form-control"}),
-            'HS_LLNP': forms.NumberInput(attrs={"class": "form-control"}),
-            'HS_LLVP': forms.NumberInput(attrs={"class": "form-control"}),
+            'HS_LPNP': forms.NumberInput(attrs={"class": "form-control"}),
+            'HS_LPVP': forms.NumberInput(attrs={"class": "form-control"}),
             'TG': forms.NumberInput(attrs={"class": "form-control"}),
-            'KAT': forms.NumberInput(attrs={"class": "form-control"}),
+            'KA': forms.NumberInput(attrs={"class": "form-control"}),
         }
 
 
@@ -94,7 +94,7 @@ class BiochemicalBloodAnalysisForm(forms.ModelForm):
             'ALAT': forms.NumberInput(attrs={"class": "form-control"}),
             'ACAT': forms.NumberInput(attrs={"class": "form-control"}),
             'HS_LLVP': forms.NumberInput(attrs={"class": "form-control"}),
-            'creotenin': forms.NumberInput(attrs={"class": "form-control"}),
+            'creatinin': forms.NumberInput(attrs={"class": "form-control"}),
             'urea': forms.NumberInput(attrs={"class": "form-control"}),
             'uric_acid': forms.NumberInput(attrs={"class": "form-control"}),
             'bilirubin_common': forms.NumberInput(attrs={"class": "form-control"}),
@@ -175,8 +175,8 @@ class BodyMassIndexInLine(InlineFormSetFactory):
 
 
 class PilidogramInLine(InlineFormSetFactory):
-    form_class = PilidogramForm
-    model = Pilidogram
+    form_class = LipidogramForm
+    model = Lipidogram
 
 
 class BiochemicalBloodAnalysisInLine(InlineFormSetFactory):

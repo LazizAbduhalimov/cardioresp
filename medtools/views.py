@@ -40,6 +40,7 @@ class HeartDiseaseToolUpdatePage(NamedFormsetsMixin, MenuMixin, UpdateWithInline
         context = super(HeartDiseaseToolUpdatePage, self).get_context_data(**kwargs)
         surveys = Survey.objects.all().distinct()
         context["surveys"] = surveys
+        print(self.object.get_overall_score())
         surveys_result = list()
         patient_id = self.request.session.get("patient_id")
         for survey in surveys:

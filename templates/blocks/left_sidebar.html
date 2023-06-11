@@ -54,12 +54,5 @@
             </ul>
         </div>
     </div>
-    <div class="pkp_block block_information">
-        {% if patient_id %}
-            <a href="{% url 'heart-disease-tool-update' patient_id %}"><span class="title">{% trans "Инструменты" %}</span></a>
-        {% else %}
-            <a href="{% url 'heart-disease-tool' %}"><span class="title">{% trans "Инструменты" %}</span></a>
-        {% endif %}
-    </div>
 </div>
 <!-- pkp_sidebar.left -->

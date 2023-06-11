@@ -32,6 +32,21 @@
                     <li class>
                         <a href="{% url 'issue' %}"> {% trans "Выпуски" %} </a>
                     </li>
+                    <li class>
+                        <a href=""> {% trans "Инструменты" %} </a>
+
+                        <ul>
+                            <li>
+                                {% if patient_id %}
+                                    <a href="{% url 'heart-disease-tool-update' patient_id %}"><span
+                                            class="title">{% trans "Прогнозирование коронарной болезни сердца в зависимости от психоэмоционального состояния" %}</span></a>
+                                {% else %}
+                                    <a href="{% url 'heart-disease-tool' %}"><span
+                                            class="title">{% trans "Инструменты" %}</span></a>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </li>
                     {% if user.is_staff %}
                         <li class>
                             <a href="/admin/"> {% trans "Админ панель" %} </a>

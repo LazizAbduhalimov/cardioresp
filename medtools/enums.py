@@ -20,8 +20,8 @@ class AgeEnum(str, Enum):
 
 
 age_choices = [
-    (AgeEnum.under60.value, _('Старше 60')),
-    (AgeEnum.above60.value, _('Младше 60')),
+    (AgeEnum.above60.value, _('Старше 60')),
+    (AgeEnum.under60.value, _('Младше 60')),
 ]
 
 

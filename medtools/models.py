@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.db import models
@@ -6,7 +7,7 @@ from registration.models import User
 from .enums import (
     sex_choices, age_choices, social_status_choices,
     pain_duration_choices, mk_choices, genetic_choices,
-    coronary_angiography_choices, ECG_choices, genetic_alt_choices, PainDurationEnum, SexEnum
+    coronary_angiography_choices, ECG_choices, genetic_alt_choices, PainDurationEnum, SexEnum, SocialStatusEnum, AgeEnum
 )
 from .utils import get_verbose_name
 
@@ -27,6 +28,28 @@ class Patient(models.Model):
 
     def get_absolute_url(self):
         return reverse_lazy("heart-disease-tool-update", kwargs={"pk": self.pk})
+
+    def get_overall_score(self):
+        result = 0
+        if self.sex == SexEnum.man.value:
+            result += 1
+        if self.social_position == SocialStatusEnum.dissatisfied.value:
+            result += 1
+        if self.age == AgeEnum.above60.value:
+            result += 1
+
+        result += int(self.congestive_heart_failure) + int(self.chronic_heart_failure) + \
+                  int(self.heart_rhythm_disturbances) + int(self.congestive_pneumonia) + \
+                  int(self.underlying_disease)
+
+        result += self.geneticresearch.get_total_mark()
+        result += self.coronaryangiography.get_total_mark()
+        try:
+            result += self.bodymassindex.get_total_mark()
+        except ObjectDoesNotExist:
+            pass
+
+        return result
 
     def get_heart_rate_disease(self):
         if self.heart_rate < 60:
@@ -137,7 +160,7 @@ class GeneticResearch(models.Model):
     patient = models.OneToOneField(Patient, verbose_name="Пациент", on_delete=models.CASCADE)
 
     IL_1b_511_TC = models.CharField(_("IL-1β 511 T/C (rs16944)"), max_length=3, default="", choices=genetic_choices)
-    IL_4_TC = models.CharField(_("IL-1β 511 T/C (rs2243250)"), max_length=3, default="", choices=genetic_choices)
+    IL_4_TC = models.CharField(_("IL-4 С/Т (rs2243250)"), max_length=3, default="", choices=genetic_choices)
     IL_10_819_CT = models.CharField(_("IL-10 819 C/T (rs1800871)"), max_length=3, default="", choices=genetic_choices)
     TNF_a_GA = models.CharField(_("TNF-α G/A 308 (rs1800629)"), max_length=3, default="", choices=genetic_alt_choices)
 
@@ -180,42 +203,27 @@ class ImmunologicalResearch(models.Model):
         return "{}".format(self.id)
 
 
-class Pilidogram(models.Model):
+class Lipidogram(models.Model):
     patient = models.OneToOneField(Patient, verbose_name="Пациент", on_delete=models.CASCADE)
 
     HS = models.FloatField(_("Общий ХС ммоль/г"), default=0)
-    HS_LLNP = models.FloatField(_("ХС ЛЛНП. ммоль/г"), default=0)
-    HS_LLVP = models.FloatField(_("ХС ЛЛВП. ммоль/г"), default=0)
+    HS_LPNP = models.FloatField(_("ХС ЛПНП. ммоль/г"), default=0)
+    HS_LPVP = models.FloatField(_("ХС ЛПВП. ммоль/г"), default=0)
     TG = models.FloatField(_("ТГ. ммоль/г"), default=0)
-    KAT = models.FloatField(_("КАТ"), default=0)
-
-    def is_HS_normalized(self):
-        return check_btw_nums(self.HS, 2.2, 3.5)
-
-    def is_HS_LLNP_normalized(self):
-        return check_btw_nums(self.HS, 2.2, 3.5)
-
-    def is_HS_LLVP_normalized(self):
-        return check_btw_nums(self.HS, 2.2, 3.5)
-
-    def is_TG_normalized(self):
-        return check_btw_nums(self.HS, 2.2, 3.5)
-
-    def is_KAT_normalized(self):
-        return check_btw_nums(self.HS, 2.2, 3.5)
+    KA = models.FloatField(_("КА"), default=0)
 
     def get_disease_list(self):
         result = list()
 
-        if (self.KAT > 5 or
-              self.HS_LLNP > 4.9 or
-              ((self.patient.sex == SexEnum.man.value and self.HS_LLVP < 1.16) or
-               self.patient.sex == SexEnum.woman.value and self.HS_LLVP < 0.9)):
+        if (self.KA > 5 or
+                self.HS_LPNP > 4.9 or
+                ((self.patient.sex == SexEnum.man.value and self.HS_LPVP < 1.16) or
+                 self.patient.sex == SexEnum.woman.value and self.HS_LPVP < 0.9)):
             result.append("Атеросклероз")
-        elif 3 < self.KAT < 4:
+        elif 3 < self.KA < 4:
             result.append("Присутствует риск атеросклероза и ишемической болезни сердца")
 
-        if self.KAT > 3.5 and self.TG > 2.8 and self.HS_LLVP < 1 and self.HS_LLNP > 3.37 and self.HS > 5.6:
+        if self.KA > 3.5 and self.TG > 2.8 and self.HS_LPVP < 1 and self.HS_LPNP > 3.37 and self.HS > 5.6:
             result.append("Дислипидемия")
 
         return result
@@ -228,10 +236,23 @@ class BodyMassIndex(models.Model):
     patient = models.OneToOneField(Patient, verbose_name="Пациент", on_delete=models.CASCADE)
 
     height = models.FloatField(_("Рост (cм)"), default=0)
-    mass = models.FloatField(_("Mass (кг)"), default=0)
+    mass = models.FloatField(_("Масса (кг)"), default=0)
 
     def get_mass_index(self):
         return self.mass / ((self.height / 100) ** 2)
+
+    def get_total_mark(self):
+        mass_index = self.get_mass_index()
+        if mass_index < 25:
+            return 0
+        if mass_index < 30:
+            return 1
+        elif mass_index < 35:
+            return 2
+        elif mass_index < 40:
+            return 3
+        else:
+            return 4
 
     def get_mass_disease(self):
         mass_index = self.get_mass_index()
@@ -259,12 +280,12 @@ class BiochemicalBloodAnalysis(models.Model):
 
     ALAT = models.FloatField(_("АЛАТ (U/L)"), default=0)
     ACAT = models.FloatField(_("АСАТ(U/L)"), default=0)
-    creotenin = models.FloatField(_("Креотенин (мкмоль/л)"), default=0)
-    urea = models.FloatField(_("Мочевина Креотенин (мкмоль/л)"), default=0)
+    creatinin = models.FloatField(_("Креатинин (мкмоль/л)"), default=0)
+    urea = models.FloatField(_("Мочевина (мкмоль/л)"), default=0)
     uric_acid = models.FloatField(_("Мочевая кислота(мкмоль/л)"), default=0)
-    bilirubin_common = models.FloatField(_("Билурибин общий (мкмоль/л)"), default=0)
-    bilirubin_direct = models.FloatField(_("Билурибин прямой (мкмоль/л)"), default=0)
-    bilirubin_indirect = models.FloatField(_("Билурибин непрямой (мкмоль/л)"), default=0)
+    bilirubin_common = models.FloatField(_("Билирубин общий (мкмоль/л)"), default=0)
+    bilirubin_direct = models.FloatField(_("Билирубин прямой (мкмоль/л)"), default=0)
+    bilirubin_indirect = models.FloatField(_("Билирубин непрямой (мкмоль/л)"), default=0)
     glucose = models.FloatField(_("Глюкоза (мкмоль/л)"), default=0)
 
     def get_disease_list(self):
@@ -290,7 +311,7 @@ class CoronaryAngiography(models.Model):
     field = models.CharField(_("Количество поражений КА"), default="", max_length=1,
                              choices=coronary_angiography_choices)
 
-    def get_coronary_mark(self):
+    def get_total_mark(self):
         return int(self.field)
 
     def __str__(self):
@@ -372,7 +393,7 @@ class SurveyQuestion(models.Model):
         for i in range(0, len(all_questions)):
             if all_questions[i] == self:
                 try:
-                    return all_questions[i+1].get_absolute_url()
+                    return all_questions[i + 1].get_absolute_url()
                 except IndexError:
                     return None
 
