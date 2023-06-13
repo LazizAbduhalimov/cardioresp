@@ -26,6 +26,8 @@ class Patient(models.Model):
                                      choices=pain_duration_choices)
     heart_rate = models.FloatField("ЧСС", default=0)
 
+    MAX_SCORE = 28
+
     def get_absolute_url(self):
         return reverse_lazy("heart-disease-tool-update", kwargs={"pk": self.pk})
 
@@ -51,6 +53,17 @@ class Patient(models.Model):
 
         return result
 
+    def get_risk_group(self):
+        def get_percentage_of_score():
+            return self.get_overall_score() / self.MAX_SCORE
+
+        if get_percentage_of_score() < 1/3:
+            return "Группа низкого риска"
+        if get_percentage_of_score() < 2/3:
+            return "Группа среднего риска"
+        if get_percentage_of_score() <= 1:
+            return "Группа высокого риска"
+
     def get_heart_rate_disease(self):
         if self.heart_rate < 60:
             return "Брадикардия"
@@ -68,7 +81,6 @@ class Patient(models.Model):
     def get_disease_list(self):
         result = list()
         result.append(self.get_heart_rate_disease())
-        result.append(self.get_pain_duration_text())
         if self.congestive_heart_failure:
             txt = get_verbose_name(self, "congestive_heart_failure")
             result.append(txt)
@@ -288,6 +300,33 @@ class BiochemicalBloodAnalysis(models.Model):
     bilirubin_indirect = models.FloatField(_("Билирубин непрямой (мкмоль/л)"), default=0)
     glucose = models.FloatField(_("Глюкоза (мкмоль/л)"), default=0)
 
+    def is_alat_normalized(self):
+        if ((self.ALAT < 34 and self.patient.sex == SexEnum.woman.value) or
+            (self.ALAT < 45 and self.patient.sex == SexEnum.man.value)):
+            return True
+
+        return False
+
+    def is_acat_normalized(self):
+        if ((self.ALAT < 31 and self.patient.sex == SexEnum.woman.value) or
+                (self.ALAT < 35 and self.patient.sex == SexEnum.man.value)):
+            return True
+
+        return False
+
+    def is_glucose_normalized(self):
+        if 3.89 < self.bilirubin_common < 5.83:
+            return True
+
+        return False
+
+    def is_bilirubin_common_normalized(self):
+        if 0 < self.bilirubin_common < 20.5:
+            return True
+
+        return False
+
+
     def get_disease_list(self):
         result = list()
         if ((self.patient.sex == SexEnum.man.value and self.uric_acid > 432) or
@@ -298,6 +337,15 @@ class BiochemicalBloodAnalysis(models.Model):
             result.append("нарушение толерантности к глюкозе")
         elif self.glucose > 5.83:
             result.append("сахарный диабет")
+
+        return result
+
+    def get_recommendation_list(self):
+        result = list()
+        if not (self.is_alat_normalized() and self.is_acat_normalized() and self.is_bilirubin_common_normalized()):
+            result.append("Rонсультация гепатолога")
+        if not self.is_glucose_normalized():
+            result.append("Консультация эндокринолога")
 
         return result
 
