@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.http import Http404
 from django.views.generic import FormView
 from extra_views import UpdateWithInlinesView, CreateWithInlinesView, NamedFormsetsMixin
@@ -49,6 +50,7 @@ class HeartDiseaseToolUpdatePage(NamedFormsetsMixin, MenuMixin, UpdateWithInline
         patient_id = self.request.session.get("patient_id")
         for survey in surveys:
             overall_score = survey.get_overall_score(patient_id)
+            print(survey.name, overall_score)
             survey_results_set = survey.surveyresult_set.all()
 
             if survey_results_set.first() is None:
@@ -79,6 +81,10 @@ class SurveyView(MenuMixin, FormView):
         question_id = self.request.GET.get("question_id", None)
         url = SurveyQuestion.objects.get(id=question_id).get_next_question()
         if url is None:
+            messages.add_message(
+                self.request, messages.SUCCESS,
+                "Опросник пройден"
+            )
             return reverse_lazy("heart-disease-tool-update", kwargs={"pk": self.request.session.get("patient_id")})
 
         return url

@@ -388,7 +388,7 @@ class Survey(models.Model):
 
     def get_overall_score(self, patient_id):
         question_number = len(self.surveyquestion_set.all())
-        answers = SurveyAnswer.objects.filter(patient_id=patient_id)[:question_number]
+        answers = SurveyAnswer.objects.filter(patient_id=patient_id, choice__question__survey=self)[:question_number]
         if len(answers) < question_number:
             return
 
@@ -482,6 +482,8 @@ class SurveyAnswer(models.Model):
     patient = models.ForeignKey(Patient, verbose_name="Пациент", on_delete=models.CASCADE, null=True)
     choice = models.ForeignKey(SurveyQuestionChoices, verbose_name="Выбор", on_delete=models.CASCADE, null=True)
 
+    def __str__(self):
+        return f"{self.pk}-{self.choice.choice_text}"
     class Meta:
         ordering = ["-id"]
 
