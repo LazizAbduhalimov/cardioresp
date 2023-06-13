@@ -1,5 +1,5 @@
 from django.http import Http404
-from django.views.generic import ListView, DetailView, FormView, CreateView
+from django.views.generic import FormView
 from extra_views import UpdateWithInlinesView, CreateWithInlinesView, NamedFormsetsMixin
 
 from main_app.utils import MenuMixin
@@ -26,6 +26,11 @@ class HeartDiseaseToolPage(NamedFormsetsMixin, MenuMixin, CreateWithInlinesView)
     def get_success_url(self):
         return self.object.get_absolute_url()
 
+    def form_valid(self, form):
+        form.save()
+        self.request.session["patient_id"] = self.object.pk
+        return super(HeartDiseaseToolPage, self).form_valid(form)
+
 
 class HeartDiseaseToolUpdatePage(NamedFormsetsMixin, MenuMixin, UpdateWithInlinesView):
     model = Patient
@@ -40,7 +45,6 @@ class HeartDiseaseToolUpdatePage(NamedFormsetsMixin, MenuMixin, UpdateWithInline
         context = super(HeartDiseaseToolUpdatePage, self).get_context_data(**kwargs)
         surveys = Survey.objects.all().distinct()
         context["surveys"] = surveys
-        print(self.object.get_overall_score())
         surveys_result = list()
         patient_id = self.request.session.get("patient_id")
         for survey in surveys:
@@ -92,7 +96,6 @@ class SurveyView(MenuMixin, FormView):
             raise Http404()
 
         context["question"] = SurveyQuestion.objects.get(id=question_id)
-        context["me"] = 1
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
 
