@@ -49,6 +49,7 @@ EXTRA_APPS = [
     'debug_toolbar',
     'extra_views',
     'nested_admin',
+    'import_export',
 ]
 
 CUSTOM_APPS = [

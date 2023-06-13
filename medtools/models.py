@@ -28,6 +28,10 @@ class Patient(models.Model):
 
     MAX_SCORE = 28
 
+    class Meta:
+        verbose_name = "Пациента"
+        verbose_name_plural = "Пациенты"
+
     def get_absolute_url(self):
         return reverse_lazy("heart-disease-tool-update", kwargs={"pk": self.pk})
 
@@ -378,6 +382,10 @@ class ECG(models.Model):
 class Survey(models.Model):
     name = models.CharField(_("Название"), max_length=255, default="")
 
+    class Meta:
+        verbose_name = "Опросник"
+        verbose_name_plural = "Опросники"
+
     def get_overall_score(self, patient_id):
         question_number = len(self.surveyquestion_set.all())
         answers = SurveyAnswer.objects.filter(patient_id=patient_id)[:question_number]
@@ -420,6 +428,10 @@ class SurveyResult(models.Model):
     mark_from = models.IntegerField(_("Мин балл для вывода"), default=0)
     mark_to = models.IntegerField(_("Макс балл для вывода"), default=0)
 
+    class Meta:
+        verbose_name = "Результат для опросника"
+        verbose_name_plural = "Результаты для опросников"
+
     def __str__(self):
         return self.text
 
@@ -428,6 +440,10 @@ class SurveyQuestion(models.Model):
     survey = models.ForeignKey(Survey, verbose_name="Опросник", on_delete=models.CASCADE)
     question = models.TextField("Вопрос", default="")
     has_multiple_choice = models.BooleanField(_("Множественный выбор"), default=False)
+
+    class Meta:
+        verbose_name = "Вопрос опросника"
+        verbose_name_plural = "Вопросы для опросников"
 
     def get_absolute_url(self):
         if self.has_multiple_choice:
