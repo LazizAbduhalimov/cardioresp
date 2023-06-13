@@ -470,6 +470,10 @@ class SurveyQuestionChoices(models.Model):
     question = models.ForeignKey(SurveyQuestion, verbose_name="Вопрос", on_delete=models.CASCADE, null=True)
     mark = models.SmallIntegerField("Балл", default=0)
 
+    class Meta:
+        verbose_name = "Выбор для вопроса"
+        verbose_name_plural = "Выборы для вопросов"
+        
     def __str__(self):
         return self.choice_text
 

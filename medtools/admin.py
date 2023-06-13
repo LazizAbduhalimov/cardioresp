@@ -34,9 +34,20 @@ class SurveyResultResource(resources.ModelResource):
         model = SurveyResult
 
 
+class SurveyAnswerChoicesResource(resources.ModelResource):
+    class Meta:
+        model = SurveyQuestionChoices
+
+
 @admin.register(SurveyQuestion)
 class SurveyQuestionAdmin(ImportExportModelAdmin):
     resource_classes = [SurveyQuestionResource]
+    list_per_page = 30
+
+
+@admin.register(SurveyQuestionChoices)
+class SurveyQuestionChoicesAdmin(ImportExportModelAdmin):
+    resource_classes = [SurveyAnswerChoicesResource]
     list_per_page = 30
 
 
