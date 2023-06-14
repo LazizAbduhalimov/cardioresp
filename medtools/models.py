@@ -118,7 +118,7 @@ class Echocardiography(models.Model):
     ejection_fraction = models.FloatField(_("ФВЛЖ (%)"), default=0)
     kcr = models.FloatField(_("КСР (см)"), default=0)
     kdr = models.FloatField(_("КДР (см)"), default=0)
-    eslj = models.FloatField(_("ЭСЛЖ (см)"), default=0)
+    eslj = models.FloatField(_("ЗСЛЖ (см)"), default=0)
     mjp = models.FloatField(_("МЖП (см)"), default=0)
     pj = models.FloatField(_("ПЖ (см)"), default=0)
     mk = models.CharField(_("МК (см)"), max_length=6, default="", choices=mk_choices)
@@ -158,7 +158,7 @@ class Echocardiography(models.Model):
         if not self.is_kdr_normalized():
             result.append("Увеличение размеров сердца")
         if not self.is_eslj_normalized():
-            result.append("ЭСЛЖ ненормирован")
+            result.append("ЗСЛЖ ненормирован")
         if not self.is_mjp_normalized():
             result.append("МЖП ненормирован")
         if not self.is_pj_normalized():
@@ -338,9 +338,9 @@ class BiochemicalBloodAnalysis(models.Model):
             result.append("Гиперурикемия")
 
         if self.glucose > 7:
-            result.append("нарушение толерантности к глюкозе")
+            result.append("Сахарный диабет")
         elif self.glucose > 5.83:
-            result.append("сахарный диабет")
+            result.append("Нарушение толерантности к глюкозе")
 
         return result
 

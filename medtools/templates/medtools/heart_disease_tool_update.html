@@ -3,7 +3,6 @@
 {% block title %} Прогнозирование коронарной болезни сердца в зависимости от психоэмоционального
     состояния
 {% endblock %}
-
 {% block content %}
     <div class="container">
         <form action="" method="post" enctype="multipart/form-data">
@@ -22,63 +21,87 @@
                     {{ form.as_p }}
                 </div>
                 <div class="col">
-                    <h2></h2>
-                    <p class="h6">
+
                     <ul class="list-group">
 
-                        {% for disease in patient.get_disease_list %}
-                            {% if disease %}
-                                <li class="list-group-item list-group-item-danger">{{ disease }}</li>
-                            {% endif %}
-                        {% endfor %}
+                        <li class="list-group-item list-group-item-danger">{{ patient.get_pain_duration_text }}, {{ patient.ecg.get_field_display }}</li>
 
-                        {% if patient.get_risk_group %}
-                            <li class="list-group-item list-group-item-danger">{{ patient.get_risk_group }}</li>
+                        <p>
+                            <a class="btn btn-danger" data-bs-toggle="collapse" href="#collapseExample11" role="button"
+                               aria-expanded="false" aria-controls="collapseExample">
+                                Осложнения
+                            </a>
+                        </p>
+                        <div class="collapse" id="collapseExample11">
+                            {% for disease in patient.get_disease_list %}
+                                {% if disease %}
+                                    <li class="list-group-item list-group-item-danger">{{ disease }}</li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if patient.get_risk_group %}
+                                <li class="list-group-item list-group-item-danger">{{ patient.get_risk_group }}</li>
+                            {% endif %}
+
+                            {% if object.bodymassindex.get_mass_disease %}
+                                <li class="list-group-item list-group-item-danger">{{ patient.bodymassindex.get_mass_disease }}</li>
+                            {% endif %}
+
+                            {% for disease in patient.immunologicalresearch.get_disease_list %}
+                                {% if disease %}
+                                    <li class="list-group-item list-group-item-danger">{{ disease }}</li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% for disease in patient.biochemicalbloodanalysis.get_disease_list %}
+                                {% if disease %}
+                                    <li class="list-group-item list-group-item-danger">{{ disease }}</li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% for disease in patient.lipidogram.get_disease_list %}
+                                {% if disease %}
+                                    <li class="list-group-item list-group-item-danger">{{ disease }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <p>
+                            <a class="btn btn-danger" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                               aria-expanded="false" aria-controls="collapseExample">
+                                Показатели ЭХОКГ
+                            </a>
+                        </p>
+                        <div class="collapse" id="collapseExample">
+                            {% for disease in patient.echocardiography.get_disease_list %}
+                                {% if disease %}
+                                    <li class="list-group-item list-group-item-danger">{{ disease }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+                        {% if surveys_result and INSD and PRI %}
+                            <p>
+                                <a class="btn btn-danger" data-bs-toggle="collapse" href="#collapseExample10"
+                                   role="button"
+                                   aria-expanded="false" aria-controls="collapseExample">
+                                    Результаты опросников
+                                </a>
+                            </p>
+                            <div class="collapse" id="collapseExample10">
+                                {% for result in surveys_result %}
+                                    <li class="list-group-item list-group-item-danger">{{ result }}</li>
+                                {% endfor %}
+
+                                {% if INSD %}
+                                    <li class="list-group-item list-group-item-danger">ИЧВД: {{ INSD }}</li>
+                                {% endif %}
+
+                                {% if PRI %}
+                                    <li class="list-group-item list-group-item-danger">РИБ: {{ PRI }}</li>
+                                {% endif %}
+                            </div>
                         {% endif %}
-
-                        {% for disease in patient.echocardiography.get_disease_list %}
-                            {% if disease %}
-                                <li class="list-group-item list-group-item-danger">{{ disease }}</li>
-                            {% endif %}
-                        {% endfor %}
-
-                        {% for disease in patient.immunologicalresearch.get_disease_list %}
-                            {% if disease %}
-                                <li class="list-group-item list-group-item-danger">{{ disease }}</li>
-                            {% endif %}
-                        {% endfor %}
-
-                        {% for disease in patient.biochemicalbloodanalysis.get_disease_list %}
-                            {% if disease %}
-                                <li class="list-group-item list-group-item-danger">{{ disease }}</li>
-                            {% endif %}
-                        {% endfor %}
-
-                        {% for disease in patient.pilidogram.get_disease_list %}
-                            {% if disease %}
-                                <li class="list-group-item list-group-item-danger">{{ disease }}</li>
-                            {% endif %}
-                        {% endfor %}
-
-                        {% if object.bodymassindex.get_mass_disease %}
-                            <li class="list-group-item list-group-item-danger">{{ patient.bodymassindex.get_mass_disease }}</li>
-                        {% endif %}
-
-                        {% for result in surveys_result %}
-                            <li class="list-group-item list-group-item-danger">{{ result }}</li>
-                        {% endfor %}
-
-                        {% if INSD %}
-                            <li class="list-group-item list-group-item-danger">ИЧВД: {{ INSD }}</li>
-                        {% endif %}
-
-                        {% if PRI %}
-                            <li class="list-group-item list-group-item-danger">РИБ: {{ PRI }}</li>
-                        {% endif %}
-                        <li class="list-group-item list-group-item-danger">{{ patient.get_pain_duration_text }}</li>
-                        <li class="list-group-item list-group-item-danger">{{ patient.ecg.get_field_display }}</li>
                     </ul>
-                    </p>
                 </div>
             </div>
             {% include "medtools/blocks/analisys_formset.html" %}
@@ -86,7 +109,6 @@
             <button class="btn btn-dark" type="submit">{% trans "Изменить" %}</button>
         </form>
         <hr>
-
         <h2>Опросники</h2>
         {% for survey in surveys %}
             {% if survey.surveyquestion_set.first.has_multiple_choice %}
