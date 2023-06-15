@@ -1,4 +1,5 @@
 {% extends "main_app/base.html" %}
+{% load static %}
 {% load i18n %}
 {% block title %} Прогнозирование коронарной болезни сердца в зависимости от психоэмоционального
     состояния
@@ -6,6 +7,10 @@
 
 {% block content %}
     <div class="container">
+        <div class="homepage_image">
+            <img src="{% static 'images/medtool_poster.jpg' %}" alt/>
+        </div>
+        <br>
         <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="row">
