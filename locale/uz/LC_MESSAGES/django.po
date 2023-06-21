@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-07 19:40+0500\n"
+"POT-Creation-Date: 2023-06-17 15:48+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -63,7 +63,7 @@ msgstr "Kalit so'zlar"
 #: .\blogs\models.py:182 .\blogs\templates\blogs\article.html:90
 #: .\profiles\templates\profiles\article_reviewing.html:68
 #: .\profiles\templates\profiles\article_update_review.html:68
-#: .\templates\blocks\left_sidebar.html:51
+#: .\templates\blocks\left_sidebar.html:52
 msgid "Ключевые слова"
 msgstr "Kalit so'zlar"
 
@@ -95,7 +95,7 @@ msgstr "Ko'rishlar"
 msgid "Архивы | Cardioresp"
 msgstr "Arxivlar | Cardioresp"
 
-#: .\blogs\templates\blogs\archives.html:10 .\templates\blocks\header.html:30
+#: .\blogs\templates\blogs\archives.html:10 .\templates\blocks\header.html:33
 msgid "Выпуски"
 msgstr "Nashrlar"
 
@@ -126,25 +126,25 @@ msgstr "Nashr qilingan"
 msgid "Выпуск"
 msgstr "Chiqarish"
 
-#: .\cardioresp\settings.py:123
+#: .\cardioresp\settings.py:129
 msgid "Russian"
 msgstr "Russian"
 
-#: .\cardioresp\settings.py:124
+#: .\cardioresp\settings.py:130
 msgid "English"
 msgstr "English"
 
-#: .\cardioresp\settings.py:125
+#: .\cardioresp\settings.py:131
 msgid "Uzbek"
 msgstr "Uzbek"
 
 #: .\main_app\templates\main_app\authors.html:4
-#: .\templates\blocks\left_sidebar.html:48
+#: .\templates\blocks\left_sidebar.html:49
 msgid "Авторы"
 msgstr ""
 
 #: .\main_app\templates\main_app\editorial_page.html:4
-#: .\templates\blocks\header.html:25
+#: .\templates\blocks\header.html:28
 msgid "Редакция"
 msgstr "Mualliflar"
 
@@ -154,7 +154,7 @@ msgstr "Qidiruv"
 
 #: .\main_app\templates\main_app\search.html:28
 #: .\main_app\templates\main_app\search.html:52
-#: .\templates\blocks\header.html:55 .\templates\blocks\header.html:58
+#: .\templates\blocks\header.html:73 .\templates\blocks\header.html:76
 msgid "Найти"
 msgstr "Topish"
 
@@ -183,14 +183,22 @@ msgid "Отправка материалов"
 msgstr "Materiallarni yuborish"
 
 #: .\main_app\templates\main_app\submission.html:16
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "Нажмите <a href=\"%(create_url)s\">сюда</a> для отправки материала.\n"
+#| "        "
 msgid ""
-"Нажмите <a href=\"%(create_url)s\">сюда</a> для отправки "
+"\n"
+"            Нажмите <a href=\"%(create_url)s\">сюда</a> для отправки "
 "материала.\n"
 "        "
 msgstr ""
-"Materiallarni yuborish uchun  <a href=\" %(create_url) s\"> bu yerga</a> boisng "
-" "
+"\n"
+"            Нажмите <a href=\"%(create_url)s\">сюда</a> для отправки "
+"материала.\n"
+"        "
+"Materiallarni yuborish uchun  <a href=\" %(create_url) s\"> bu yerga</a> "
+"boisng  "
 
 #: .\main_app\templates\main_app\submission.html:22
 #, python-format
@@ -205,11 +213,11 @@ msgid ""
 msgstr ""
 "\n"
 "Materiallarni yuborish uchun siz bizning muallifimiz bo'lishingiz kerak.\n"
-"<a class=\"alert-link\" href=\"%(login_url) s\"> Tizimga kiring/a>"
-" yoki\n"
-"            <a class=\"alert-link\" href=\"%(registration_url)s"
-"\">Ro'yxatdan o'tish.</a>\n"
+"<a class=\"alert-link\" href=\"%(login_url) s\"> Tizimga kiring/a> yoki\n"
+"            <a class=\"alert-link\" href=\"%(registration_url)s\">Ro'yxatdan "
+"o'tish.</a>\n"
 "        "
+
 #: .\main_app\templates\main_app\submission.html:30
 #, python-format
 msgid ""
@@ -223,10 +231,450 @@ msgid ""
 msgstr ""
 "\n"
 "Materialni yuborish uchun sizga \n"
-"<a class=\"alert-link\" href= \"%(login_url) s\"> kirishingiz </a> kerak yoki "
-"            <a class=\"alert-link\" href=\"%(registration_url)s"
+"<a class=\"alert-link\" href= \"%(login_url) s\"> kirishingiz </a> kerak "
+"yoki             <a class=\"alert-link\" href=\"%(registration_url)s"
 "\">ro'yxatdan o'tishingiz.</a> kerak\n"
 "        "
+
+#: .\medtools\enums.py:12
+msgid "Мужчина"
+msgstr "Erkak "
+
+#: .\medtools\enums.py:13
+msgid "Женщина"
+msgstr "Ayol"
+
+#: .\medtools\enums.py:23
+msgid "Старше 60"
+msgstr "60 yoshdan katta"
+
+#: .\medtools\enums.py:24
+msgid "Младше 60"
+msgstr "60 yoshgacha"
+
+#: .\medtools\enums.py:34
+msgid "Удовлетворительно"
+msgstr "Qoniqarli"
+
+#: .\medtools\enums.py:35
+msgid "Неудовлетворительно"
+msgstr "Qonoqarsiz "
+
+#: .\medtools\enums.py:46
+msgid "Менее 20 минут"
+msgstr "20 daqiqacha"
+
+#: .\medtools\enums.py:47
+msgid "Более 20 минут"
+msgstr "20 daqiqadan ortiq"
+
+#: .\medtools\enums.py:48
+msgid "Более 24 часов"
+msgstr "24 soatdan ortiq"
+
+#: .\medtools\enums.py:58
+msgid "Не уплотнённый"
+msgstr "Qalinlashmagan"
+
+#: .\medtools\enums.py:59
+msgid "Уплотнённый"
+msgstr "Qalinlashgan"
+
+#: .\medtools\enums.py:105
+msgid "Подъём сегманта ST"
+msgstr "ST segmenti elevatsiyasi"
+
+#: .\medtools\enums.py:106
+msgid "Депрессия сегманта ST"
+msgstr "ST segmenti depressiyasi"
+
+#: .\medtools\enums.py:107
+msgid "Инверсия зубца T"
+msgstr "T tishchasi inversiyasi"
+
+#: .\medtools\models.py:16
+msgid "Пол"
+msgstr "Jinsi"
+
+#: .\medtools\models.py:17
+msgid "Возраст"
+msgstr "Yoshi"
+
+#: .\medtools\models.py:18
+msgid "ОСН"
+msgstr "O’YuYe"
+
+#: .\medtools\models.py:19
+msgid "ХСН"
+msgstr "SyuYe"
+
+#: .\medtools\models.py:20
+msgid "Нарушение ритма"
+msgstr "Yurak ritmining buzilishi"
+
+#: .\medtools\models.py:21
+msgid "Застойчивая пневмония"
+msgstr "Dimlangan zotiljam"
+
+#: .\medtools\models.py:22
+msgid "Фоновое заболевание"
+msgstr "Fon kasalligi"
+
+#: .\medtools\models.py:23
+msgid "Социальный статус"
+msgstr "Ijtimoiy holati"
+
+#: .\medtools\models.py:25
+msgid "Продолжительность боли"
+msgstr "Og’riqning davomiyligi"
+
+#: .\medtools\models.py:27
+msgid "ЧСС"
+msgstr "YUT"
+
+#: .\medtools\models.py:65
+msgid "Группа низкого риска"
+msgstr "Past xavf guruhi"
+
+#: .\medtools\models.py:67
+msgid "Группа среднего риска"
+msgstr "O'rta xavf guruhi"
+
+#: .\medtools\models.py:69
+msgid "Группа высокого риска"
+msgstr "Yuqori xavf guruhi"
+
+#: .\medtools\models.py:73
+msgid "Брадикардия"
+msgstr "Bradikardiya"
+
+#: .\medtools\models.py:75
+msgid "Тахикардия"
+msgstr "Taxikardiya"
+
+#: .\medtools\models.py:79
+msgid "Прогрессирующая стенокардия напряжения"
+msgstr "Avj olib boruvchi stenokardiya"
+
+#: .\medtools\models.py:81
+msgid "Острый коронарный синдром"
+msgstr "O'tkir koronar sindrom"
+
+#: .\medtools\models.py:83
+msgid "Острый инфаркт миокарда"
+msgstr "O'tkir miokard infarkti"
+
+#: .\medtools\models.py:117 .\medtools\models.py:176 .\medtools\models.py:191
+#: .\medtools\models.py:223 .\medtools\models.py:252 .\medtools\models.py:295
+#: .\medtools\models.py:360 .\medtools\models.py:373
+msgid "Пациент"
+msgstr "Bemor"
+
+#: .\medtools\models.py:118
+msgid "ФВЛЖ (%)"
+msgstr "Otish fraksiyasi (%)"
+
+#: .\medtools\models.py:119
+msgid "КСР (см)"
+msgstr "Oxirgi sistolik o’lchov (sm)"
+
+#: .\medtools\models.py:120
+msgid "КДР (см)"
+msgstr "Oxirgi diastolik o’lchov (sm)"
+
+#: .\medtools\models.py:121
+msgid "ЗСЛЖ (см)"
+msgstr "Chap qorincha orqa devori (sm)"
+
+#: .\medtools\models.py:122
+msgid "МЖП (см)"
+msgstr "Qorinchalar aro to’siq (sm)"
+
+#: .\medtools\models.py:123
+msgid "ПЖ (см)"
+msgstr "O’ng qorincha (sm)"
+
+#: .\medtools\models.py:124
+msgid "МК (см)"
+msgstr "Mitral klappan (sm)"
+
+#: .\medtools\models.py:125
+msgid "ЛП (см)"
+msgstr "Chap bo’lmacha (sm)"
+
+#: .\medtools\models.py:129
+msgid "Сердечная недостаточность"
+msgstr "Yurak yetishmovchiligi"
+
+#: .\medtools\models.py:131
+msgid "Сниженная ФВЛЖ"
+msgstr "Chap qorincha otish fraksiyasining pasayishi"
+
+#: .\medtools\models.py:157
+msgid "КСР ненормирован"
+msgstr "Oxirgi sistolik o'lchami normallashtirilmagan"
+
+#: .\medtools\models.py:159
+msgid "Увеличение размеров сердца"
+msgstr "Yurakning kengayishi"
+
+#: .\medtools\models.py:161
+msgid "ЗСЛЖ ненормирован"
+msgstr "Chap qorinchaning orqa devori anormal"
+
+#: .\medtools\models.py:163
+msgid "МЖП ненормирован"
+msgstr "Qorinchalar aro to'siq anormallik"
+
+#: .\medtools\models.py:165
+msgid "ПЖ ненормирован"
+msgstr "O'ng qorincha anormal"
+
+#: .\medtools\models.py:167
+msgid "ЛП ненормирован"
+msgstr "Chap bo'lmacha anormal"
+
+#: .\medtools\models.py:214
+msgid "Цитокиновый дисбаланс"
+msgstr "Sitokin nomutanosibligi"
+
+#: .\medtools\models.py:225
+msgid "Общий ХС ммоль/г"
+msgstr "Umumiy xolesterin (mmol/g)"
+
+#: .\medtools\models.py:226
+msgid "ХС ЛПНП. ммоль/г"
+msgstr "zichligi past bo'lgan lipoproteidlar (mmol/g)"
+
+#: .\medtools\models.py:227
+msgid "ХС ЛПВП. ммоль/г"
+msgstr "zichligi baland bo'lgan lipoproteidlar (mmol/g)"
+
+#: .\medtools\models.py:228
+msgid "ТГ. ммоль/г"
+msgstr "triglitseridlar (mmol/g)"
+
+#: .\medtools\models.py:229
+msgid "КА"
+msgstr "aterogenlik koeffitsienti"
+
+#: .\medtools\models.py:238
+msgid "Атеросклероз"
+msgstr "Ateroskleroz"
+
+#: .\medtools\models.py:240
+msgid "Присутствует риск атеросклероза и ишемической болезни сердца"
+msgstr "Ateroskleroz va yurak-qon tomir kasalliklari xavfi mavjud"
+
+#: .\medtools\models.py:243
+msgid "Дислипидемия"
+msgstr "Dislipidemiya"
+
+#: .\medtools\models.py:254
+msgid "Рост (cм)"
+msgstr "Boýi (sm)"
+
+#: .\medtools\models.py:255
+msgid "Масса (кг)"
+msgstr "Vazni (kg)"
+
+#: .\medtools\models.py:276
+msgid "Выраженный дефицит массы тела"
+msgstr "Tana vaznining aniq etishmasligi"
+
+#: .\medtools\models.py:278
+msgid "Недостаточная (дефицит) масса тела"
+msgstr "Tana vaznining etishmasligi (etishmasligi)"
+
+#: .\medtools\models.py:282
+msgid "Избыточная масса тела (предожирение)"
+msgstr "Massaning biroz ortiqcha bo'lishi, semirishgacha bo’lgan darajasi"
+
+#: .\medtools\models.py:284
+msgid "Ожирение первой степени"
+msgstr "Semirishning birinchi darajasi"
+
+#: .\medtools\models.py:286
+msgid "Ожирение второй степени"
+msgstr "Semirishning ikkinchi darajasi"
+
+#: .\medtools\models.py:288
+msgid "Ожирение третьей степени (морбидное)"
+msgstr "Semirishning uchinchi darajasi"
+
+#: .\medtools\models.py:297
+msgid "АЛАТ (U/L)"
+msgstr "ALAT (U/L)"
+
+#: .\medtools\models.py:298
+msgid "АСАТ(U/L)"
+msgstr "ASAT (U/L)"
+
+#: .\medtools\models.py:299
+msgid "Креатинин (мкмоль/л)"
+msgstr "Kreatinin (mkmol/l)"
+
+#: .\medtools\models.py:300
+msgid "Мочевина (мкмоль/л)"
+msgstr "Mochevina(mkmol/l)"
+
+#: .\medtools\models.py:301
+msgid "Мочевая кислота(мкмоль/л)"
+msgstr "Siydik kislotasi (mkmol/l)"
+
+#: .\medtools\models.py:302
+msgid "Билирубин общий (мкмоль/л)"
+msgstr "Bilirubin umumiy (mkmol/l)"
+
+#: .\medtools\models.py:303
+msgid "Билирубин прямой (мкмоль/л)"
+msgstr "Bilirubin to’g’ri(mkmol/l)"
+
+#: .\medtools\models.py:304
+msgid "Билирубин непрямой (мкмоль/л)"
+msgstr "Bilirubin noto’g’ri (mkmol/l)"
+
+#: .\medtools\models.py:305
+msgid "Глюкоза (мкмоль/л)"
+msgstr "Glukoza(mkmol/l)"
+
+#: .\medtools\models.py:337
+msgid "Гиперурикемия"
+msgstr "Giperurikemiya"
+
+#: .\medtools\models.py:340
+msgid "Сахарный диабет"
+msgstr "Qandli diabet"
+
+#: .\medtools\models.py:342
+msgid "Нарушение толерантности к глюкозе"
+msgstr "Glyukozaga tolerantlik buzilishi"
+
+#: .\medtools\models.py:349
+msgid "Консультация гепатолога"
+msgstr "Gepatolog maslahati"
+
+#: .\medtools\models.py:351
+msgid "Консультация эндокринолога"
+msgstr "Endokrinolog maslahati"
+
+#: .\medtools\models.py:362
+msgid "Количество поражений КА"
+msgstr "Koronar arteriya jarohatlanishi"
+
+#: .\medtools\models.py:375
+msgid "Поле"
+msgstr ""
+
+#: .\medtools\models.py:382
+msgid "Название"
+msgstr "Nomi"
+
+#: .\medtools\models.py:425
+msgid "Опросник"
+msgstr "Anketa"
+
+#: .\medtools\models.py:426
+msgid "Текст"
+msgstr "Matn"
+
+#: .\medtools\models.py:427
+msgid "Мин балл для вывода"
+msgstr "Chiqish uchun min ball"
+
+#: .\medtools\models.py:428
+msgid "Макс балл для вывода"
+msgstr "Chiqish uchun max ball"
+
+#: .\medtools\models.py:441
+msgid "Множественный выбор"
+msgstr "Bir nechta tanlov"
+
+#: .\medtools\models.py:468
+msgid "Выбор"
+msgstr "Tanlov"
+
+#: .\medtools\templates\medtools\blocks\analisys_formset.html:5
+msgid "Генетическое Исследование"
+msgstr "Genetik tekshirish"
+
+#: .\medtools\templates\medtools\blocks\analisys_formset.html:16
+msgid "Иммунологическое Исследование"
+msgstr "Immunologik tekshirish"
+
+#: .\medtools\templates\medtools\blocks\analisys_formset.html:27
+msgid "Липидогамма"
+msgstr "Lipidogramma"
+
+#: .\medtools\templates\medtools\blocks\analisys_formset.html:37
+msgid "Биохимическое ИК"
+msgstr "Qonning biokimyoviy tahlili"
+
+#: .\medtools\templates\medtools\blocks\analisys_formset.html:46
+msgid "Индекс массы тела"
+msgstr "Tana massasi indeksi"
+
+#: .\medtools\templates\medtools\blocks\analisys_formset.html:55
+msgid "Эхокардиография"
+msgstr "Exokardiografiya"
+
+#: .\medtools\templates\medtools\blocks\analisys_formset.html:66
+msgid "Коронарная ангиография"
+msgstr "Koronar angiografiya"
+
+#: .\medtools\templates\medtools\blocks\analisys_formset.html:76
+msgid "ЭКГ"
+msgstr "EKG"
+
+#: .\medtools\templates\medtools\heart_disease_tool.html:5
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:5
+#: .\templates\blocks\header.html:42 .\templates\blocks\header.html:45
+msgid ""
+"Прогнозирование коронарной болезни сердца в зависимости от "
+"психоэмоционального состояния"
+msgstr ""
+"Psixo-emotsional holatga qarab koronаr yurak kasalligini bashorat qilish"
+
+#: .\medtools\templates\medtools\heart_disease_tool.html:18
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:24
+msgid "Основная информация"
+msgstr "Asosiy Ma'lumot"
+
+#: .\medtools\templates\medtools\heart_disease_tool.html:36
+msgid "Создать"
+msgstr "Yaratish"
+
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:37
+msgid "Осложнения"
+msgstr "Murakkabliklar"
+
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:76
+msgid "Показатели ЭХОКГ"
+msgstr "EХOКG parametrlari"
+
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:92
+msgid "Результаты опросников"
+msgstr "Anketalar natijalari"
+
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:101
+msgid "Индекс числа выбранных дескрипторов:"
+msgstr "Tanlangan deskriptorlar soni indeksi"
+
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:105
+msgid "Ранговой индекс боли:"
+msgstr "Darajali og'riqlar ko'rsatkichi"
+
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:114
+msgid "Изменить"
+msgstr "O'zgartirish"
+
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:117
+msgid "Опросники"
+msgstr "Anketalar"
+
+#: .\medtools\templates\medtools\survey.html:19
+msgid "Далее"
+msgstr "Keyingisi"
 
 #: .\profiles\forms.py:44
 msgid "В статье должно быть более 5 ключевых слов"
@@ -250,6 +698,7 @@ msgstr "Maqolani yaratish"
 
 #: .\profiles\templates\profiles\article_create.html:14
 #: .\profiles\templates\profiles\article_create.html:21
+#: .\profiles\templates\profiles\authors_profile.html:140
 msgid "Добавить статью"
 msgstr "Maqolani qo'shish"
 
@@ -284,21 +733,26 @@ msgstr "Sharhni o'zgartirish"
 msgid "Профиль"
 msgstr "Profil"
 
-#: .\profiles\templates\profiles\authors_profile.html:13
-msgid "Ваши статьи:"
-msgstr "Sizning maqolalaringiz:"
+#: .\profiles\templates\profiles\authors_profile.html:68
+#: .\profiles\templates\profiles\reviewer_profile.html:24
+msgid "На текущий момент не статей для рецензирования"
+msgstr "Hozirgi vaqtda ko'rib chiqish uchun maqolalar yo'q"
 
-#: .\profiles\templates\profiles\authors_profile.html:22
-msgid "Cтатус:"
-msgstr "Holati:"
+#: .\profiles\templates\profiles\authors_profile.html:100
+msgid "Вы ещё не оставляли рецензии на статьи"
+msgstr "Siz hali maqola sharhlarini qoldirmadingiz"
+
+#: .\profiles\templates\profiles\authors_profile.html:135
+msgid "У вас нет опубликованных статей"
+msgstr "Sizda nashr etilgan maqolalar yo'q"
+
+#: .\profiles\templates\profiles\authors_profile.html:168
+msgid "Зарегестрировать нового автора"
+msgstr "Yangi muallifni ro'yxatdan o'tkazish"
 
 #: .\profiles\templates\profiles\reviewer_profile.html:14
 msgid "Статьи для рецензирования"
 msgstr "Ko'rib chiqish uchun maqolalar"
-
-#: .\profiles\templates\profiles\reviewer_profile.html:24
-msgid "На текущий момент не статей для рецензирования"
-msgstr "Hozirgi vaqtda ko'rib chiqish uchun maqolalar yo'q"
 
 #: .\profiles\templates\profiles\reviewer_profile.html:27
 msgid "Статьи рецензированные вами"
@@ -329,8 +783,8 @@ msgid "Место работы"
 msgstr "Ish joyi"
 
 #: .\registration\models.py:12
-msgid "ORCHID"
-msgstr "ORCHID"
+msgid "ORCID"
+msgstr "ORCID"
 
 #: .\registration\models.py:13
 msgid "Страна"
@@ -361,7 +815,7 @@ msgstr "Tizimga kirish"
 #: .\registration\templates\registration\login.html:19
 #: .\registration\templates\registration\registration.html:6
 #: .\registration\templates\registration\registration.html:23
-#: .\templates\blocks\header.html:99
+#: .\templates\blocks\header.html:111
 msgid "Регистрация"
 msgstr "Ro'yxatdan o'tish"
 
@@ -406,30 +860,43 @@ msgstr "Ro'yxatdan o'tish|UJCR"
 msgid "Страница не найдена | Ошибка 404"
 msgstr "Sahifa topilmadi | 404 xato"
 
-#: .\templates\blocks\header.html:16
+#: .\templates\blocks\header.html:19
 msgid "О нас"
 msgstr "Biz haqimizda"
 
-#: .\templates\blocks\header.html:34
+#: .\templates\blocks\header.html:36
+msgid "Инструменты"
+msgstr "Asboblar"
+
+#: .\templates\blocks\header.html:52
 msgid "Админ панель"
 msgstr "Administrator paneli"
 
-#: .\templates\blocks\header.html:45
+#: .\templates\blocks\header.html:63
 msgid "Следующий выпуск"
 msgstr "Keyingi nashr"
 
-#: .\templates\blocks\header.html:90
+#: .\templates\blocks\header.html:102
 msgid "Выйти"
 msgstr "Chiqish"
 
-#: .\templates\blocks\header.html:102
+#: .\templates\blocks\header.html:114
 msgid "Вход"
 msgstr "Kirish"
 
-#: .\templates\blocks\left_sidebar.html:15
+#: .\templates\blocks\left_sidebar.html:16
 msgid "Язык"
 msgstr "Til"
 
-#: .\templates\blocks\left_sidebar.html:38
+#: .\templates\blocks\left_sidebar.html:39
 msgid "Информация"
 msgstr "Ma'lumot"
+
+#~ msgid "Ваши статьи:"
+#~ msgstr "Sizning maqolalaringiz:"
+
+#~ msgid "Cтатус:"
+#~ msgstr "Holati:"
+
+#~ msgid "ORCHID"
+#~ msgstr "ORCHID"

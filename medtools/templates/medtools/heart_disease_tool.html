@@ -1,8 +1,8 @@
 {% extends "main_app/base.html" %}
 {% load static %}
 {% load i18n %}
-{% block title %} Прогнозирование коронарной болезни сердца в зависимости от психоэмоционального
-    состояния
+{% block title %}
+    {% trans 'Прогнозирование коронарной болезни сердца в зависимости от психоэмоционального состояния' %}
 {% endblock %}
 
 {% block content %}
@@ -15,7 +15,7 @@
             {% csrf_token %}
             <div class="row">
                 <div class="col">
-                    <h2>Основная информация</h2>
+                    <h2>{% trans 'Основная информация' %}</h2>
                     {{ form.media }}
                     <div class="row">
                         {% for field in form %}

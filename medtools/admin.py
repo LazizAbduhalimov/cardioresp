@@ -3,6 +3,7 @@ from import_export.admin import ImportExportModelAdmin
 
 from .inlines import *
 from nested_admin.nested import NestedModelAdmin
+from modeltranslation.admin import TabbedTranslationAdmin
 
 
 @admin.register(Patient)
@@ -40,19 +41,20 @@ class SurveyAnswerChoicesResource(resources.ModelResource):
 
 
 @admin.register(SurveyQuestion)
-class SurveyQuestionAdmin(ImportExportModelAdmin):
+class SurveyQuestionAdmin(ImportExportModelAdmin, TabbedTranslationAdmin):
+    inlines = [SurveyQuestionChoicesInLine]
     resource_classes = [SurveyQuestionResource]
     list_per_page = 30
 
 
 @admin.register(SurveyQuestionChoices)
-class SurveyQuestionChoicesAdmin(ImportExportModelAdmin):
+class SurveyQuestionChoicesAdmin(ImportExportModelAdmin, TabbedTranslationAdmin):
     resource_classes = [SurveyAnswerChoicesResource]
     list_per_page = 30
 
 
 @admin.register(Survey)
-class SurveyAdmin(NestedModelAdmin, ImportExportModelAdmin):
+class SurveyAdmin(NestedModelAdmin, ImportExportModelAdmin, TabbedTranslationAdmin):
     resource_classes = [SurveyResource]
     list_display = [
         "name",
@@ -66,7 +68,7 @@ class SurveyAdmin(NestedModelAdmin, ImportExportModelAdmin):
 
 
 @admin.register(SurveyResult)
-class SurveyResultAdmin(ImportExportModelAdmin):
+class SurveyResultAdmin(ImportExportModelAdmin, TabbedTranslationAdmin):
     resource_classes = [SurveyResultResource]
     list_display = [
         "survey",

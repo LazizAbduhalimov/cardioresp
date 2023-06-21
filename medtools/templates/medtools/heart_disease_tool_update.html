@@ -1,8 +1,8 @@
 {% extends "main_app/base.html" %}
 {% load static %}
 {% load i18n %}
-{% block title %} Прогнозирование коронарной болезни сердца в зависимости от психоэмоционального
-    состояния
+{% block title %}
+    {% trans 'Прогнозирование коронарной болезни сердца в зависимости от психоэмоционального состояния' %}
 {% endblock %}
 {% block content %}
     <div class="container">
@@ -21,7 +21,7 @@
             {% csrf_token %}
             <div class="row">
                 <div class="col">
-                    <h2>Основная информация</h2>
+                    <h2>{% trans 'Основная информация' %}</h2>
                     {{ form.media }}
                     {{ form.as_p }}
                 </div>
@@ -34,7 +34,7 @@
                         <p>
                             <a class="btn btn-danger" data-bs-toggle="collapse" href="#collapseExample11" role="button"
                                aria-expanded="false" aria-controls="collapseExample">
-                                Осложнения
+                                {% trans 'Осложнения' %}
                             </a>
                         </p>
                         <div class="collapse" id="collapseExample11">
@@ -73,7 +73,7 @@
                         <p>
                             <a class="btn btn-danger" data-bs-toggle="collapse" href="#collapseExample" role="button"
                                aria-expanded="false" aria-controls="collapseExample">
-                                Показатели ЭХОКГ
+                                {% trans 'Показатели ЭХОКГ' %}
                             </a>
                         </p>
                         <div class="collapse" id="collapseExample">
@@ -89,7 +89,7 @@
                                 <a class="btn btn-danger" data-bs-toggle="collapse" href="#collapseExample10"
                                    role="button"
                                    aria-expanded="false" aria-controls="collapseExample">
-                                    Результаты опросников
+                                    {% trans 'Результаты опросников' %}
                                 </a>
                             </p>
                             <div class="collapse" id="collapseExample10">
@@ -98,11 +98,11 @@
                                 {% endfor %}
 
                                 {% if INSD %}
-                                    <li class="list-group-item list-group-item-danger">ИЧВД: {{ INSD }}</li>
+                                    <li class="list-group-item list-group-item-danger">{% trans 'Индекс числа выбранных дескрипторов:' %} {{ INSD }}</li>
                                 {% endif %}
 
                                 {% if PRI %}
-                                    <li class="list-group-item list-group-item-danger">РИБ: {{ PRI }}</li>
+                                    <li class="list-group-item list-group-item-danger">{% trans 'Ранговой индекс боли:' %} {{ PRI }}</li>
                                 {% endif %}
                             </div>
                         {% endif %}
@@ -114,7 +114,7 @@
             <button class="btn btn-dark" type="submit">{% trans "Изменить" %}</button>
         </form>
         <hr>
-        <h2>Опросники</h2>
+        <h2>{% trans 'Опросники' %}</h2>
         {% for survey in surveys %}
             {% if survey.surveyquestion_set.first.has_multiple_choice %}
                 <p>

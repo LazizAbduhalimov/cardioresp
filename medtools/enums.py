@@ -67,16 +67,16 @@ class GeneticEnum(str, Enum):
 
 
 genetic_choices = [
-    (GeneticEnum.CC.value, _("C/C")),
-    (GeneticEnum.CT.value, _("C/T")),
-    (GeneticEnum.TT.value, _("T/T")),
+    (GeneticEnum.CC.value, "C/C"),
+    (GeneticEnum.CT.value, "C/T"),
+    (GeneticEnum.TT.value, "T/T"),
 ]
 
 
 genetic_alt_choices = [
-    (GeneticEnum.CC.value, _("G/G")),
-    (GeneticEnum.CT.value, _("G/A")),
-    (GeneticEnum.TT.value, _("A/A")),
+    (GeneticEnum.CC.value, "G/G"),
+    (GeneticEnum.CT.value, "G/A"),
+    (GeneticEnum.TT.value, "A/A"),
 ]
 
 
@@ -88,10 +88,10 @@ class CoronaryAngiographyEnum(str, Enum):
 
 
 coronary_angiography_choices = [
-    (CoronaryAngiographyEnum.one.value, _("1")),
-    (CoronaryAngiographyEnum.two.value, _("2")),
-    (CoronaryAngiographyEnum.three.value, _("3")),
-    (CoronaryAngiographyEnum.four_or_more.value, _("4+")),
+    (CoronaryAngiographyEnum.one.value, "1"),
+    (CoronaryAngiographyEnum.two.value, "2"),
+    (CoronaryAngiographyEnum.three.value, "3"),
+    (CoronaryAngiographyEnum.four_or_more.value, "4+"),
 ]
 
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-07 19:41+0500\n"
+"POT-Creation-Date: 2023-06-17 15:48+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,7 +65,7 @@ msgstr "Ключевые слова (от автора)"
 #: .\blogs\models.py:182 .\blogs\templates\blogs\article.html:90
 #: .\profiles\templates\profiles\article_reviewing.html:68
 #: .\profiles\templates\profiles\article_update_review.html:68
-#: .\templates\blocks\left_sidebar.html:51
+#: .\templates\blocks\left_sidebar.html:52
 msgid "Ключевые слова"
 msgstr "Ключевые слова"
 
@@ -97,7 +97,7 @@ msgstr "Просмотры"
 msgid "Архивы | Cardioresp"
 msgstr "Архивы | Cardioresp"
 
-#: .\blogs\templates\blogs\archives.html:10 .\templates\blocks\header.html:30
+#: .\blogs\templates\blogs\archives.html:10 .\templates\blocks\header.html:33
 msgid "Выпуски"
 msgstr "Выпуски"
 
@@ -128,25 +128,25 @@ msgstr "Опубликован"
 msgid "Выпуск"
 msgstr "Выпуск"
 
-#: .\cardioresp\settings.py:123
+#: .\cardioresp\settings.py:129
 msgid "Russian"
 msgstr "Russian"
 
-#: .\cardioresp\settings.py:124
+#: .\cardioresp\settings.py:130
 msgid "English"
 msgstr "English"
 
-#: .\cardioresp\settings.py:125
+#: .\cardioresp\settings.py:131
 msgid "Uzbek"
 msgstr "Uzbek"
 
 #: .\main_app\templates\main_app\authors.html:4
-#: .\templates\blocks\left_sidebar.html:48
+#: .\templates\blocks\left_sidebar.html:49
 msgid "Авторы"
 msgstr "Авторы"
 
 #: .\main_app\templates\main_app\editorial_page.html:4
-#: .\templates\blocks\header.html:25
+#: .\templates\blocks\header.html:28
 msgid "Редакция"
 msgstr "Редакция"
 
@@ -156,7 +156,7 @@ msgstr "Поиск"
 
 #: .\main_app\templates\main_app\search.html:28
 #: .\main_app\templates\main_app\search.html:52
-#: .\templates\blocks\header.html:55 .\templates\blocks\header.html:58
+#: .\templates\blocks\header.html:73 .\templates\blocks\header.html:76
 msgid "Найти"
 msgstr "Найти"
 
@@ -235,6 +235,447 @@ msgstr ""
 "\">Зарегистрироваться.</a>\n"
 "        "
 
+#: .\medtools\enums.py:12
+msgid "Мужчина"
+msgstr "Мужчина"
+
+#: .\medtools\enums.py:13
+msgid "Женщина"
+msgstr "Женщина"
+
+#: .\medtools\enums.py:23
+msgid "Старше 60"
+msgstr "Старше 60"
+
+#: .\medtools\enums.py:24
+msgid "Младше 60"
+msgstr "Младше 60"
+
+#: .\medtools\enums.py:34
+msgid "Удовлетворительно"
+msgstr "Удовлетворительно"
+
+#: .\medtools\enums.py:35
+msgid "Неудовлетворительно"
+msgstr "Неудовлетворительно"
+
+#: .\medtools\enums.py:46
+msgid "Менее 20 минут"
+msgstr "Менее 20 минут"
+
+#: .\medtools\enums.py:47
+msgid "Более 20 минут"
+msgstr "Более 20 минут"
+
+#: .\medtools\enums.py:48
+msgid "Более 24 часов"
+msgstr "Более 24 часов"
+
+#: .\medtools\enums.py:58
+msgid "Не уплотнённый"
+msgstr "Не уплотнённый"
+
+#: .\medtools\enums.py:59
+msgid "Уплотнённый"
+msgstr "Уплотнённый"
+
+#: .\medtools\enums.py:105
+msgid "Подъём сегманта ST"
+msgstr "Подъём сегманта ST"
+
+#: .\medtools\enums.py:106
+msgid "Депрессия сегманта ST"
+msgstr "Депрессия сегманта ST"
+
+#: .\medtools\enums.py:107
+msgid "Инверсия зубца T"
+msgstr "Инверсия зубца T"
+
+#: .\medtools\models.py:16
+msgid "Пол"
+msgstr "Пол"
+
+#: .\medtools\models.py:17
+msgid "Возраст"
+msgstr "Возраст"
+
+#: .\medtools\models.py:18
+msgid "ОСН"
+msgstr "ОСН"
+
+#: .\medtools\models.py:19
+msgid "ХСН"
+msgstr "ХСН"
+
+#: .\medtools\models.py:20
+msgid "Нарушение ритма"
+msgstr "Нарушение ритма"
+
+#: .\medtools\models.py:21
+msgid "Застойчивая пневмония"
+msgstr "Застойчивая пневмония"
+
+#: .\medtools\models.py:22
+msgid "Фоновое заболевание"
+msgstr "Фоновое заболевание"
+
+#: .\medtools\models.py:23
+msgid "Социальный статус"
+msgstr "Социальный статус"
+
+#: .\medtools\models.py:25
+msgid "Продолжительность боли"
+msgstr "Продолжительность боли"
+
+#: .\medtools\models.py:27
+msgid "ЧСС"
+msgstr "ЧСС"
+
+#: .\medtools\models.py:65
+msgid "Группа низкого риска"
+msgstr "Группа низкого риска"
+
+#: .\medtools\models.py:67
+msgid "Группа среднего риска"
+msgstr "Группа среднего риска"
+
+#: .\medtools\models.py:69
+msgid "Группа высокого риска"
+msgstr "Группа высокого риска"
+
+#: .\medtools\models.py:73
+msgid "Брадикардия"
+msgstr "Брадикардия"
+
+#: .\medtools\models.py:75
+msgid "Тахикардия"
+msgstr "Тахикардия"
+
+#: .\medtools\models.py:79
+msgid "Прогрессирующая стенокардия напряжения"
+msgstr "Прогрессирующая стенокардия напряжения"
+
+#: .\medtools\models.py:81
+msgid "Острый коронарный синдром"
+msgstr "Острый коронарный синдром"
+
+#: .\medtools\models.py:83
+msgid "Острый инфаркт миокарда"
+msgstr "Острый инфаркт миокарда"
+
+#: .\medtools\models.py:117 .\medtools\models.py:176 .\medtools\models.py:191
+#: .\medtools\models.py:223 .\medtools\models.py:252 .\medtools\models.py:295
+#: .\medtools\models.py:360 .\medtools\models.py:373
+msgid "Пациент"
+msgstr "Пациент"
+
+#: .\medtools\models.py:118
+msgid "ФВЛЖ (%)"
+msgstr "ФВЛЖ (%)"
+
+#: .\medtools\models.py:119
+msgid "КСР (см)"
+msgstr "КСР (см)"
+
+#: .\medtools\models.py:120
+msgid "КДР (см)"
+msgstr "КДР (см)"
+
+#: .\medtools\models.py:121
+msgid "ЗСЛЖ (см)"
+msgstr "ЗСЛЖ (см)"
+
+#: .\medtools\models.py:122
+msgid "МЖП (см)"
+msgstr "МЖП (см)"
+
+#: .\medtools\models.py:123
+msgid "ПЖ (см)"
+msgstr "ПЖ (см)"
+
+#: .\medtools\models.py:124
+msgid "МК (см)"
+msgstr "МК (см)"
+
+#: .\medtools\models.py:125
+msgid "ЛП (см)"
+msgstr "ЛП (см)"
+
+#: .\medtools\models.py:129
+msgid "Сердечная недостаточность"
+msgstr "Сердечная недостаточность"
+
+#: .\medtools\models.py:131
+msgid "Сниженная ФВЛЖ"
+msgstr "Сниженная ФВЛЖ"
+
+#: .\medtools\models.py:157
+msgid "КСР ненормирован"
+msgstr "КСР ненормирован"
+
+#: .\medtools\models.py:159
+msgid "Увеличение размеров сердца"
+msgstr "Увеличение размеров сердца"
+
+#: .\medtools\models.py:161
+msgid "ЗСЛЖ ненормирован"
+msgstr "ЗСЛЖ ненормирован"
+
+#: .\medtools\models.py:163
+msgid "МЖП ненормирован"
+msgstr "МЖП ненормирован"
+
+#: .\medtools\models.py:165
+msgid "ПЖ ненормирован"
+msgstr "ПЖ ненормирован"
+
+#: .\medtools\models.py:167
+msgid "ЛП ненормирован"
+msgstr "ЛП ненормирован"
+
+#: .\medtools\models.py:214
+msgid "Цитокиновый дисбаланс"
+msgstr "Цитокиновый дисбаланс"
+
+#: .\medtools\models.py:225
+msgid "Общий ХС ммоль/г"
+msgstr "Общий ХС ммоль/г"
+
+#: .\medtools\models.py:226
+msgid "ХС ЛПНП. ммоль/г"
+msgstr "ХС ЛПНП. ммоль/г"
+
+#: .\medtools\models.py:227
+msgid "ХС ЛПВП. ммоль/г"
+msgstr "ХС ЛПВП. ммоль/г"
+
+#: .\medtools\models.py:228
+msgid "ТГ. ммоль/г"
+msgstr "ТГ. ммоль/г"
+
+#: .\medtools\models.py:229
+msgid "КА"
+msgstr "КА"
+
+#: .\medtools\models.py:238
+msgid "Атеросклероз"
+msgstr "Атеросклероз"
+
+#: .\medtools\models.py:240
+msgid "Присутствует риск атеросклероза и ишемической болезни сердца"
+msgstr "Присутствует риск атеросклероза и ишемической болезни сердца"
+
+#: .\medtools\models.py:243
+msgid "Дислипидемия"
+msgstr "Дислипидемия"
+
+#: .\medtools\models.py:254
+msgid "Рост (cм)"
+msgstr "Рост (cм)"
+
+#: .\medtools\models.py:255
+msgid "Масса (кг)"
+msgstr "Масса (кг)"
+
+#: .\medtools\models.py:276
+msgid "Выраженный дефицит массы тела"
+msgstr "Выраженный дефицит массы тела"
+
+#: .\medtools\models.py:278
+msgid "Недостаточная (дефицит) масса тела"
+msgstr "Недостаточная (дефицит) масса тела"
+
+#: .\medtools\models.py:282
+msgid "Избыточная масса тела (предожирение)"
+msgstr "Избыточная масса тела (предожирение)"
+
+#: .\medtools\models.py:284
+msgid "Ожирение первой степени"
+msgstr "Ожирение первой степени"
+
+#: .\medtools\models.py:286
+msgid "Ожирение второй степени"
+msgstr "Ожирение второй степени"
+
+#: .\medtools\models.py:288
+msgid "Ожирение третьей степени (морбидное)"
+msgstr "Ожирение третьей степени (морбидное)"
+
+#: .\medtools\models.py:297
+msgid "АЛАТ (U/L)"
+msgstr "АЛАТ (U/L)"
+
+#: .\medtools\models.py:298
+msgid "АСАТ(U/L)"
+msgstr "АСАТ(U/L)"
+
+#: .\medtools\models.py:299
+msgid "Креатинин (мкмоль/л)"
+msgstr "Креатинин (мкмоль/л)"
+
+#: .\medtools\models.py:300
+msgid "Мочевина (мкмоль/л)"
+msgstr "Мочевина (мкмоль/л)"
+
+#: .\medtools\models.py:301
+msgid "Мочевая кислота(мкмоль/л)"
+msgstr "Мочевая кислота(мкмоль/л)"
+
+#: .\medtools\models.py:302
+msgid "Билирубин общий (мкмоль/л)"
+msgstr "Билирубин общий (мкмоль/л)"
+
+#: .\medtools\models.py:303
+msgid "Билирубин прямой (мкмоль/л)"
+msgstr "Билирубин прямой (мкмоль/л)"
+
+#: .\medtools\models.py:304
+msgid "Билирубин непрямой (мкмоль/л)"
+msgstr "Билирубин непрямой (мкмоль/л)"
+
+#: .\medtools\models.py:305
+msgid "Глюкоза (мкмоль/л)"
+msgstr "Глюкоза (мкмоль/л)"
+
+#: .\medtools\models.py:337
+msgid "Гиперурикемия"
+msgstr "Гиперурикемия"
+
+#: .\medtools\models.py:340
+msgid "Сахарный диабет"
+msgstr "Сахарный диабет"
+
+#: .\medtools\models.py:342
+msgid "Нарушение толерантности к глюкозе"
+msgstr "Нарушение толерантности к глюкозе"
+
+#: .\medtools\models.py:349
+msgid "Консультация гепатолога"
+msgstr "Консультация гепатолога"
+
+#: .\medtools\models.py:351
+msgid "Консультация эндокринолога"
+msgstr "Консультация эндокринолога"
+
+#: .\medtools\models.py:362
+msgid "Количество поражений КА"
+msgstr "Количество поражений КА"
+
+#: .\medtools\models.py:375
+msgid "Поле"
+msgstr "Поле"
+
+#: .\medtools\models.py:382
+msgid "Название"
+msgstr "Название"
+
+#: .\medtools\models.py:425
+msgid "Опросник"
+msgstr "Опросник"
+
+#: .\medtools\models.py:426
+msgid "Текст"
+msgstr "Текст"
+
+#: .\medtools\models.py:427
+msgid "Мин балл для вывода"
+msgstr "Мин балл для вывода"
+
+#: .\medtools\models.py:428
+msgid "Макс балл для вывода"
+msgstr "Макс балл для вывода"
+
+#: .\medtools\models.py:441
+msgid "Множественный выбор"
+msgstr "Множественный выбор"
+
+#: .\medtools\models.py:468
+msgid "Выбор"
+msgstr "Выбор"
+
+#: .\medtools\templates\medtools\blocks\analisys_formset.html:5
+msgid "Генетическое Исследование"
+msgstr "Генетическое Исследование"
+
+#: .\medtools\templates\medtools\blocks\analisys_formset.html:16
+msgid "Иммунологическое Исследование"
+msgstr "Иммунологическое Исследование"
+
+#: .\medtools\templates\medtools\blocks\analisys_formset.html:27
+msgid "Липидогамма"
+msgstr "Липидогамма"
+
+#: .\medtools\templates\medtools\blocks\analisys_formset.html:37
+msgid "Биохимическое ИК"
+msgstr "Биохимическое ИК"
+
+#: .\medtools\templates\medtools\blocks\analisys_formset.html:46
+msgid "Индекс массы тела"
+msgstr "Индекс массы тела"
+
+#: .\medtools\templates\medtools\blocks\analisys_formset.html:55
+msgid "Эхокардиография"
+msgstr "Эхокардиография"
+
+#: .\medtools\templates\medtools\blocks\analisys_formset.html:66
+msgid "Коронарная ангиография"
+msgstr "Коронарная ангиография"
+
+#: .\medtools\templates\medtools\blocks\analisys_formset.html:76
+msgid "ЭКГ"
+msgstr "ЭКГ"
+
+#: .\medtools\templates\medtools\heart_disease_tool.html:5
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:5
+#: .\templates\blocks\header.html:42 .\templates\blocks\header.html:45
+msgid ""
+"Прогнозирование коронарной болезни сердца в зависимости от "
+"психоэмоционального состояния"
+msgstr ""
+"Прогнозирование коронарной болезни сердца в зависимости от "
+"психоэмоционального состояния"
+
+#: .\medtools\templates\medtools\heart_disease_tool.html:18
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:24
+msgid "Основная информация"
+msgstr "Основная информация"
+
+#: .\medtools\templates\medtools\heart_disease_tool.html:36
+msgid "Создать"
+msgstr "Создать"
+
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:37
+msgid "Осложнения"
+msgstr "Осложнения"
+
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:76
+msgid "Показатели ЭХОКГ"
+msgstr "Показатели ЭХОКГ"
+
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:92
+msgid "Результаты опросников"
+msgstr "Результаты опросников"
+
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:101
+msgid "Индекс числа выбранных дескрипторов:"
+msgstr "Индекс числа выбранных дескрипторов:"
+
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:105
+msgid "Ранговой индекс боли:"
+msgstr "Ранговой индекс боли:"
+
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:114
+msgid "Изменить"
+msgstr "Изменить"
+
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:117
+msgid "Опросники"
+msgstr "Опросники"
+
+#: .\medtools\templates\medtools\survey.html:19
+msgid "Далее"
+msgstr "Далее"
+
 #: .\profiles\forms.py:44
 msgid "В статье должно быть более 5 ключевых слов"
 msgstr "В статье должно быть более 5 ключевых слов"
@@ -257,6 +698,7 @@ msgstr "Создание статьи"
 
 #: .\profiles\templates\profiles\article_create.html:14
 #: .\profiles\templates\profiles\article_create.html:21
+#: .\profiles\templates\profiles\authors_profile.html:140
 msgid "Добавить статью"
 msgstr "Добавить статью"
 
@@ -291,21 +733,26 @@ msgstr "Изменить рецензию"
 msgid "Профиль"
 msgstr "Профиль"
 
-#: .\profiles\templates\profiles\authors_profile.html:13
-msgid "Ваши статьи:"
-msgstr "Ваши статьи"
+#: .\profiles\templates\profiles\authors_profile.html:68
+#: .\profiles\templates\profiles\reviewer_profile.html:24
+msgid "На текущий момент не статей для рецензирования"
+msgstr "На текущий момент не статей для рецензирования"
 
-#: .\profiles\templates\profiles\authors_profile.html:22
-msgid "Cтатус:"
-msgstr "Cтатус"
+#: .\profiles\templates\profiles\authors_profile.html:100
+msgid "Вы ещё не оставляли рецензии на статьи"
+msgstr "Вы ещё не оставляли рецензии на статьи"
+
+#: .\profiles\templates\profiles\authors_profile.html:135
+msgid "У вас нет опубликованных статей"
+msgstr "У вас нет опубликованных статей"
+
+#: .\profiles\templates\profiles\authors_profile.html:168
+msgid "Зарегестрировать нового автора"
+msgstr "Зарегестрировать нового автора"
 
 #: .\profiles\templates\profiles\reviewer_profile.html:14
 msgid "Статьи для рецензирования"
 msgstr "Статьи для рецензирования"
-
-#: .\profiles\templates\profiles\reviewer_profile.html:24
-msgid "На текущий момент не статей для рецензирования"
-msgstr "На текущий момент не статей для рецензирования"
 
 #: .\profiles\templates\profiles\reviewer_profile.html:27
 msgid "Статьи рецензированные вами"
@@ -336,8 +783,8 @@ msgid "Место работы"
 msgstr "Место работы"
 
 #: .\registration\models.py:12
-msgid "ORCHID"
-msgstr "ORCHID"
+msgid "ORCID"
+msgstr "ORCID"
 
 #: .\registration\models.py:13
 msgid "Страна"
@@ -369,7 +816,7 @@ msgstr "Войти в систему"
 #: .\registration\templates\registration\login.html:19
 #: .\registration\templates\registration\registration.html:6
 #: .\registration\templates\registration\registration.html:23
-#: .\templates\blocks\header.html:99
+#: .\templates\blocks\header.html:111
 msgid "Регистрация"
 msgstr "Регистрация"
 
@@ -414,33 +861,46 @@ msgstr "Регистрация|UJCR"
 msgid "Страница не найдена | Ошибка 404"
 msgstr "Страница не найдена | Ошибка 404"
 
-#: .\templates\blocks\header.html:16
+#: .\templates\blocks\header.html:19
 msgid "О нас"
 msgstr "О нас"
 
-#: .\templates\blocks\header.html:34
+#: .\templates\blocks\header.html:36
+msgid "Инструменты"
+msgstr "Инструменты"
+
+#: .\templates\blocks\header.html:52
 msgid "Админ панель"
 msgstr "Админ панель"
 
-#: .\templates\blocks\header.html:45
+#: .\templates\blocks\header.html:63
 msgid "Следующий выпуск"
 msgstr "Следующий выпуск"
 
-#: .\templates\blocks\header.html:90
+#: .\templates\blocks\header.html:102
 msgid "Выйти"
 msgstr "Выйти"
 
-#: .\templates\blocks\header.html:102
+#: .\templates\blocks\header.html:114
 msgid "Вход"
 msgstr "Вход"
 
-#: .\templates\blocks\left_sidebar.html:15
+#: .\templates\blocks\left_sidebar.html:16
 msgid "Язык"
 msgstr "Язык"
 
-#: .\templates\blocks\left_sidebar.html:38
+#: .\templates\blocks\left_sidebar.html:39
 msgid "Информация"
 msgstr "Информация"
+
+#~ msgid "Ваши статьи:"
+#~ msgstr "Ваши статьи"
+
+#~ msgid "Cтатус:"
+#~ msgstr "Cтатус"
+
+#~ msgid "ORCHID"
+#~ msgstr "ORCHID"
 
 #~ msgid "Об этой издательской системе"
 #~ msgstr "Об этой издательской системе"

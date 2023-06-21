@@ -102,6 +102,7 @@ class SurveyView(MenuMixin, FormView):
             raise Http404()
 
         context["question"] = SurveyQuestion.objects.get(id=question_id)
+        context["GET_params"] = f"?question_id={question_id}"
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
 

@@ -1,8 +1,10 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationTabularInline
 
-from nested_admin.nested import  NestedTabularInline
+from nested_admin.nested import NestedTabularInline
 
 from .models import *
+
 
 class EchocardiographyInline(admin.StackedInline):
     model = Echocardiography
@@ -54,10 +56,10 @@ class ECGInline(admin.StackedInline):
 
 class SurveyQuestionChoicesInLine(NestedTabularInline):
     model = SurveyQuestionChoices
-    extra = 2
+    extra = 0
 
 
-class SurveyQuestionInline(NestedTabularInline):
+class SurveyQuestionInline(NestedTabularInline, TranslationTabularInline):
     model = SurveyQuestion
     extra = 0
 

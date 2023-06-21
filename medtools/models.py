@@ -20,11 +20,11 @@ class Patient(models.Model):
     heart_rhythm_disturbances = models.BooleanField(_("Нарушение ритма"), default=False)
     congestive_pneumonia = models.BooleanField(_("Застойчивая пневмония"), default=False)
     underlying_disease = models.BooleanField(_("Фоновое заболевание"), default=False)
-    social_position = models.CharField(_("Социальное положение"), default="", max_length=1,
+    social_position = models.CharField(_("Социальный статус"), default="", max_length=1,
                                        choices=social_status_choices)
     pain_duration = models.CharField(_("Продолжительность боли"), default="", max_length=4,
                                      choices=pain_duration_choices)
-    heart_rate = models.FloatField("ЧСС", default=0)
+    heart_rate = models.FloatField(_("ЧСС"), default=0)
 
     MAX_SCORE = 28
 
@@ -61,26 +61,26 @@ class Patient(models.Model):
         def get_percentage_of_score():
             return self.get_overall_score() / self.MAX_SCORE
 
-        if get_percentage_of_score() < 1/3:
-            return "Группа низкого риска"
-        if get_percentage_of_score() < 2/3:
-            return "Группа среднего риска"
+        if get_percentage_of_score() < 1 / 3:
+            return _("Группа низкого риска")
+        if get_percentage_of_score() < 2 / 3:
+            return _("Группа среднего риска")
         if get_percentage_of_score() <= 1:
-            return "Группа высокого риска"
+            return _("Группа высокого риска")
 
     def get_heart_rate_disease(self):
         if self.heart_rate < 60:
-            return "Брадикардия"
+            return _("Брадикардия")
         elif self.heart_rate > 90:
-            return "Тахикардия"
+            return _("Тахикардия")
 
     def get_pain_duration_text(self):
         if self.pain_duration == PainDurationEnum.less_20_min.value:
-            return "Прогрессирующая стенокардия напряжения"
+            return _("Прогрессирующая стенокардия напряжения")
         if self.pain_duration == PainDurationEnum.more_20_min.value:
-            return "Острый коронарный синдром"
+            return _("Острый коронарный синдром")
         if self.pain_duration == PainDurationEnum.more_24_hours.value:
-            return "Острый инфаркт миокарда"
+            return _("Острый инфаркт миокарда")
 
     def get_disease_list(self):
         result = list()
@@ -114,7 +114,7 @@ def check_btw_nums(checked_num, limit1, limit2):
 
 
 class Echocardiography(models.Model):
-    patient = models.OneToOneField(Patient, verbose_name="Пациент", on_delete=models.CASCADE, blank=True)
+    patient = models.OneToOneField(Patient, verbose_name=_("Пациент"), on_delete=models.CASCADE, blank=True)
     ejection_fraction = models.FloatField(_("ФВЛЖ (%)"), default=0)
     kcr = models.FloatField(_("КСР (см)"), default=0)
     kdr = models.FloatField(_("КДР (см)"), default=0)
@@ -126,9 +126,9 @@ class Echocardiography(models.Model):
 
     def is_ejection_fraction_normalized(self):
         if self.ejection_fraction < 40:
-            return "Сердечная недостаточность"
+            return _("Сердечная недостаточность")
         elif self.ejection_fraction < 55:
-            return "Сниженная ФВЛЖ"
+            return _("Сниженная ФВЛЖ")
 
     def is_kcr_normalized(self):
         return check_btw_nums(self.kcr, 2.5, 3.6)
@@ -154,17 +154,17 @@ class Echocardiography(models.Model):
         if not self.is_eslj_normalized():
             result.append(self.is_eslj_normalized())
         if not self.is_kcr_normalized():
-            result.append("КСР ненормирован")
+            result.append(_("КСР ненормирован"))
         if not self.is_kdr_normalized():
-            result.append("Увеличение размеров сердца")
+            result.append(_("Увеличение размеров сердца"))
         if not self.is_eslj_normalized():
-            result.append("ЗСЛЖ ненормирован")
+            result.append(_("ЗСЛЖ ненормирован"))
         if not self.is_mjp_normalized():
-            result.append("МЖП ненормирован")
+            result.append(_("МЖП ненормирован"))
         if not self.is_pj_normalized():
-            result.append("ПЖ ненормирован")
+            result.append(_("ПЖ ненормирован"))
         if not self.is_lp_normalized():
-            result.append("ЛП ненормирован")
+            result.append(_("ЛП ненормирован"))
 
         return result
 
@@ -173,12 +173,12 @@ class Echocardiography(models.Model):
 
 
 class GeneticResearch(models.Model):
-    patient = models.OneToOneField(Patient, verbose_name="Пациент", on_delete=models.CASCADE)
+    patient = models.OneToOneField(Patient, verbose_name=_("Пациент"), on_delete=models.CASCADE)
 
-    IL_1b_511_TC = models.CharField(_("IL-1β 511 T/C (rs16944)"), max_length=3, default="", choices=genetic_choices)
-    IL_4_TC = models.CharField(_("IL-4 С/Т (rs2243250)"), max_length=3, default="", choices=genetic_choices)
-    IL_10_819_CT = models.CharField(_("IL-10 819 C/T (rs1800871)"), max_length=3, default="", choices=genetic_choices)
-    TNF_a_GA = models.CharField(_("TNF-α G/A 308 (rs1800629)"), max_length=3, default="", choices=genetic_alt_choices)
+    IL_1b_511_TC = models.CharField("IL-1β 511 T/C (rs16944)", max_length=3, default="", choices=genetic_choices)
+    IL_4_TC = models.CharField("IL-4 С/Т (rs2243250)", max_length=3, default="", choices=genetic_choices)
+    IL_10_819_CT = models.CharField("IL-10 819 C/T (rs1800871)", max_length=3, default="", choices=genetic_choices)
+    TNF_a_GA = models.CharField("TNF-α G/A 308 (rs1800629)", max_length=3, default="", choices=genetic_alt_choices)
 
     def get_total_mark(self):
         return int(self.IL_1b_511_TC) + int(self.IL_4_TC) + int(self.IL_10_819_CT) + int(self.TNF_a_GA)
@@ -188,12 +188,12 @@ class GeneticResearch(models.Model):
 
 
 class ImmunologicalResearch(models.Model):
-    patient = models.OneToOneField(Patient, verbose_name="Пациент", on_delete=models.CASCADE)
+    patient = models.OneToOneField(Patient, verbose_name=_("Пациент"), on_delete=models.CASCADE)
 
-    IL_1b = models.FloatField(_("IL-1(b)"), default=0)
-    TNF_a = models.FloatField(_("TNF-a"), default=0)
-    IL_4 = models.FloatField(_("IL-4"), default=0)
-    IL_10 = models.FloatField(_("IL-10"), default=0)
+    IL_1b = models.FloatField("IL-1(b)", default=0)
+    TNF_a = models.FloatField("TNF-a", default=0)
+    IL_4 = models.FloatField("IL-4", default=0)
+    IL_10 = models.FloatField("IL-10", default=0)
 
     def is_IL_1b_normalized(self):
         return check_btw_nums(self.IL_1b, (26.6 - 0.93), (26.6 + 0.93))
@@ -211,7 +211,7 @@ class ImmunologicalResearch(models.Model):
         result = list()
 
         if not (self.is_IL_1b_normalized() or self.is_TNF_a_normalized()):
-            result.append("Цитокиновый дисбаланс")
+            result.append(_("Цитокиновый дисбаланс"))
 
         return result
 
@@ -220,7 +220,7 @@ class ImmunologicalResearch(models.Model):
 
 
 class Lipidogram(models.Model):
-    patient = models.OneToOneField(Patient, verbose_name="Пациент", on_delete=models.CASCADE)
+    patient = models.OneToOneField(Patient, verbose_name=_("Пациент"), on_delete=models.CASCADE)
 
     HS = models.FloatField(_("Общий ХС ммоль/г"), default=0)
     HS_LPNP = models.FloatField(_("ХС ЛПНП. ммоль/г"), default=0)
@@ -235,12 +235,12 @@ class Lipidogram(models.Model):
                 self.HS_LPNP > 4.9 or
                 ((self.patient.sex == SexEnum.man.value and self.HS_LPVP < 1.16) or
                  self.patient.sex == SexEnum.woman.value and self.HS_LPVP < 0.9)):
-            result.append("Атеросклероз")
+            result.append(_("Атеросклероз"))
         elif 3 < self.KA < 4:
-            result.append("Присутствует риск атеросклероза и ишемической болезни сердца")
+            result.append(_("Присутствует риск атеросклероза и ишемической болезни сердца"))
 
         if self.KA > 3.5 and self.TG > 2.8 and self.HS_LPVP < 1 and self.HS_LPNP > 3.37 and self.HS > 5.6:
-            result.append("Дислипидемия")
+            result.append(_("Дислипидемия"))
 
         return result
 
@@ -249,7 +249,7 @@ class Lipidogram(models.Model):
 
 
 class BodyMassIndex(models.Model):
-    patient = models.OneToOneField(Patient, verbose_name="Пациент", on_delete=models.CASCADE)
+    patient = models.OneToOneField(Patient, verbose_name=_("Пациент"), on_delete=models.CASCADE)
 
     height = models.FloatField(_("Рост (cм)"), default=0)
     mass = models.FloatField(_("Масса (кг)"), default=0)
@@ -273,26 +273,26 @@ class BodyMassIndex(models.Model):
     def get_mass_disease(self):
         mass_index = self.get_mass_index()
         if mass_index < 16.0:
-            return "Выраженный дефицит массы тела"
+            return _("Выраженный дефицит массы тела")
         elif mass_index < 18.50:
-            return "Недостаточная (дефицит) масса тела"
+            return _("Недостаточная (дефицит) масса тела")
         elif mass_index < 25:
             return
         elif mass_index < 30:
-            return "Избыточная масса тела (предожирение)"
+            return _("Избыточная масса тела (предожирение)")
         elif mass_index < 35:
-            return "Ожирение первой степени"
+            return _("Ожирение первой степени")
         elif mass_index < 40:
-            return "Ожирение второй степени"
+            return _("Ожирение второй степени")
         elif mass_index >= 40:
-            return "Ожирение третьей степени (морбидное)"
+            return _("Ожирение третьей степени (морбидное)")
 
     def __str__(self):
         return "{}".format(self.id)
 
 
 class BiochemicalBloodAnalysis(models.Model):
-    patient = models.OneToOneField(Patient, verbose_name="Пациент", on_delete=models.CASCADE)
+    patient = models.OneToOneField(Patient, verbose_name=_("Пациент"), on_delete=models.CASCADE)
 
     ALAT = models.FloatField(_("АЛАТ (U/L)"), default=0)
     ACAT = models.FloatField(_("АСАТ(U/L)"), default=0)
@@ -306,7 +306,7 @@ class BiochemicalBloodAnalysis(models.Model):
 
     def is_alat_normalized(self):
         if ((self.ALAT < 34 and self.patient.sex == SexEnum.woman.value) or
-            (self.ALAT < 45 and self.patient.sex == SexEnum.man.value)):
+                (self.ALAT < 45 and self.patient.sex == SexEnum.man.value)):
             return True
 
         return False
@@ -330,26 +330,25 @@ class BiochemicalBloodAnalysis(models.Model):
 
         return False
 
-
     def get_disease_list(self):
         result = list()
         if ((self.patient.sex == SexEnum.man.value and self.uric_acid > 432) or
                 (self.patient.sex == SexEnum.woman.value and self.uric_acid > 360)):
-            result.append("Гиперурикемия")
+            result.append(_("Гиперурикемия"))
 
         if self.glucose > 7:
-            result.append("Сахарный диабет")
+            result.append(_("Сахарный диабет"))
         elif self.glucose > 5.83:
-            result.append("Нарушение толерантности к глюкозе")
+            result.append(_("Нарушение толерантности к глюкозе"))
 
         return result
 
     def get_recommendation_list(self):
         result = list()
         if not (self.is_alat_normalized() and self.is_acat_normalized() and self.is_bilirubin_common_normalized()):
-            result.append("Rонсультация гепатолога")
+            result.append(_("Консультация гепатолога"))
         if not self.is_glucose_normalized():
-            result.append("Консультация эндокринолога")
+            result.append(_("Консультация эндокринолога"))
 
         return result
 
@@ -358,7 +357,7 @@ class BiochemicalBloodAnalysis(models.Model):
 
 
 class CoronaryAngiography(models.Model):
-    patient = models.OneToOneField(Patient, verbose_name="Пациент", on_delete=models.CASCADE)
+    patient = models.OneToOneField(Patient, verbose_name=_("Пациент"), on_delete=models.CASCADE)
 
     field = models.CharField(_("Количество поражений КА"), default="", max_length=1,
                              choices=coronary_angiography_choices)
@@ -371,7 +370,7 @@ class CoronaryAngiography(models.Model):
 
 
 class ECG(models.Model):
-    patient = models.OneToOneField(Patient, verbose_name="Пациент", on_delete=models.CASCADE)
+    patient = models.OneToOneField(Patient, verbose_name=_("Пациент"), on_delete=models.CASCADE)
 
     field = models.CharField(_("Поле"), default="", max_length=4, choices=ECG_choices)
 
@@ -419,7 +418,7 @@ class Survey(models.Model):
         return result
 
     def __str__(self):
-        return self.name
+        return f"{self.name}-{self.id}"
 
 
 class SurveyResult(models.Model):
@@ -473,7 +472,7 @@ class SurveyQuestionChoices(models.Model):
     class Meta:
         verbose_name = "Выбор для вопроса"
         verbose_name_plural = "Выборы для вопросов"
-        
+
     def __str__(self):
         return self.choice_text
 
@@ -484,6 +483,7 @@ class SurveyAnswer(models.Model):
 
     def __str__(self):
         return f"{self.pk}-{self.choice.choice_text}"
+
     class Meta:
         ordering = ["-id"]
 
