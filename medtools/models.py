@@ -15,8 +15,8 @@ from .utils import get_verbose_name
 class Patient(models.Model):
     sex = models.CharField(_("Пол"), max_length=1, default="M", choices=sex_choices)
     age = models.CharField(_("Возраст"), default="", max_length=3, choices=age_choices)
-    congestive_heart_failure = models.BooleanField(_("ОСН"), default=False)
-    chronic_heart_failure = models.BooleanField(_("ХСН"), default=False)
+    congestive_heart_failure = models.BooleanField(_("Острая сердечная недостаточность"), default=False)
+    chronic_heart_failure = models.BooleanField(_("Хроническая сердечная недостаточность"), default=False)
     heart_rhythm_disturbances = models.BooleanField(_("Нарушение ритма"), default=False)
     congestive_pneumonia = models.BooleanField(_("Застойчивая пневмония"), default=False)
     underlying_disease = models.BooleanField(_("Фоновое заболевание"), default=False)
@@ -24,7 +24,7 @@ class Patient(models.Model):
                                        choices=social_status_choices)
     pain_duration = models.CharField(_("Продолжительность боли"), default="", max_length=4,
                                      choices=pain_duration_choices)
-    heart_rate = models.FloatField(_("ЧСС"), default=0)
+    heart_rate = models.FloatField(_("Частота сердечных сокращений"), default=0)
 
     MAX_SCORE = 28
 
@@ -336,9 +336,7 @@ class BiochemicalBloodAnalysis(models.Model):
                 (self.patient.sex == SexEnum.woman.value and self.uric_acid > 360)):
             result.append(_("Гиперурикемия"))
 
-        if self.glucose > 7:
-            result.append(_("Сахарный диабет"))
-        elif self.glucose > 5.83:
+        if self.glucose > 5.83:
             result.append(_("Нарушение толерантности к глюкозе"))
 
         return result

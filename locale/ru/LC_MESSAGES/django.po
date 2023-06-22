@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-17 15:48+0500\n"
+"POT-Creation-Date: 2023-06-22 13:00+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -300,12 +300,12 @@ msgid "Возраст"
 msgstr "Возраст"
 
 #: .\medtools\models.py:18
-msgid "ОСН"
-msgstr "ОСН"
+msgid "Острая сердечная недостаточность"
+msgstr "Острая сердечная недостаточность"
 
 #: .\medtools\models.py:19
-msgid "ХСН"
-msgstr "ХСН"
+msgid "Хроническая сердечная недостаточность"
+msgstr "Хроническая сердечная недостаточность"
 
 #: .\medtools\models.py:20
 msgid "Нарушение ритма"
@@ -328,8 +328,8 @@ msgid "Продолжительность боли"
 msgstr "Продолжительность боли"
 
 #: .\medtools\models.py:27
-msgid "ЧСС"
-msgstr "ЧСС"
+msgid "Частота сердечных сокращений"
+msgstr "Частота сердечных сокращений"
 
 #: .\medtools\models.py:65
 msgid "Группа низкого риска"
@@ -365,7 +365,7 @@ msgstr "Острый инфаркт миокарда"
 
 #: .\medtools\models.py:117 .\medtools\models.py:176 .\medtools\models.py:191
 #: .\medtools\models.py:223 .\medtools\models.py:252 .\medtools\models.py:295
-#: .\medtools\models.py:360 .\medtools\models.py:373
+#: .\medtools\models.py:358 .\medtools\models.py:371
 msgid "Пациент"
 msgstr "Пациент"
 
@@ -542,72 +542,68 @@ msgid "Гиперурикемия"
 msgstr "Гиперурикемия"
 
 #: .\medtools\models.py:340
-msgid "Сахарный диабет"
-msgstr "Сахарный диабет"
-
-#: .\medtools\models.py:342
 msgid "Нарушение толерантности к глюкозе"
 msgstr "Нарушение толерантности к глюкозе"
 
-#: .\medtools\models.py:349
+#: .\medtools\models.py:347
 msgid "Консультация гепатолога"
 msgstr "Консультация гепатолога"
 
-#: .\medtools\models.py:351
+#: .\medtools\models.py:349
 msgid "Консультация эндокринолога"
 msgstr "Консультация эндокринолога"
 
-#: .\medtools\models.py:362
+#: .\medtools\models.py:360
 msgid "Количество поражений КА"
 msgstr "Количество поражений КА"
 
-#: .\medtools\models.py:375
+#: .\medtools\models.py:373
 msgid "Поле"
 msgstr "Поле"
 
-#: .\medtools\models.py:382
+#: .\medtools\models.py:380
 msgid "Название"
 msgstr "Название"
 
-#: .\medtools\models.py:425
+#: .\medtools\models.py:423
 msgid "Опросник"
 msgstr "Опросник"
 
-#: .\medtools\models.py:426
+#: .\medtools\models.py:424
 msgid "Текст"
 msgstr "Текст"
 
-#: .\medtools\models.py:427
+#: .\medtools\models.py:425
 msgid "Мин балл для вывода"
 msgstr "Мин балл для вывода"
 
-#: .\medtools\models.py:428
+#: .\medtools\models.py:426
 msgid "Макс балл для вывода"
 msgstr "Макс балл для вывода"
 
-#: .\medtools\models.py:441
+#: .\medtools\models.py:439
 msgid "Множественный выбор"
 msgstr "Множественный выбор"
 
-#: .\medtools\models.py:468
+#: .\medtools\models.py:466
 msgid "Выбор"
 msgstr "Выбор"
 
 #: .\medtools\templates\medtools\blocks\analisys_formset.html:5
-msgid "Генетическое Исследование"
-msgstr "Генетическое Исследование"
+msgid "Генетическое исследование"
+msgstr "Генетическое исследование"
 
 #: .\medtools\templates\medtools\blocks\analisys_formset.html:16
-msgid "Иммунологическое Исследование"
-msgstr "Иммунологическое Исследование"
+msgid "Иммунологическое исследование"
+msgstr "Иммунологическое исследование"
 
 #: .\medtools\templates\medtools\blocks\analisys_formset.html:27
 msgid "Липидогамма"
 msgstr "Липидогамма"
 
 #: .\medtools\templates\medtools\blocks\analisys_formset.html:37
-msgid "Биохимическое ИК"
-msgstr "Биохимическое ИК"
+msgid "Биохимическое исследование крови"
+msgstr "Биохимическое исследование крови"
 
 #: .\medtools\templates\medtools\blocks\analisys_formset.html:46
 msgid "Индекс массы тела"
@@ -892,6 +888,21 @@ msgstr "Язык"
 #: .\templates\blocks\left_sidebar.html:39
 msgid "Информация"
 msgstr "Информация"
+
+#~ msgid "ОСН"
+#~ msgstr "ОСН"
+
+#~ msgid "ХСН"
+#~ msgstr "ХСН"
+
+#~ msgid "ЧСС"
+#~ msgstr "ЧСС"
+
+#~ msgid "Сахарный диабет"
+#~ msgstr "Сахарный диабет"
+
+#~ msgid "Биохимическое ИК"
+#~ msgstr "Биохимическое ИК"
 
 #~ msgid "Ваши статьи:"
 #~ msgstr "Ваши статьи"
