@@ -55,7 +55,6 @@ class HeartDiseaseToolUpdatePage(NamedFormsetsMixin, MenuMixin, UpdateWithInline
         patient_id = self.request.session.get("patient_id")
         for survey in surveys:
             overall_score = survey.get_overall_score(patient_id)
-            print(survey.name, overall_score)
             survey_results_set = survey.surveyresult_set.all()
 
             if survey_results_set.first() is None:
