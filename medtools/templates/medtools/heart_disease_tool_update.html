@@ -84,7 +84,7 @@
                             {% endfor %}
                         </div>
 
-                        {% if surveys_result and INSD and PRI %}
+                        {% if surveys_result or INSD or PRI %}
                             <p>
                                 <a class="btn btn-danger" data-bs-toggle="collapse" href="#collapseExample10"
                                    role="button"
@@ -107,6 +107,11 @@
                             </div>
                         {% endif %}
                     </ul>
+
+                    <div>
+                        <a class="obj_galley_link pdf"
+                           href="{% url "docx-file-download" patient.pk %}"> {% trans "Скачать" %} docx </a>
+                    </div>
                 </div>
             </div>
             {% include "medtools/blocks/analisys_formset.html" %}
@@ -132,6 +137,33 @@
                 </p>
             {% endif %}
         {% endfor %}
+
+        <br>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            {% trans "Очистить данные" %}
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+             aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">{% trans "Вы точно хотите очистить данные?" %}</h1>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark"
+                                data-bs-dismiss="modal">{% trans "Нет" %}</button>
+                        <form method="POST" action="{% url "heart-disease-tool-delete" patient.pk %}">
+                            {% csrf_token %}<input type="submit" class="btn btn-danger"
+                                                   value="{% trans 'Да' %}">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     </div>
 {% endblock %}

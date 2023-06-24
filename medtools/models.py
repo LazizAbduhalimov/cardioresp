@@ -99,8 +99,9 @@ class Patient(models.Model):
             result.append(txt)
         if self.underlying_disease:
             txt = get_verbose_name(self, "underlying_disease")
-            result.append((txt))
-        return result
+            result.append(txt)
+
+        return list(filter(None, result))
 
     def __str__(self):
         return "{}".format(self.id)
@@ -151,8 +152,7 @@ class Echocardiography(models.Model):
     def get_disease_list(self):
         result = list()
         result.append(self.is_ejection_fraction_normalized())
-        if not self.is_eslj_normalized():
-            result.append(self.is_eslj_normalized())
+
         if not self.is_kcr_normalized():
             result.append(_("КСР ненормирован"))
         if not self.is_kdr_normalized():

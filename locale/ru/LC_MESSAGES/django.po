@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-22 13:00+0500\n"
+"POT-Creation-Date: 2023-06-24 14:28+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,6 +112,7 @@ msgstr "Предыдущие выпуски"
 #: .\blogs\templates\blogs\article.html:52
 #: .\blogs\templates\blogs\issue.html:29 .\blogs\templates\blogs\issue.html:66
 #: .\main_app\templates\main_app\author's_articles.html:37
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:113
 #: .\profiles\templates\profiles\article_reviewing.html:39
 #: .\profiles\templates\profiles\article_update_review.html:39
 msgid "Скачать"
@@ -363,49 +364,49 @@ msgstr "Острый коронарный синдром"
 msgid "Острый инфаркт миокарда"
 msgstr "Острый инфаркт миокарда"
 
-#: .\medtools\models.py:117 .\medtools\models.py:176 .\medtools\models.py:191
+#: .\medtools\models.py:118 .\medtools\models.py:176 .\medtools\models.py:191
 #: .\medtools\models.py:223 .\medtools\models.py:252 .\medtools\models.py:295
 #: .\medtools\models.py:358 .\medtools\models.py:371
 msgid "Пациент"
 msgstr "Пациент"
 
-#: .\medtools\models.py:118
+#: .\medtools\models.py:119
 msgid "ФВЛЖ (%)"
 msgstr "ФВЛЖ (%)"
 
-#: .\medtools\models.py:119
+#: .\medtools\models.py:120
 msgid "КСР (см)"
 msgstr "КСР (см)"
 
-#: .\medtools\models.py:120
+#: .\medtools\models.py:121
 msgid "КДР (см)"
 msgstr "КДР (см)"
 
-#: .\medtools\models.py:121
+#: .\medtools\models.py:122
 msgid "ЗСЛЖ (см)"
 msgstr "ЗСЛЖ (см)"
 
-#: .\medtools\models.py:122
+#: .\medtools\models.py:123
 msgid "МЖП (см)"
 msgstr "МЖП (см)"
 
-#: .\medtools\models.py:123
+#: .\medtools\models.py:124
 msgid "ПЖ (см)"
 msgstr "ПЖ (см)"
 
-#: .\medtools\models.py:124
+#: .\medtools\models.py:125
 msgid "МК (см)"
 msgstr "МК (см)"
 
-#: .\medtools\models.py:125
+#: .\medtools\models.py:126
 msgid "ЛП (см)"
 msgstr "ЛП (см)"
 
-#: .\medtools\models.py:129
+#: .\medtools\models.py:130
 msgid "Сердечная недостаточность"
 msgstr "Сердечная недостаточность"
 
-#: .\medtools\models.py:131
+#: .\medtools\models.py:132
 msgid "Сниженная ФВЛЖ"
 msgstr "Сниженная ФВЛЖ"
 
@@ -641,14 +642,17 @@ msgid "Создать"
 msgstr "Создать"
 
 #: .\medtools\templates\medtools\heart_disease_tool_update.html:37
+#: .\medtools\views.py:151
 msgid "Осложнения"
 msgstr "Осложнения"
 
 #: .\medtools\templates\medtools\heart_disease_tool_update.html:76
+#: .\medtools\views.py:185
 msgid "Показатели ЭХОКГ"
 msgstr "Показатели ЭХОКГ"
 
 #: .\medtools\templates\medtools\heart_disease_tool_update.html:92
+#: .\medtools\views.py:212
 msgid "Результаты опросников"
 msgstr "Результаты опросников"
 
@@ -660,17 +664,41 @@ msgstr "Индекс числа выбранных дескрипторов:"
 msgid "Ранговой индекс боли:"
 msgstr "Ранговой индекс боли:"
 
-#: .\medtools\templates\medtools\heart_disease_tool_update.html:114
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:119
 msgid "Изменить"
 msgstr "Изменить"
 
-#: .\medtools\templates\medtools\heart_disease_tool_update.html:117
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:122
 msgid "Опросники"
 msgstr "Опросники"
+
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:144
+msgid "Очистить данные"
+msgstr "Очистить данные"
+
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:153
+msgid "Вы точно хотите очистить данные?"
+msgstr "Вы точно хотите очистить данные?"
+
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:157
+msgid "Нет"
+msgstr "Нет"
+
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:160
+msgid "Да"
+msgstr "Да"
 
 #: .\medtools\templates\medtools\survey.html:19
 msgid "Далее"
 msgstr "Далее"
+
+#: .\medtools\views.py:197
+msgid "Индекс числа выбранных дескрипторов"
+msgstr "Индекс числа выбранных дескрипторов:"
+
+#: .\medtools\views.py:198
+msgid "Ранговой индекс боли"
+msgstr "Ранговой индекс боли:"
 
 #: .\profiles\forms.py:44
 msgid "В статье должно быть более 5 ключевых слов"
@@ -888,30 +916,3 @@ msgstr "Язык"
 #: .\templates\blocks\left_sidebar.html:39
 msgid "Информация"
 msgstr "Информация"
-
-#~ msgid "ОСН"
-#~ msgstr "ОСН"
-
-#~ msgid "ХСН"
-#~ msgstr "ХСН"
-
-#~ msgid "ЧСС"
-#~ msgstr "ЧСС"
-
-#~ msgid "Сахарный диабет"
-#~ msgstr "Сахарный диабет"
-
-#~ msgid "Биохимическое ИК"
-#~ msgstr "Биохимическое ИК"
-
-#~ msgid "Ваши статьи:"
-#~ msgstr "Ваши статьи"
-
-#~ msgid "Cтатус:"
-#~ msgstr "Cтатус"
-
-#~ msgid "ORCHID"
-#~ msgstr "ORCHID"
-
-#~ msgid "Об этой издательской системе"
-#~ msgstr "Об этой издательской системе"

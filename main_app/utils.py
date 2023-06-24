@@ -1,5 +1,8 @@
+from django.views import View
+
 from blogs.models import *
 from main_app.models import *
+from medtools.models import Patient
 from profiles.models import AuthorsProfile
 
 
@@ -10,7 +13,7 @@ def get_or_none(class_model, **kwargs):
         return None
 
 
-class MenuMixin:
+class MenuMixin(View):
 
     def get_user_context(self, **kwargs):
         context = kwargs
@@ -21,6 +24,11 @@ class MenuMixin:
 
         context["next_volume"] = get_or_none(Volume, status="Следующий")
         context["current_path"] = str(self.request.path)[3:]
+
+        patient_id = self.request.session.get("patient_id", None)
+        patient = get_or_none(Patient, pk=patient_id)
+        if patient is None:
+            self.request.session["patient_id"] = None
         context["patient_id"] = self.request.session.get("patient_id", None)
 
         if self.request.user.is_authenticated:

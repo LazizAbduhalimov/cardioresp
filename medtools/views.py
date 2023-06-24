@@ -1,7 +1,12 @@
+from io import BytesIO
+
 from django.contrib import messages
-from django.http import Http404
-from django.views.generic import FormView
+from django.http import Http404, HttpResponse
+from django.shortcuts import get_object_or_404
+from django.views.generic import FormView, DeleteView
+from docx import Document
 from extra_views import UpdateWithInlinesView, CreateWithInlinesView, NamedFormsetsMixin
+from django.utils.translation import gettext_lazy as _
 
 from main_app.utils import MenuMixin
 from medtools.forms import *
@@ -74,6 +79,12 @@ class HeartDiseaseToolUpdatePage(NamedFormsetsMixin, MenuMixin, UpdateWithInline
         return self.object.get_absolute_url()
 
 
+class HeartDiseaseToolDeletePage(DeleteView):
+    model = Patient
+    template_name = "medtools/heart_disease_tool_delete.html"
+    success_url = reverse_lazy("heart-disease-tool")
+
+
 class SurveyView(MenuMixin, FormView):
     template_name = "medtools/survey.html"
 
@@ -127,3 +138,92 @@ class SurveyPage(SurveyView):
         return super(SurveyPage, self).form_valid(form)
 
 
+def GetDocxFile(request, pk):
+    """Return .docx file of the result of the HeartDiseaseToolUpdatePage"""
+    patient = get_object_or_404(Patient, pk=pk)
+    document = Document()
+    docx_title = "result.docx"
+
+    text = str()
+    text += "{}, {} \n".format(patient.get_pain_duration_text(), patient.ecg.get_field_display())
+    document.add_paragraph(text)
+
+    text = _("Осложнения") + "\n"
+    for disease in patient.get_disease_list():
+        text += "{} \n".format(disease)
+
+    risk_group = patient.get_risk_group()
+    if risk_group is not None:
+        text += "{} \n".format(risk_group)
+
+    try:
+        mass_index = patient.bodymassindex.get_mass_disease()
+        text += "{} \n".format(mass_index)
+    except ObjectDoesNotExist:
+        pass
+
+    try:
+        for disease in patient.immunologicalresearch.get_disease_list():
+            document.add_paragraph(disease)
+    except ObjectDoesNotExist:
+        pass
+
+    try:
+        for disease in patient.biochemicalbloodanalysis.get_disease_list():
+            text += "{} \n".format(disease)
+    except ObjectDoesNotExist:
+        pass
+
+    try:
+        for disease in patient.lipidogram.get_disease_list():
+            text += "{} \n".format(disease)
+    except ObjectDoesNotExist:
+        pass
+
+    document.add_paragraph(text)
+
+    text = _("Показатели ЭХОКГ") + "\n"
+    for disease in patient.echocardiography.get_disease_list():
+        text += "{} \n".format(disease)
+    document.add_paragraph(text)
+
+    text = ""
+    surveys = Survey.objects.all().distinct()
+    for survey in surveys:
+        overall_score = survey.get_overall_score(pk)
+        survey_results_set = survey.surveyresult_set.all()
+
+        if survey_results_set.first() is None and (survey.get_insd(pk) and survey.get_pri(pk)):
+            insd = _("Индекс числа выбранных дескрипторов")
+            pri = _("Ранговой индекс боли")
+            text += "{}: {}\n".format(insd, survey.get_insd(pk))
+            text += "{}: {}\n".format(pri, survey.get_pri(pk))
+            continue
+
+        if overall_score is None:
+            continue
+
+        for result in survey_results_set:
+            if result.mark_from <= overall_score <= result.mark_to:
+                text += result.text + "\n"
+                break
+
+    if text != "":
+        text = _("Результаты опросников") + "\n" + text
+
+    document.add_paragraph(text)
+    document.add_page_break()
+
+    # Prepare document for download
+    # -----------------------------
+    f = BytesIO()
+    document.save(f)
+    length = f.tell()
+    f.seek(0)
+    response = HttpResponse(
+        f.getvalue(),
+        content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    )
+    response['Content-Disposition'] = 'attachment; filename=' + docx_title
+    response['Content-Length'] = length
+    return response

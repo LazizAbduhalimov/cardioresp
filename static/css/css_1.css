@@ -900,16 +900,16 @@ template {
     display: inline-block;
     padding: 0 1em;
     background: #fff;
-    border: 1px solid #007ab2;
+    border: 1px solid #291470;
     border-radius: 3px;
     font-size: 13px;
     line-height: 28px;
-    color: #007ab2;
+    color: #291470;
     text-decoration: none
 }
 
 .cmp_button_wire:hover, .cmp_button_wire:focus, .obj_galley_link:hover, .obj_galley_link:focus {
-    background: #007ab2;
+    background: #291470;
     color: #fff
 }
 

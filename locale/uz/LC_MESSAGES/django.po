@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-22 13:00+0500\n"
+"POT-Creation-Date: 2023-06-24 14:29+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -110,6 +110,7 @@ msgstr "Oldingi nashrlar"
 #: .\blogs\templates\blogs\article.html:52
 #: .\blogs\templates\blogs\issue.html:29 .\blogs\templates\blogs\issue.html:66
 #: .\main_app\templates\main_app\author's_articles.html:37
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:113
 #: .\profiles\templates\profiles\article_reviewing.html:39
 #: .\profiles\templates\profiles\article_update_review.html:39
 msgid "Скачать"
@@ -363,49 +364,49 @@ msgstr "O'tkir koronar sindrom"
 msgid "Острый инфаркт миокарда"
 msgstr "O'tkir miokard infarkti"
 
-#: .\medtools\models.py:117 .\medtools\models.py:176 .\medtools\models.py:191
+#: .\medtools\models.py:118 .\medtools\models.py:176 .\medtools\models.py:191
 #: .\medtools\models.py:223 .\medtools\models.py:252 .\medtools\models.py:295
 #: .\medtools\models.py:358 .\medtools\models.py:371
 msgid "Пациент"
 msgstr "Bemor"
 
-#: .\medtools\models.py:118
+#: .\medtools\models.py:119
 msgid "ФВЛЖ (%)"
 msgstr "Otish fraksiyasi (%)"
 
-#: .\medtools\models.py:119
+#: .\medtools\models.py:120
 msgid "КСР (см)"
 msgstr "Oxirgi sistolik o’lchov (sm)"
 
-#: .\medtools\models.py:120
+#: .\medtools\models.py:121
 msgid "КДР (см)"
 msgstr "Oxirgi diastolik o’lchov (sm)"
 
-#: .\medtools\models.py:121
+#: .\medtools\models.py:122
 msgid "ЗСЛЖ (см)"
 msgstr "Chap qorincha orqa devori (sm)"
 
-#: .\medtools\models.py:122
+#: .\medtools\models.py:123
 msgid "МЖП (см)"
 msgstr "Qorinchalar aro to’siq (sm)"
 
-#: .\medtools\models.py:123
+#: .\medtools\models.py:124
 msgid "ПЖ (см)"
 msgstr "O’ng qorincha (sm)"
 
-#: .\medtools\models.py:124
+#: .\medtools\models.py:125
 msgid "МК (см)"
 msgstr "Mitral klappan (sm)"
 
-#: .\medtools\models.py:125
+#: .\medtools\models.py:126
 msgid "ЛП (см)"
 msgstr "Chap bo’lmacha (sm)"
 
-#: .\medtools\models.py:129
+#: .\medtools\models.py:130
 msgid "Сердечная недостаточность"
 msgstr "Yurak yetishmovchiligi"
 
-#: .\medtools\models.py:131
+#: .\medtools\models.py:132
 msgid "Сниженная ФВЛЖ"
 msgstr "Chap qorincha otish fraksiyasining pasayishi"
 
@@ -640,14 +641,17 @@ msgid "Создать"
 msgstr "Yaratish"
 
 #: .\medtools\templates\medtools\heart_disease_tool_update.html:37
+#: .\medtools\views.py:151
 msgid "Осложнения"
-msgstr "Murakkabliklar"
+msgstr "Asoratlat"
 
 #: .\medtools\templates\medtools\heart_disease_tool_update.html:76
+#: .\medtools\views.py:185
 msgid "Показатели ЭХОКГ"
 msgstr "EХOКG parametrlari"
 
 #: .\medtools\templates\medtools\heart_disease_tool_update.html:92
+#: .\medtools\views.py:212
 msgid "Результаты опросников"
 msgstr "Anketalar natijalari"
 
@@ -659,17 +663,41 @@ msgstr "Tanlangan deskriptorlar soni indeksi"
 msgid "Ранговой индекс боли:"
 msgstr "Darajali og'riqlar ko'rsatkichi"
 
-#: .\medtools\templates\medtools\heart_disease_tool_update.html:114
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:119
 msgid "Изменить"
 msgstr "O'zgartirish"
 
-#: .\medtools\templates\medtools\heart_disease_tool_update.html:117
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:122
 msgid "Опросники"
 msgstr "Anketalar"
+
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:144
+msgid "Очистить данные"
+msgstr "Ma'lumotlarni tozalash"
+
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:153
+msgid "Вы точно хотите очистить данные?"
+msgstr "Siz aniq ma'lumotlarni tozalashni xohlaysizmi?"
+
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:157
+msgid "Нет"
+msgstr "Yo'q"
+
+#: .\medtools\templates\medtools\heart_disease_tool_update.html:160
+msgid "Да"
+msgstr "Ha"
 
 #: .\medtools\templates\medtools\survey.html:19
 msgid "Далее"
 msgstr "Keyingisi"
+
+#: .\medtools\views.py:197
+msgid "Индекс числа выбранных дескрипторов"
+msgstr "Tanlangan deskriptorlar soni indeksi"
+
+#: .\medtools\views.py:198
+msgid "Ранговой индекс боли"
+msgstr "Darajali og'riqlar ko'rsatkichi"
 
 #: .\profiles\forms.py:44
 msgid "В статье должно быть более 5 ключевых слов"
@@ -886,27 +914,3 @@ msgstr "Til"
 #: .\templates\blocks\left_sidebar.html:39
 msgid "Информация"
 msgstr "Ma'lumot"
-
-#~ msgid "ОСН"
-#~ msgstr "O’YuYe"
-
-#~ msgid "ХСН"
-#~ msgstr "SyuYe"
-
-#~ msgid "ЧСС"
-#~ msgstr "YUT"
-
-#~ msgid "Сахарный диабет"
-#~ msgstr "Qandli diabet"
-
-#~ msgid "Биохимическое ИК"
-#~ msgstr "Qonning biokimyoviy tahlili"
-
-#~ msgid "Ваши статьи:"
-#~ msgstr "Sizning maqolalaringiz:"
-
-#~ msgid "Cтатус:"
-#~ msgstr "Holati:"
-
-#~ msgid "ORCHID"
-#~ msgstr "ORCHID"
