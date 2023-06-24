@@ -50,17 +50,15 @@ class HeartDiseaseToolUpdatePage(NamedFormsetsMixin, MenuMixin, UpdateWithInline
     def get_context_data(self, **kwargs):
         context = super(HeartDiseaseToolUpdatePage, self).get_context_data(**kwargs)
         surveys = Survey.objects.all().distinct()
-        context["surveys"] = surveys
+        surveys_ratio_choice = surveys.filter(surveyquestion__has_multiple_choice=False)
+        context["surveys_ratio_choice"] = surveys_ratio_choice
+        surveys_multiple_choice = surveys.filter(surveyquestion__has_multiple_choice=True)
+        context["surveys_multiple_choice"] = surveys_multiple_choice
         surveys_result = list()
         patient_id = self.request.session.get("patient_id")
-        for survey in surveys:
+        for survey in surveys_ratio_choice:
             overall_score = survey.get_overall_score(patient_id)
             survey_results_set = survey.surveyresult_set.all()
-
-            if survey_results_set.first() is None:
-                context["INSD"] = survey.get_insd(patient_id)
-                context["PRI"] = survey.get_pri(patient_id)
-                continue
 
             if overall_score is None:
                 continue
@@ -69,6 +67,13 @@ class HeartDiseaseToolUpdatePage(NamedFormsetsMixin, MenuMixin, UpdateWithInline
                 if result.mark_from <= overall_score <= result.mark_to:
                     surveys_result.append(result.text)
                     break
+
+        for survey in surveys_multiple_choice:
+            pri = survey.get_pri(patient_id)
+            insd = survey.get_insd(patient_id)
+            if (pri or insd) is not None:
+                context["INSD"] = insd
+                context["PRI"] = pri
 
         context["surveys_result"] = surveys_result
 

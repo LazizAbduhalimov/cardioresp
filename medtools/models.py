@@ -385,7 +385,7 @@ class Survey(models.Model):
 
     def get_overall_score(self, patient_id):
         question_number = len(self.surveyquestion_set.all())
-        answers = SurveyAnswer.objects.filter(patient_id=patient_id, choice__question__survey=self)[:question_number]
+        answers = SurveyAnswer.objects.filter(patient_id=patient_id, choice__question__survey=self)[:question_number].select_related("choice")
         if len(answers) < question_number:
             return
 
@@ -398,7 +398,7 @@ class Survey(models.Model):
     def get_insd(self, patient_id):
         result = 0
         question_number = len(self.surveyquestion_set.all())
-        answers = SurveyMultipleAnswer.objects.filter(patient_id=patient_id)[:question_number]
+        answers = SurveyMultipleAnswer.objects.filter(patient_id=patient_id)[:question_number].prefetch_related("choice")
         for answer in answers:
             result += answer.choice.all().count()
 
@@ -407,7 +407,7 @@ class Survey(models.Model):
     def get_pri(self, patient_id):
         result = 0
         question_number = len(self.surveyquestion_set.all())
-        answers = SurveyMultipleAnswer.objects.filter(patient_id=patient_id)[:question_number]
+        answers = SurveyMultipleAnswer.objects.filter(patient_id=patient_id)[:question_number].prefetch_related("choice")
         for answer in answers:
             choices = answer.choice.all()
             for choice in choices:

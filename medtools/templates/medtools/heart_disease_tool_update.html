@@ -120,24 +120,22 @@
         </form>
         <hr>
         <h2>{% trans 'Опросники' %}</h2>
-        {% for survey in surveys %}
-            {% if survey.surveyquestion_set.first.has_multiple_choice %}
-                <p>
-                    <a class="title"
-                       href="{% url 'heart-disease-survey-multiple-choice' %}?question_id={{ survey.surveyquestion_set.first.pk }}">
-                        {{ survey.name }}
-                    </a>
-                </p>
-            {% else %}
-                <p>
-                    <a class="title"
-                       href="{% url 'heart-disease-survey' %}?question_id={{ survey.surveyquestion_set.first.pk }}">
-                        {{ survey.name }}
-                    </a>
-                </p>
-            {% endif %}
+        {% for survey in surveys_multiple_choice %}
+            <p>
+                <a class="title"
+                   href="{% url 'heart-disease-survey-multiple-choice' %}?question_id={{ survey.surveyquestion_set.first.pk }}">
+                    {{ survey.name }}
+                </a>
+            </p>
         {% endfor %}
-
+        {% for survey in surveys_ratio_choice %}
+            <p>
+                <a class="title"
+                   href="{% url 'heart-disease-survey' %}?question_id={{ survey.surveyquestion_set.first.pk }}">
+                    {{ survey.name }}
+                </a>
+            </p>
+        {% endfor %}
         <br>
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -150,7 +148,8 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">{% trans "Вы точно хотите очистить данные?" %}</h1>
+                        <h1 class="modal-title fs-5"
+                            id="staticBackdropLabel">{% trans "Вы точно хотите очистить данные?" %}</h1>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-dark"
