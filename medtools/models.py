@@ -395,25 +395,19 @@ class Survey(models.Model):
 
         return score
 
-    def get_insd(self, patient_id):
-        result = 0
+    def get_insd_and_pri(self, patient_id):
+        """Returns two values: first is insd, second is pri"""
+        insd = pri = 0
         question_number = len(self.surveyquestion_set.all())
         answers = SurveyMultipleAnswer.objects.filter(patient_id=patient_id)[:question_number].prefetch_related("choice")
         for answer in answers:
-            result += answer.choice.all().count()
+            insd += answer.choice.all().count()
 
-        return result
-
-    def get_pri(self, patient_id):
-        result = 0
-        question_number = len(self.surveyquestion_set.all())
-        answers = SurveyMultipleAnswer.objects.filter(patient_id=patient_id)[:question_number].prefetch_related("choice")
-        for answer in answers:
             choices = answer.choice.all()
             for choice in choices:
-                result += choice.mark
+                pri += choice.mark
 
-        return result
+        return insd, pri
 
     def __str__(self):
         return f"{self.name}-{self.id}"

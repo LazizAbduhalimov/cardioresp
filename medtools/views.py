@@ -50,9 +50,11 @@ class HeartDiseaseToolUpdatePage(NamedFormsetsMixin, MenuMixin, UpdateWithInline
     def get_context_data(self, **kwargs):
         context = super(HeartDiseaseToolUpdatePage, self).get_context_data(**kwargs)
         surveys = Survey.objects.all().distinct()
-        surveys_ratio_choice = surveys.filter(surveyquestion__has_multiple_choice=False)
+        surveys_ratio_choice = surveys.filter(surveyquestion__has_multiple_choice=False).prefetch_related(
+            "surveyquestion_set")
         context["surveys_ratio_choice"] = surveys_ratio_choice
-        surveys_multiple_choice = surveys.filter(surveyquestion__has_multiple_choice=True)
+        surveys_multiple_choice = surveys.filter(surveyquestion__has_multiple_choice=True).prefetch_related(
+            "surveyquestion_set")
         context["surveys_multiple_choice"] = surveys_multiple_choice
         surveys_result = list()
         patient_id = self.request.session.get("patient_id")
@@ -69,8 +71,7 @@ class HeartDiseaseToolUpdatePage(NamedFormsetsMixin, MenuMixin, UpdateWithInline
                     break
 
         for survey in surveys_multiple_choice:
-            pri = survey.get_pri(patient_id)
-            insd = survey.get_insd(patient_id)
+            insd, pri = survey.get_insd_and_pri(patient_id)
             if (pri or insd) is not None:
                 context["INSD"] = insd
                 context["PRI"] = pri
@@ -142,13 +143,99 @@ class SurveyPage(SurveyView):
         return super(SurveyPage, self).form_valid(form)
 
 
-def GetDocxFile(request, pk):
+def get_docx_file(request, pk):
     """Return .docx file of the result of the HeartDiseaseToolUpdatePage"""
     patient = get_object_or_404(Patient, pk=pk)
     document = Document()
     docx_title = "result.docx"
 
     text = str()
+    # ----- Analysis data ----- #
+
+    # Main
+    text += _("Основная информация") + "\n"
+    text += _("Пол") + ": " + patient.get_sex_display() + "\n"
+    text += _("Возраст") + ": " + patient.get_age_display() + "\n"
+    text += _("Социальный статус") + ": " + patient.get_social_position_display() + "\n"
+    text += _("Продолжительность боли") + ": " + patient.get_pain_duration_display() + "\n"
+    text += _("Частота сердечных сокращений") + ": " + str(patient.heart_rate) + "\n"
+    document.add_paragraph(text)
+
+    # Genetic research
+    text = _("Генетическое исследование") + "\n"
+    text += "IL-1β 511 T/C (rs16944)" + ": " + patient.geneticresearch.get_IL_1b_511_TC_display() + "\n"
+    text += "IL-4 С/Т (rs2243250)" + ": " + patient.geneticresearch.get_IL_4_TC_display() + "\n"
+    text += "IL-10 819 C/T (rs1800871)" + ": " + patient.geneticresearch.get_IL_10_819_CT_display() + "\n"
+    text += "TNF-α G/A 308 (rs1800629)" + ": " + patient.geneticresearch.get_TNF_a_GA_display() + "\n"
+    document.add_paragraph(text)
+
+    # Immunological research
+    try:
+        text = _("Иммунологическое исследование") + "\n"
+        text += "IL-1(b)" + ": " + str(patient.immunologicalresearch.IL_1b) + "\n"
+        text += "TNF-a" + ": " + str(patient.immunologicalresearch.TNF_a) + "\n"
+        text += "IL-4" + ": " + str(patient.immunologicalresearch.IL_4) + "\n"
+        text += "IL-10" + ": " + str(patient.immunologicalresearch.IL_10) + "\n"
+        document.add_paragraph(text)
+    except ObjectDoesNotExist:
+        pass
+
+    # Lipidogram
+    try:
+        text = _("Липидогамма") + "\n"
+        text += _("Общий ХС ммоль/г") + ": " + str(patient.lipidogram.HS) + "\n"
+        text += _("ХС ЛПНП. ммоль/г") + ": " + str(patient.lipidogram.HS_LPNP) + "\n"
+        text += _("ХС ЛПВП. ммоль/г") + ": " + str(patient.lipidogram.HS_LPVP) + "\n"
+        text += _("ТГ. ммоль/г") + ": " + str(patient.lipidogram.TG) + "\n"
+        text += _("КА") + ": " + str(patient.lipidogram.KA) + "\n"
+        document.add_paragraph(text)
+    except ObjectDoesNotExist:
+        pass
+
+    # Biochemical blood analysis
+    try:
+        text = _("Биохимическое исследование крови") + "\n"
+        text += _("АЛАТ (U/L)") + ": " + str(patient.biochemicalbloodanalysis.ALAT) + "\n"
+        text += _("АСАТ(U/L)") + ": " + str(patient.biochemicalbloodanalysis.ACAT) + "\n"
+        text += _("Креатинин (мкмоль/л)") + ": " + str(patient.biochemicalbloodanalysis.creatinin) + "\n"
+        text += _("Мочевина (мкмоль/л)") + ": " + str(patient.biochemicalbloodanalysis.urea) + "\n"
+        text += _("Мочевая кислота(мкмоль/л)") + ": " + str(patient.biochemicalbloodanalysis.uric_acid) + "\n"
+        text += _("Билирубин общий (мкмоль/л)") + ": " + str(patient.biochemicalbloodanalysis.bilirubin_common) + "\n"
+        text += _("Билирубин прямой (мкмоль/л)") + ": " + str(patient.biochemicalbloodanalysis.bilirubin_direct) + "\n"
+        text += _("Билирубин непрямой (мкмоль/л)") + ": " + str(patient.biochemicalbloodanalysis.bilirubin_indirect) + "\n"
+        text += _("Глюкоза (мкмоль/л)") + ": " + str(patient.biochemicalbloodanalysis.glucose) + "\n"
+        document.add_paragraph(text)
+    except ObjectDoesNotExist:
+        pass
+
+    # Body mass index
+    try:
+        text = _("Индекс массы тела") + "\n"
+        text += "Рост (cм)" + ": " + str(patient.bodymassindex.height) + "\n"
+        text += "Масса (кг)" + ": " + str(patient.bodymassindex.mass) + "\n"
+        document.add_paragraph(text)
+    except ObjectDoesNotExist:
+        pass
+
+    # Echocardiography
+    text = _("Эхокардиография") + "\n"
+    text += _("ФВЛЖ (%)") + ": " + str(patient.echocardiography.ejection_fraction) + "\n"
+    text += _("КСР (см)") + ": " + str(patient.echocardiography.kcr) + "\n"
+    text += _("КДР (см)") + ": " + str(patient.echocardiography.kdr) + "\n"
+    text += _("ЗСЛЖ (см)") + ": " + str(patient.echocardiography.eslj) + "\n"
+    text += _("МЖП (см)") + ": " + str(patient.echocardiography.mjp) + "\n"
+    text += _("ПЖ (см)") + ": " + str(patient.echocardiography.pj) + "\n"
+    text += _("МК (см)") + ": " + patient.echocardiography.get_mk_display() + "\n"
+    text += _("ЛП (см)") + ": " + str(patient.echocardiography.lp) + "\n"
+    document.add_paragraph(text)
+
+    # Coronary Angiography
+    text = _("Коронарная ангиография") + "\n"
+    text += _("Количество поражений КА") + ": " + patient.coronaryangiography.get_field_display() + "\n\n"
+    document.add_paragraph(text)
+
+    text = _("Результаты анализов") + "\n"
+    # ----- Result ------ #
     text += "{}, {} \n".format(patient.get_pain_duration_text(), patient.ecg.get_field_display())
     document.add_paragraph(text)
 
@@ -162,7 +249,8 @@ def GetDocxFile(request, pk):
 
     try:
         mass_index = patient.bodymassindex.get_mass_disease()
-        text += "{} \n".format(mass_index)
+        if mass_index is not None:
+            text += "{} \n".format(mass_index)
     except ObjectDoesNotExist:
         pass
 
@@ -193,16 +281,14 @@ def GetDocxFile(request, pk):
 
     text = ""
     surveys = Survey.objects.all().distinct()
-    for survey in surveys:
+    surveys_ratio_choice = surveys.filter(surveyquestion__has_multiple_choice=False).prefetch_related(
+        "surveyquestion_set")
+    surveys_multiple_choice = surveys.filter(surveyquestion__has_multiple_choice=True).prefetch_related(
+        "surveyquestion_set")
+
+    for survey in surveys_ratio_choice:
         overall_score = survey.get_overall_score(pk)
         survey_results_set = survey.surveyresult_set.all()
-
-        if survey_results_set.first() is None and (survey.get_insd(pk) and survey.get_pri(pk)):
-            insd = _("Индекс числа выбранных дескрипторов")
-            pri = _("Ранговой индекс боли")
-            text += "{}: {}\n".format(insd, survey.get_insd(pk))
-            text += "{}: {}\n".format(pri, survey.get_pri(pk))
-            continue
 
         if overall_score is None:
             continue
@@ -211,6 +297,15 @@ def GetDocxFile(request, pk):
             if result.mark_from <= overall_score <= result.mark_to:
                 text += result.text + "\n"
                 break
+
+    for survey in surveys_multiple_choice:
+        insd, pri = survey.get_insd_and_pri(pk)
+        if pri or insd:
+            insd_text = _("Индекс числа выбранных дескрипторов")
+            pri_text = _("Ранговой индекс боли")
+            text += "{}: {}\n".format(insd_text, insd)
+            text += "{}: {}\n".format(pri_text, pri)
+            continue
 
     if text != "":
         text = _("Результаты опросников") + "\n" + text
