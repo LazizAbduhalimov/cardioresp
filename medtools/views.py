@@ -7,6 +7,7 @@ from django.views.generic import FormView, DeleteView
 from docx import Document
 from extra_views import UpdateWithInlinesView, CreateWithInlinesView, NamedFormsetsMixin
 from django.utils.translation import gettext_lazy as _
+from django.db.models import Q
 
 from main_app.utils import MenuMixin
 from medtools.forms import *
@@ -77,6 +78,26 @@ class HeartDiseaseToolUpdatePage(NamedFormsetsMixin, MenuMixin, UpdateWithInline
                 context["PRI"] = pri
 
         context["surveys_result"] = surveys_result
+        extra_recommendations = None
+        hanin_surveys = surveys.filter(Q(id=5) | Q(id=6))
+        for hanin_survey in hanin_surveys:
+            try:
+                if hanin_survey.get_overall_score(patient_id) > 30:
+                    extra_recommendations = _("Консультация невролога")
+                    break
+            except:
+                pass
+
+        hads_surveys = surveys.filter(Q(id=3) | Q(id=4))
+        for hads_survey in hads_surveys:
+            try:
+                if hads_survey.get_overall_score(patient_id) > 7:
+                    extra_recommendations = _("Консультация невролога")
+                    break
+            except:
+                pass
+
+        context["extra_recommendations"] = extra_recommendations
 
         return dict(list(context.items()) + list(self.get_user_context().items()))
 
@@ -277,6 +298,10 @@ def get_docx_file(request, pk):
     text = _("Показатели ЭХОКГ") + "\n"
     for disease in patient.echocardiography.get_disease_list():
         text += "{} \n".format(disease)
+    document.add_paragraph(text)
+
+    text = ("Рекомендации") + "\n"
+    text += patient.get_recommendation()
     document.add_paragraph(text)
 
     text = ""

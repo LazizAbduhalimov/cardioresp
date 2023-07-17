@@ -58,15 +58,31 @@ class Patient(models.Model):
         return result
 
     def get_risk_group(self):
-        def get_percentage_of_score():
-            return self.get_overall_score() / self.MAX_SCORE
 
-        if get_percentage_of_score() < 1 / 3:
+        percentage = self.get_overall_score() / self.MAX_SCORE
+
+        if percentage < 1 / 3:
             return _("Группа низкого риска")
-        if get_percentage_of_score() < 2 / 3:
+        if percentage < 2 / 3:
             return _("Группа среднего риска")
-        if get_percentage_of_score() <= 1:
+        if percentage <= 1:
             return _("Группа высокого риска")
+
+    def get_recommendation(self):
+        percentage_of_risk_group = self.get_overall_score() / self.MAX_SCORE
+        result = str()
+
+        if percentage_of_risk_group < 1 / 3:
+            result = _("Традиционное лечение, контроль больного каждые 6 месяцев.")
+        elif percentage_of_risk_group < 2 / 3:
+            result = _("Традиционное лечение+2-4 мг периндоприл+ 10 мг розувастатин+ 20-40 мг флуоксетин, консультация интервенциониста, подготовка больного к ЧКВ по результатам коронарной ангиографии, контроль больного каждые 6 месяцев.")
+        elif percentage_of_risk_group <= 1:
+            result = _("Традиционное лечение+ 8 мг периндоприл+ 20 мг розувастатин+ 60 мг флуоксетин, контроль больного ежеквартально, консультация интервенциониста, подготовка больного к АКШ.")
+
+        if self.underlying_disease:
+            result += "\n" + _("Консультация эндокринолога.")
+
+        return result
 
     def get_heart_rate_disease(self):
         if self.heart_rate < 60:

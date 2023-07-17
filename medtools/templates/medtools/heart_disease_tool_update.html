@@ -106,8 +106,21 @@
                                 {% endif %}
                             </div>
                         {% endif %}
-                    </ul>
 
+                        <p>
+                            <a class="btn btn-danger" data-bs-toggle="collapse" href="#collapseExample12" role="button"
+                               aria-expanded="false" aria-controls="collapseExample">
+                                {% trans 'Рекомендации' %}
+                            </a>
+                        </p>
+                        <div class="collapse" id="collapseExample12">
+                            <li class="list-group-item list-group-item-danger">{{ patient.get_recommendation }}</li>
+                            {% if extra_recommendations %}
+                                <li class="list-group-item list-group-item-danger">{{ extra_recommendations }}</li>
+                            {% endif %}
+                        </div>
+                    </ul>
+                    <br>
                     <div>
                         <a class="obj_galley_link pdf"
                            href="{% url "docx-file-download" patient.pk %}"> {% trans "Скачать" %} docx </a>
