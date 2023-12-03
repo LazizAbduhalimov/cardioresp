@@ -48,6 +48,10 @@
                                 <li class="list-group-item list-group-item-danger">{{ patient.get_risk_group }}</li>
                             {% endif %}
 
+                            {% if patient.get_risk_of_death %}
+                                <li class="list-group-item list-group-item-danger">{{ patient.get_risk_of_death }}</li>
+                            {% endif %}
+
                             {% if object.bodymassindex.get_mass_disease %}
                                 <li class="list-group-item list-group-item-danger">{{ patient.bodymassindex.get_mass_disease }}</li>
                             {% endif %}

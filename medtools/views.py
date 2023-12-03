@@ -267,6 +267,10 @@ def get_docx_file(request, pk):
     risk_group = patient.get_risk_group()
     if risk_group is not None:
         text += "{} \n".format(risk_group)
+    
+    risk_of_death = patient.get_risk_of_death()
+    if risk_of_death is not None:
+        text += "{} \n".format(risk_of_death)
 
     try:
         mass_index = patient.bodymassindex.get_mass_disease()
