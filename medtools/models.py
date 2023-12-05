@@ -69,16 +69,8 @@ class Patient(models.Model):
             return _("Группа высокого риска")
 
     def get_risk_of_death(self):
-        percentage = self.get_overall_score() / self.MAX_SCORE
-        print(self.get_overall_score())
-        print(percentage)
-        if percentage < 1 / 100:
-            return _("Смертность в течении года - низкая")
-        if percentage < 1 / 20:
-            return _("Смертность в течении года - умеренная")
-        if percentage < 1 / 10:
-            return _("Смертность в течении года - высокая")
-        return _("Смертность в течении года - очень высокая")
+        percentage = round(self.get_overall_score() / self.MAX_SCORE * 100, 1)
+        return _("Летальность в течении года - ") + str(percentage) + "%"
 
     def get_recommendation(self):
         percentage_of_risk_group = self.get_overall_score() / self.MAX_SCORE
