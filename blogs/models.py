@@ -81,18 +81,24 @@ class Volume(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
-
+        super().save(*args, **kwargs)
         # Создание и сохранение qr-code
         url = MEDIA_ROOT.replace("\\", "/") + "/" + str(self.file)
         qrcode_image = qrcode.make(url)
-        canvas = Image.new("RGB", (qrcode_image.pixel_size, qrcode_image.pixel_size), "white")
-        draw = ImageDraw.Draw(canvas)
-        canvas.paste(qrcode_image)
+
+        # Convert QR code to an RGB image to match the canvas mode
+        qrcode_image = qrcode_image.convert("RGB")
+        canvas = Image.new("RGB", qrcode_image.size, "white")
+
+        # Paste QR code image onto canvas at (0, 0)
+        canvas.paste(qrcode_image, (0, 0))
+
         file_name = f"qrcode-{self.slug}.png"
         buffer = BytesIO()
         canvas.save(buffer, "PNG")
         self.qr.save(file_name, File(buffer), save=False)
         canvas.close()
+        buffer.close()
 
         # При статусе Неактивынй отключаем все связанные Статьи, а иначе включаем их
         if self.status == VolumeStatusEnum.inactive.value or self.status == VolumeStatusEnum.next.value:

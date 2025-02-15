@@ -57,7 +57,6 @@ CUSTOM_APPS = [
     'blogs',
     'registration',
     'profiles',
-    'medtools',
 ]
 INSTALLED_APPS += EXTRA_APPS + CUSTOM_APPS
 

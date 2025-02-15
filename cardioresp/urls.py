@@ -16,7 +16,6 @@ urlpatterns = [
     path("", include("blogs.urls")),
     path("", include("registration.urls")),
     path("", include("profiles.urls")),
-    path("", include("medtools.urls")),
     path("", include("main_app.urls")),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
@@ -27,7 +26,6 @@ urlpatterns += i18n_patterns(
     path("", include("blogs.urls")),
     path("", include("profiles.urls")),
     path("", include("registration.urls")),
-    path("", include("medtools.urls")),
     path("", include("main_app.urls")),
 )
 

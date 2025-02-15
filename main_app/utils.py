@@ -2,7 +2,7 @@ from django.views import View
 
 from blogs.models import *
 from main_app.models import *
-from medtools.models import Patient
+# from medtools.models import Patient
 from profiles.models import AuthorsProfile
 
 
@@ -25,11 +25,11 @@ class MenuMixin(View):
         context["next_volume"] = get_or_none(Volume, status="Следующий")
         context["current_path"] = str(self.request.path)[3:]
 
-        patient_id = self.request.session.get("patient_id", None)
-        patient = get_or_none(Patient, pk=patient_id)
-        if patient is None:
-            self.request.session["patient_id"] = None
-        context["patient_id"] = self.request.session.get("patient_id", None)
+        # patient_id = self.request.session.get("patient_id", None)
+        # patient = get_or_none(Patient, pk=patient_id)
+        # if patient is None:
+        #     self.request.session["patient_id"] = None
+        # context["patient_id"] = self.request.session.get("patient_id", None)
 
         if self.request.user.is_authenticated:
             context["author_profile"] = get_or_none(AuthorsProfile, user=self.request.user)

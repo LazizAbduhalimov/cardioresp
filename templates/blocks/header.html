@@ -7,9 +7,9 @@
                 <a href="#" style="text-decoration: none; color: #ffffff">
                     <img style="width: 15%; padding-bottom: 2.5%" src="/static/images/sammi_logo.png">
                 </a>
-                <a href="#" style="text-decoration: none; color: #ffffff">
-                    <img style="width: 15%; padding-bottom: 2.5%" src="/static/images/Logo.png">
-                </a>
+{#                <a href="#" style="text-decoration: none; color: #ffffff">#}
+{#                    <img style="width: 15%; padding-bottom: 2.5%" src="/static/images/Logo.png">#}
+{#                </a>#}
             </h1>
         </div>
         <nav class="pkp_navigation_primary_row" aria-label="Навигация сайта">
@@ -31,21 +31,6 @@
                     </li>
                     <li class>
                         <a href="{% url 'issue' %}"> {% trans "Выпуски" %} </a>
-                    </li>
-                    <li class>
-                        <a href=""> {% trans "Инструменты" %} </a>
-
-                        <ul>
-                            <li>
-                                {% if patient_id %}
-                                    <a href="{% url 'heart-disease-tool-update' patient_id %}"><span
-                                            class="title">{% trans "Прогнозирование коронарной болезни сердца в зависимости от психоэмоционального состояния" %}</span></a>
-                                {% else %}
-                                    <a href="{% url 'heart-disease-tool' %}"><span
-                                            class="title">{% trans "Прогнозирование коронарной болезни сердца в зависимости от психоэмоционального состояния" %}</span></a>
-                                {% endif %}
-                            </li>
-                        </ul>
                     </li>
                     {% if user.is_staff %}
                         <li class>
